@@ -61,8 +61,9 @@
     margin-bottom: 20px;
     text-align: center;
     transition: transform 0.3s ease;
+    margin-left: -70px;
   }
-  
+
   .testimonial-card:hover {
     transform: translateY(-10px);
   }
@@ -90,6 +91,7 @@
     padding: 30px;
     color: white;
     text-align: center;
+    
   }
   
   .cta h2 {
@@ -127,7 +129,7 @@
     .testimonial-card {
       width: 100%;
     }
-  
+
     .cta {
       padding: 20px;
     }
