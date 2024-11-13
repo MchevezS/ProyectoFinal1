@@ -29,12 +29,12 @@ if (nombreUsuario.trim()==="" || cedulaIndentidad.trim()==="" || emailRegistro.t
   return (
     <div>
     <div className='formResgister'>
-    <input placeholder='Nombre' className='nombreUsuario' value={nombreUsuario} onChange={(e)=> {setNombreUsuario(e.target.value)}} required/>
-    <input placeholder='Cédula de identidad' className='cedulaIndentidad' value={cedulaIndentidad} onChange={(e)=> {setCedulaIndentidad(e.target.value)}} required/>
-    <input placeholder='Email' className='emailRegistro' value={emailRegistro} onChange={(e)=> {setEmailRegistro(e.target.value)}} required/>
-    <input placeholder='Clave' className='claveRegistro' value={claveRegistro} onChange={(e)=> {setClaveRegistro(e.target.value)}} required/>
+    <input type='name' placeholder='Nombre' className='nombreUsuario' value={nombreUsuario} onChange={(e)=> {setNombreUsuario(e.target.value)}} required/>
+    <input type='text' placeholder='Cédula de identidad' className='cedulaIndentidad' value={cedulaIndentidad} onChange={(e)=> {setCedulaIndentidad(e.target.value)}} required/>
+    <input type='email' placeholder='Email' className='emailRegistro' value={emailRegistro} onChange={(e)=> {setEmailRegistro(e.target.value)}} required/>
+    <input type='password' placeholder='Clave' className='claveRegistro' value={claveRegistro} onChange={(e)=> {setClaveRegistro(e.target.value)}} required/>
     </div>
-    <button className='btnRegister'>Registrarse</button>
+    <button type='button' className='btnRegister' onClick={validarFormRegister}>Registrarse</button>
 
     </div>
   )
