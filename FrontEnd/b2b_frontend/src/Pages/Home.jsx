@@ -1,9 +1,10 @@
-import Testimonios from "../Components/Testimonios"
+
+import Testimonio1 from "../Components/Testimonio1"
 
 function Home() {
   return (
     <div>
-      <Testimonios/>
+      <Testimonio1/>
     </div>
   )
 }

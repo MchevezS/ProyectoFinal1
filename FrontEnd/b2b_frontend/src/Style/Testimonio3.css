@@ -1,0 +1,39 @@
+.testimonial3-card {
+    background-color: white;
+    padding: 31px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    margin-bottom: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    margin-top: -308px;
+    margin-left: 1350px;
+  }
+
+  .testimonial3-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .testimonial3-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .testimonial3-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .testimonial3-card p {
+    font-size: 1rem;
+    color: #666;
+  }
+
+  @media (max-width: 768px) {
+    .testimonial3-card {
+      width: 100%;
+    }
+}

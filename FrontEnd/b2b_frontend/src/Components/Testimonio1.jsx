@@ -1,7 +1,9 @@
-import '../Style/ComponenteTestimonioss.css';
+import '../Style/Testimonio1.css';
 import { useState } from 'react';
+import Testimonio2 from './Testimonio2';
+import Testimonio3 from './Testimonio3';
 
-const Testimonios = () => {
+const Testimonio1 = () => {
   const [showContact, setShowContact] = useState(false); // Hook para mostrar nuestro contacto
 
   const toggleContactInfo = () => {
@@ -31,23 +33,8 @@ const Testimonios = () => {
                 Las encuestas personalizadas nos han dado una visión clara de áreas clave de mejora, y las recomendaciones específicas nos han permitido implementar cambios que marcan la diferencia.</p>
           </div>
 
-          {/* Testimonio 2 */}
-          <div className="testimonial-card">
-            <img src="carlos.jpg" alt="Carlos Martínez" />
-            <h3>Carlos Martínez</h3>
-            <p><strong>CEO, Grupo X</strong></p>
-            <p>Nuestro equipo está más comprometido y motivado. 
-                Con los datos proporcionados por el sistema, pudimos tomar decisiones informadas que aumentaron el bienestar general, reduciendo la rotación y mejorando la productividad.</p>
-          </div>
-
-          {/* Testimonio 3 */}
-          <div className="testimonial-card">
-            <img src="maria.jpg" alt="María Rodríguez" />
-            <h3>María Rodríguez</h3>
-            <p><strong>Jefa de Cultura Corporativa, Innovatech</strong></p>
-            <p>El uso de este sistema nos permitió identificar rápidamente problemas relacionados con el bienestar mental de nuestros empleados. 
-                Las soluciones personalizadas nos han ayudado a crear un entorno más positivo y saludable.</p>
-          </div>
+          <Testimonio2/>
+          <Testimonio3/>
         </div>
       </section>
 
@@ -73,4 +60,4 @@ const Testimonios = () => {
   );
 };
 
-export default Testimonios;
+export default Testimonio1;
