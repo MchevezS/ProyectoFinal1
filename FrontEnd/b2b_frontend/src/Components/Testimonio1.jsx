@@ -1,7 +1,5 @@
 import '../Style/Testimonio1.css';
 import { useState } from 'react';
-import Testimonio2 from './Testimonio2';
-import Testimonio3 from './Testimonio3';
 
 const Testimonio1 = () => {
   const [showContact, setShowContact] = useState(false); // Hook para mostrar nuestro contacto
@@ -21,7 +19,7 @@ const Testimonio1 = () => {
       </section>
 
       {/* Testimonios */}
-      <section className="testimonios">
+      <section className="testimonios" id='Testimonios'>
         <h2>Testimonios destacados</h2>
         <div className="testimonial-cards">
           {/* Testimonio 1 */}
@@ -33,8 +31,6 @@ const Testimonio1 = () => {
                 Las encuestas personalizadas nos han dado una visión clara de áreas clave de mejora, y las recomendaciones específicas nos han permitido implementar cambios que marcan la diferencia.</p>
           </div>
 
-          <Testimonio2/>
-          <Testimonio3/>
         </div>
       </section>
 
