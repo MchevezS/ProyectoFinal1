@@ -18,7 +18,7 @@ class RegistroView(APIView):
             return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
         else:
             usuario = User.objects.create_user(username=nombre_usuario,password=clave_usuario,email=correo_usuario)
-            Usuarios.objects.create(user=usuario,cedula_usuario=cedula_usuario)
+            Usuarios.objects.create(user=usuario,cedula_usuario=cedula_usuario) # El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 14
             return Response({"success":'Usuario creado',},status=status.HTTP_201_CREATED)
 
             
