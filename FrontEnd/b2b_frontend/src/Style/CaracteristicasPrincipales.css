@@ -1,0 +1,38 @@
+.caracteristicas {
+    padding: 50px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+  }
+  
+  .caracteristicas h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+  }
+  
+  .benefits, .how-it-works {
+    margin-bottom: 40px;
+  }
+  
+  .benefits li, .how-it-works li {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    list-style-type: none;
+  }
+  
+  .benefits li::before {
+    content: "✔️";
+    margin-right: 10px;
+  }
+  
+  /* Responsivo para Características */
+  @media (max-width: 768px) {
+    .caracteristicas h2 {
+      font-size: 2rem;
+    }
+  
+    .benefits li, .how-it-works li {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+  }
+  
