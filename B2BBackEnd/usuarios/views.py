@@ -6,8 +6,11 @@ from rest_framework.response import Response
 from .models import Usuarios
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-# Create your views here.
+from rest_framework.generics import ListCreateAPIView
+from django.contrib.auth.models import User
+from .serializers import UsuariosSerializer
 
+# Create your views here.
 class RegistroView(APIView):
     def post(self,request):
         nombre_usuario = request.data.get("username")
@@ -37,3 +40,9 @@ class LoginView(APIView):
         
         else:
             return Response({"error":'credenciales invalidas',},status=status.HTTP_400_BAD_REQUEST)    
+        
+# Hacemos una vista que nos permite listar todos los usuarios y crear un nuevo usuario en la base de datos
+class UsuariosView(ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UsuariosSerializer
+    

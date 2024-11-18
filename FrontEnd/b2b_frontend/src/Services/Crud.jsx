@@ -25,7 +25,7 @@ export{post}
 
 
 //Metodo Get: Obtiene informacio
-async function get( datosLogin, endpoint) {
+async function get(endpoint) {
     try { 
         const response = await fetch(`${URL}${endpoint}`)
         if (!response.ok) {
