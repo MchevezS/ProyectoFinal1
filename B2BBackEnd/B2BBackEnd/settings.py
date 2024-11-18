@@ -1,4 +1,4 @@
-
+from datetime import timedelta
 
 from pathlib import Path
 
@@ -31,7 +31,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'api',
-    'usuarios'
+    'usuarios',
+    'corsheaders',
+    'encuestas',
+    
 ]
 
 REST_FRAMEWORK = {
@@ -42,8 +45,13 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # ),
 }
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=3), #cambiar tiempo
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1), 
+}
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,8 +89,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'B2B',  # El nombre de tu base de datos en MySQL
-        'USER': 'moha',  # Tu usuario de MySQL
-        'PASSWORD': '119690203',  # La contraseña de tu usuario MySQL
+        'USER': 'michelle',  # Tu usuario de MySQL
+        'PASSWORD': 'fwd1820',  # La contraseña de tu usuario MySQL
         'HOST': '127.0.0.1',  # Si estás ejecutando MySQL localmente
         'PORT': '3306',  # El puerto por defecto de MySQL
     }
