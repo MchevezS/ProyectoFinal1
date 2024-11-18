@@ -1,7 +1,9 @@
+const URL = 'http://127.0.0.1:8000/api/'
+
 // Metodo post: Guarda los datos.
 async function post(dataRegister, endpoint) {
     try {
-        const response = await fetch(`http://localhost:3001/${endpoint}`, {
+        const response = await fetch(`${URL}${endpoint}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -9,7 +11,7 @@ async function post(dataRegister, endpoint) {
             body: JSON.stringify(dataRegister)
         });
         const data = await response.json()
-        // console.log(data);
+        console.log(data);
         return data
     } catch (error) {
         console.error('Error posting user:', error);

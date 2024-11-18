@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import { post } from '../Services/Crud';
 
 function FormRegister() {
   const [nombreUsuario, setNombreUsuario]=useState('');  
@@ -8,7 +8,7 @@ function FormRegister() {
   const [claveRegistro, setClaveRegistro]=useState('');
 
 async function validarFormRegister() {
-// Validamos que los campos no pueden estar vacios
+// Validamos que los campos no estén vacíos
 if (nombreUsuario.trim()==="" || cedulaIndentidad.trim()==="" || emailRegistro.trim()==="" || claveRegistro.trim()==="") {
   alert("Llenar campos vacios")
   return;
@@ -16,15 +16,29 @@ if (nombreUsuario.trim()==="" || cedulaIndentidad.trim()==="" || emailRegistro.t
 
 // Vamos a guardar los datos en nuestra api
   const dataRegister = {
-    nombreUsuario: nombreUsuario,
-    cedulaIndentidad: cedulaIndentidad,
-    emailRegistro: emailRegistro,
-    claveRegistro: claveRegistro
+    username: nombreUsuario,
+    cedula: cedulaIndentidad,
+    email: emailRegistro,
+    password: claveRegistro
   };
 
- 
+  try {
+    // Llamamos a la función post para registrar al usuario
+    const response = await post(dataRegister, "users");
+    
+    // Suponiendo que la API devuelve una respuesta exitosa
+    if (response && response.status === 200) {
+      alert("Usuario registrado exitosamente");
+    } else {
+      // Si la respuesta de la API no es exitosa, mostramos un mensaje
+      alert("Hubo un problema al registrar al usuario");
+    }
+  } catch (error) {
+    // Si ocurre algún error en la solicitud
+    console.error('Error al procesar la solicitud:', error);
+    alert("Hubo un error al registrar al usuario. Intenta nuevamente.");
+  }
 }
-
 
   return (
     <div>
