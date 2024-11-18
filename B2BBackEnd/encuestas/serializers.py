@@ -1,21 +1,24 @@
-from rest_framework import serializers
-from .models import Encuestas
-from .models import Preguntas
-from .models import Tipo_de_encuestas
+from rest_framework.serializers import ModelSerializer
 
-class EncuentasSerializer(serializers.ModelSerializer):
+from.models import Encuestas,Pregunta,Respuesta
+
+from rest_framework import serializers
+from encuestas.models import Encuestas
+
+class EncuestaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Encuestas
-        tields = '_all_'
-        
+        fields = '__all__'  # Esto incluirá todos los campos del modelo Encuestas
 
-class PreguntasSerializer(serializers.ModelSerializer):
+        
+class PreguntaSerializer(ModelSerializer):
     class Meta:
-        model = Preguntas        
-        tields = '_all_'
+        model = Pregunta
+        fields = '__all__'
         
         
-class Tipo_de_encuestasSerializer(serializers.ModelSerializer):
-    class Meta: 
-        model = Tipo_de_encuestas
-        tields = '_all_'
+class RespuestaSerializer(ModelSerializer):
+    class Meta:
+        model = Respuesta
+        fields = '__all__'
+        

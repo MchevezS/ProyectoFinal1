@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'api',
     'usuarios',
     'corsheaders',
+    'encuestas',
     
 ]
 
