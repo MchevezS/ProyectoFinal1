@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'usuarios',
     'corsheaders',
     'encuestas',
+    'empresas',
     
 ]
 
