@@ -1,12 +1,12 @@
 import './App.css'
-import Navbar from './Components/Navbar'
+import FormEmpresas from './Components/FormEmpresas'
 import Home from './Pages/Home'
 
 function App() {
     return (
     <>
-    <Navbar/>
     <Home/>
+    <FormEmpresas/>
     </>
   )
 }

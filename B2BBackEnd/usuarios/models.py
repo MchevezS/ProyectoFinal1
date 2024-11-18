@@ -7,4 +7,5 @@ class Usuarios(models.Model):
     cedula_usuario = models.CharField(max_length=18)
     
     
-    
+    def __str__(self):
+        return self.user.username
