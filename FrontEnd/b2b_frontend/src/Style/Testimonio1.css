@@ -1,229 +1,175 @@
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Fondo hero */
+.hero {
+  background-image: url('background.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.hero-overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* Sombra para mejorar contraste */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+}
+
+/* Responsive para Hero */
+@media (max-width: 768px) {
   .hero {
-    background-image: url('background.jpg'); /* Imagen de fondo */
-    background-size: cover;
-    background-position: center;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    position: relative;
+    height: 300px;
   }
-  
-  .hero-overlay {
-    background-color: rgba(0, 0, 0, 0.5); /* Overlay para texto */
-    padding: 20px;
-  }
-  
+
   .hero h1 {
     font-size: 2.5rem;
-    margin-bottom: 10px;
   }
-  
+
   .hero p {
-    font-size: 1.25rem;
-  }
-  
-  /* Testimonios */
-  .testimonios {
-    padding: 50px 20px;
-    background-color: #f4f4f4;
-  }
-  
-  .testimonios h2 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 30px;
-  }
-  
-  .testimonial-cards {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
-  
-  .testimonial-card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 30%;
-    margin-bottom: 20px;
-    text-align: center;
-    transition: transform 0.3s ease;
-    margin-left: -70px;
-  }
-
-  .testimonial-card:hover {
-    transform: translateY(-10px);
-  }
-  
-  .testimonial-card img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-  }
-  
-  .testimonial-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-  }
-  
-  .testimonial-card p {
-    font-size: 1rem;
-    color: #666;
-  }
-  
-  /* CTA Section */
-  .cta {
-    background-color: #007BFF;
-    padding: 30px;
-    color: white;
-    text-align: center;
-    
-  }
-  
-  .cta h2 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-  }
-  
-  .cta button {
-    background-color: #ff9900;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
     font-size: 1.1rem;
-    cursor: pointer;
   }
-  
-  .cta button:hover {
-    background-color: #ff6600;
-  }
-  
-  /* Contact Information */
-  .contact-info {
-    display: none;
-    margin-top: 20px;
-    font-size: 1rem;
-    color: white;
-  }
-  
-  .contact-info p {
-    margin-bottom: 10px;
-  }
-  
-  /* Media Queries para Responsividad */
-  @media (max-width: 768px) {
-    .testimonial-card {
-      width: 100%;
-    }
+}
 
-    .cta {
-      padding: 20px;
-    }
-  
-    .cta button {
-      font-size: 1rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .hero h1 {
-      font-size: 2rem;
-    }
-  
-    .hero p {
-      font-size: 1rem;
-    }
-  }
-  
-/* Modal styles */
+
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.modal h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.modal p {
+  font-size: 1rem;
+}
+
+.close-btn {
+  background-color: #ff5c5c;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background-color: #e04e4e;
+}
+
+/* Responsivo para Modal */
+@media (max-width: 768px) {
   .modal {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    position: relative; /* Necesario para posicionar el botón dentro del modal */
+    padding: 20px;
+    width: 80%;
   }
-  
+
   .modal h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 1.5rem;
   }
-  
+
   .modal p {
-    font-size: 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+
+.testimonios {
+  padding: 50px 20px;
+  background-color: #f9f9f9;
+}
+
+.testimonios h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+.testimonial-cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap; /* Asegura que las tarjetas se acomoden bien */
+}
+
+.testimonial-card, .testimonial2-card, .testimonial3-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  margin-bottom: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  margin-left: 50px;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-10px);
+}
+
+.testimonial-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.testimonial-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.testimonial-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Responsivo para Testimonios */
+@media (max-width: 768px) {
+  .testimonial-card, .testimonial2-card, .testimonial3-card {
+    width: 100%; /* Ocupan todo el ancho en pantallas pequeñas */
     margin: 10px 0;
   }
-  
-  /* Estilo del botón de cierre dentro del modal */
-  .close-btn {
-    background-color: #ff5c5c;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    border-radius: 50%; /* Redondeamos la X para darle un aspecto circular */
-    position: absolute; /* Posicionamos absolutamente dentro del modal */
-    top: 10px; /* Distancia desde el top del modal */
-    right: 10px; /* Distancia desde el lado derecho del modal */
-    width: 30px; /* Ancho y alto para darle un tamaño adecuado */
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  .testimonial-card h3 {
+    font-size: 1.1rem;
   }
-  
-  .close-btn:hover {
-    background-color: #e44d4d;
+
+  .testimonial-card p {
+    font-size: 0.9rem;
   }
-  
-  /* Responsivo */
-  @media (max-width: 768px) {
-    .testimonial-cards {
-      flex-direction: column;
-    }
-  
-    .testimonial-card {
-      width: 100%;
-      margin-bottom: 20px;
-    }
-  
-    .cta h2 {
-      font-size: 1.5rem;
-    }
-  
-    .cta button {
-      font-size: 1rem;
-      padding: 10px;
-    }
-  }
-  
+}

@@ -1,6 +1,5 @@
-import '../Style/Navbar.css'
+import '../Style/Navbar.css';
 import { useState } from 'react';
-
 
 const Navbar = () => {
   // Estado para controlar el menú hamburguesa
@@ -28,6 +27,7 @@ const Navbar = () => {
         <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
           <li><a href="#home">Inicio</a></li>
           <li><a href="#Testimonios">Testimonios</a></li>
+          <li><a href="#Caracteristicas">Características</a></li>
           <li><a href="#services">Servicios</a></li>
           <li><a href="#contact">Contacto</a></li>
         </ul>
