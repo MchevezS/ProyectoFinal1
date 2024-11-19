@@ -3,10 +3,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/", include('usuarios.urls')),
-    path("api/", include("usuarios.urls")),
-    path('api/', include("encuestas.urls"))
-    
+<<<<<<<<< Temporary merge branch 1
+    path("api/", include('usuarios.urls'))
 ]
-
-
+=========
+    path("api/", include("usuarios.urls")),
+    path("api/", include("empresas.urls")),
+    path('api/', include("encuestas.urls"))
+]

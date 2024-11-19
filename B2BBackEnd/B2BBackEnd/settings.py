@@ -95,8 +95,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'B2B',  # El nombre de tu base de datos en MySQL
-        'USER': 'michelle',  # Tu usuario de MySQL
-        'PASSWORD': 'fwd1820',  # La contraseña de tu usuario MySQL
+        'USER': 'root',  # Tu usuario de MySQL
+        'PASSWORD': 'vialka16',  # La contraseña de tu usuario MySQL
         'HOST': '127.0.0.1',  # Si estás ejecutando MySQL localmente
         'PORT': '3306',  # El puerto por defecto de MySQL
     }
