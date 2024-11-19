@@ -24,9 +24,9 @@ export{post}
 
 
 //Metodo Get: Obtiene informacio
-async function get( endpoint) {
+async function get( datosLogin, endpoint) {
     try { 
-        const response = await fetch(`http://localhost:3001/${endpoint}`, {
+        const response = await fetch(`${URL}${endpoint}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ export { get};
 // Metodo Put: Actualiza datos
 async function update( endpoint, id) {
     try {
-        const response = await fetch(`http://localhost:3001/${endpoint}/${id}`, {
+        const response = await fetch(`${URL}${endpoint}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ export{update}
 // Metodo Delete: Elimina datos.
 async function eliminar(endpoint, id) {
     try {
-        const response = await fetch(`http://localhost:3001/${endpoint}/${id}`, {
+        const response = await fetch(`${URL}${endpoint}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
