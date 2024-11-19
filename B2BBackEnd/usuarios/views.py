@@ -6,14 +6,11 @@ from rest_framework.response import Response
 from .models import Usuarios
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-<<<<<<< HEAD
 from rest_framework.generics import ListCreateAPIView
 from django.contrib.auth.models import User
 from .serializers import UsuariosSerializer
-=======
 import re 
 # Create your views here.
->>>>>>> 857bb732dff452a32123140dea2d989d1438ff17
 
 # Create your views here.
 class RegistroView(APIView):
