@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { post } from '../Services/Crud';
 import { mostrarAlerta } from './MostrarAlerta';
-
+import '../Style/FormRegister.css'
 function FormRegister() {
   const [nombreUsuario, setNombreUsuario] = useState('');
   const [cedulaIndentidad, setCedulaIndentidad] = useState('');
@@ -94,6 +94,7 @@ function FormRegister() {
         <input type='password' placeholder='Clave' className='claveRegistro' value={claveRegistro} onChange={(e) => setClaveRegistro(e.target.value)} required/>
       </div>
       <button type='button' className='btnRegister' onClick={validarFormRegister}> Registrarse </button>
+      <a href='login'>Tengo cuenta </a>
     </div>
   );
 }
