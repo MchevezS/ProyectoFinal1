@@ -8,3 +8,4 @@ urlpatterns = [
     # Rutas para las vistas de AreaTrabajo
     path('AreaTrabajo/', views.AreaTrabajoListCreateView.as_view(), name='area-trabajo-list'),
 ]
+
