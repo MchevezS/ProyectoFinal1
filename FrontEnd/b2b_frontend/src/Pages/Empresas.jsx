@@ -1,11 +1,13 @@
 import FormAreaTrabajo from '../Components/FormAreaTrabajo';
-import FormEmpresas from '../Components/FormEmpresas'
+import FormEmpresas from '../Components/FormEmpresas';
+import FormAreaTrabajoUsuarios from '../Components/FormAreaTrabajoUsuarios';
 
 function Empresas() {
   return (
     <div>
         <FormEmpresas/>
         <FormAreaTrabajo/>
+        <FormAreaTrabajoUsuarios/>
     </div>
   )
 }

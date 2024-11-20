@@ -30,3 +30,14 @@ class AreaTrabajo(models.Model):
     def __str__(self):
         
         return self.nombre_area
+    
+class AreaTrabajoUsuarios(models.Model):
+    usuario = models.ForeignKey("usuarios.Usuarios", on_delete=models.CASCADE, related_name="areas_trabajo_usuario")
+    area_trabajo = models.ForeignKey(AreaTrabajo, on_delete=models.CASCADE, related_name="usuarios_area_trabajo")
+
+    
+    class Meta:
+        unique_together = ('usuario', 'area_trabajo')  # Asegura que un usuario no esté duplicado en la misma área dentro de la misma empresa
+    
+    def __str__(self):
+        return f"{self.usuario.nombre} - {self.area_trabajo.nombre_area}"

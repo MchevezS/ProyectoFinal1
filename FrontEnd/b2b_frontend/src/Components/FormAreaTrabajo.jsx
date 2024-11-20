@@ -13,12 +13,8 @@ const FormAreaTrabajo = () => {
   useEffect(() => {
     const fetchEmpresas = async () => {
       try {
-        const response = await get('empresas'); // El endpoint 'empresas' para obtener la lista
-        if (response && response.data) {
-          setEmpresas(response.data);
-        } else {
-          alert('No se pudieron cargar las empresas');
-        }
+        const response = await get('empresas/'); // El endpoint 'empresas' para obtener la lista
+        setEmpresas(response);
       } catch (error) {
         console.error(error);
         alert('Hubo un problema al cargar las empresas');
