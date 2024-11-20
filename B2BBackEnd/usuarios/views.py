@@ -3,10 +3,13 @@ from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.response import Response
-from .models import Usuarios
+
+from .serializers import RolSerializers
+from .models import Roles, Usuarios
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-import re 
+import re
+from rest_framework.generics import ListCreateAPIView 
 # Create your views here.
 
 class RegistroView(APIView):
@@ -15,7 +18,6 @@ class RegistroView(APIView):
         clave_usuario = request.data.get("password")
         correo_usuario = request.data.get("email")
         cedula_usuario = request.data.get("cedula")
-        
         
         #Usamos expresiones regulares para validar la informacion que se envia a la base de datos. 
         nombre_usuario_regex = r'^[a-zA-Z]+$'
@@ -52,3 +54,8 @@ class LoginView(APIView):
         
         else:
             return Response({"error":'credenciales invalidas',},status=status.HTTP_400_BAD_REQUEST)    
+        
+
+class AsignarRolesView(ListCreateAPIView):
+    queryset = Roles.objects.all()
+    serializer_class = RolSerializers

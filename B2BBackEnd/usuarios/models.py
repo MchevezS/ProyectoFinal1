@@ -9,3 +9,10 @@ class Usuarios(models.Model):
     
     def __str__(self):
         return self.user.username
+    
+    
+class Roles(models.Model):
+    rol = models.CharField(max_length=50) # se asigna el rol
+    usuario = models.ForeignKey(Usuarios,on_delete=models.CASCADE) #usuario a quien se le asigna
+    
+    
