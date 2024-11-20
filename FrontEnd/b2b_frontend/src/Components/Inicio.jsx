@@ -1,8 +1,8 @@
-import '../Style/CaracteristicasPrincipales.css';
+import '../Style/Inicio.css';
 
-const CaracteristicasPrincipales = () => {
+const Inicio= () => {
   return (
-    <section id="Caracteristicas" className="caracteristicas">
+    <section id="Home" className="caracteristicas">
       <h2>Características Principales</h2>
       <div className="benefits">
         <h3>¿Por qué elegir nuestro sistema?</h3>
@@ -28,4 +28,4 @@ const CaracteristicasPrincipales = () => {
   );
 };
 
-export default CaracteristicasPrincipales;
+export default Inicio;
