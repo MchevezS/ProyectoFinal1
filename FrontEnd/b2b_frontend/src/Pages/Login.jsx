@@ -1,10 +1,12 @@
-import FormLogin from '../Components/FormLogin'
+
+import RegistroLogin from '../Components/RegistroLogin'
 
 function Login() {
   return (
     <div>
-      <FormLogin/>
 
+    
+   <RegistroLogin/>
     </div>
   )
 }
