@@ -1,12 +1,13 @@
 import '../Style/FormEmpresas.css'
 import { useState } from 'react';
-import { post } from '../Services/Crud';  // Importamos la función post desde api.js
+import { post } from '../Services/Crud';
 
 const FormEmpresas = () => {
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [cedulaJuridica, setCedulaJuridica] = useState('');
   const [correo, setCorreo] = useState('');
   const [propietario, setPropietario] = useState('');
+  // Esta cadena muestra un mensaje de error si hay espacios vacios
   const [errores, setErrores] = useState({
     nombreEmpresa: '',
     cedulaJuridica: '',
@@ -14,25 +15,37 @@ const FormEmpresas = () => {
     propietario: ''
   });
 
+  // Validación de los campos
   const validarFormulario = () => {
-    let esValido = true;
+    let esValido = true; // Es para saber si el formulario es valiado o no
     let erroresTemp = { nombreEmpresa: '', cedulaJuridica: '', correo: '', propietario: '' };
+    // almacena los mensajes de error
 
+    // Validación dbre de la empresa
     if (!nombreEmpresa) {
       erroresTemp.nombreEmpresa = 'El nombre de la empresa es obligatorio';
       esValido = false;
     }
 
+    // Validación de la cédula jurídica
     if (!cedulaJuridica) {
       erroresTemp.cedulaJuridica = 'La cédula jurídica es obligatoria';
       esValido = false;
-    }
-
-    if (!correo) {
-      erroresTemp.correo = 'El correo es obligatorio';
+    } else if (!/^\d{9}$/.test(cedulaJuridica)) { // Asegúrate de que la cédula tiene 9 dígitos
+      erroresTemp.cedulaJuridica = 'La cédula jurídica debe tener 9 dígitos';
       esValido = false;
     }
 
+    // Validación del correo electrónico
+    if (!correo) {
+      erroresTemp.correo = 'El correo es obligatorio';
+      esValido = false;
+    } else if (!/\S+@\S+\.\S+/.test(correo)) {
+      erroresTemp.correo = 'El correo no es válido';
+      esValido = false;
+    }
+
+    // Validación del propietario
     if (!propietario) {
       erroresTemp.propietario = 'El propietario es obligatorio';
       esValido = false;
@@ -42,6 +55,7 @@ const FormEmpresas = () => {
     return esValido;
   };
 
+  // Función para manejar el envío del formulario
   const manejarEnvio = async (e) => {
     e.preventDefault();
 
@@ -54,15 +68,23 @@ const FormEmpresas = () => {
       };
 
       try {
-        // Usamos la función post para enviar los datos
-        const data = await post(datosFormulario, 'empresa');  // El endpoint es 'empresa'
-        alert(data.mensaje);  // Si todo es correcto, mostramos el mensaje recibido del servidor
+        // Llamamos a la función post para enviar los datos de la empresa
+        const response = await post(datosFormulario, 'empresas');  // El endpoint es 'empresa'
+        
+        // Aqui el API devuelve una repsuesta
+        if (response && response.success) {
+          // Si la respuesta es exitosa, muestra una alerta de éxito
+          alert('Empresa registrada con éxito');
+        } else {
+          // Si la respuesta es negativa, muestra una alerta 
+          alert('Hubo un problema al registrar la empresa');
+        }
       } catch (error) {
         alert('Error al enviar el formulario');
         console.error(error);
       }
     } else {
-      alert('Por favor, completa todos los campos.');
+      alert('Por favor, completa todos los campos correctamente.');
     }
   };
 
@@ -70,42 +92,27 @@ const FormEmpresas = () => {
     <form onSubmit={manejarEnvio}>
       <div>
         <label>Nombre de la empresa:</label>
-        <input 
-          type="text" 
-          value={nombreEmpresa} 
-          onChange={(e) => setNombreEmpresa(e.target.value)} 
-        />
-        {errores.nombreEmpresa && <span style={{ color: 'red' }}>{errores.nombreEmpresa}</span>}
+        <input type="text" value={nombreEmpresa} onChange={(e) => setNombreEmpresa(e.target.value)}/>
+        {/* contiene los mensajes de error */}
+        {errores.nombreEmpresa && <span className="error-text">{errores.nombreEmpresa}</span>}
       </div>
 
       <div>
         <label>Cédula Jurídica:</label>
-        <input 
-          type="text" 
-          value={cedulaJuridica} 
-          onChange={(e) => setCedulaJuridica(e.target.value)} 
-        />
-        {errores.cedulaJuridica && <span style={{ color: 'red' }}>{errores.cedulaJuridica}</span>}
+        <input type="text" value={cedulaJuridica} onChange={(e) => setCedulaJuridica(e.target.value)}/>
+        {errores.cedulaJuridica && <span className="error-text">{errores.cedulaJuridica}</span>}
       </div>
 
       <div>
         <label>Correo:</label>
-        <input 
-          type="email" 
-          value={correo} 
-          onChange={(e) => setCorreo(e.target.value)} 
-        />
-        {errores.correo && <span style={{ color: 'red' }}>{errores.correo}</span>}
+        <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
+        {errores.correo && <span className="error-text">{errores.correo}</span>}
       </div>
 
       <div>
         <label>Propietario:</label>
-        <input 
-          type="text" 
-          value={propietario} 
-          onChange={(e) => setPropietario(e.target.value)} 
-        />
-        {errores.propietario && <span style={{ color: 'red' }}>{errores.propietario}</span>}
+        <input type="text" value={propietario} onChange={(e) => setPropietario(e.target.value)}/>
+        {errores.propietario && <span className="error-text">{errores.propietario}</span>}
       </div>
 
       <button type="submit">Enviar</button>

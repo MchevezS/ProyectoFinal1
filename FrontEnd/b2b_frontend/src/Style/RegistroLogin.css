@@ -1,0 +1,123 @@
+/* Contenedor del modal (superficie oscura detrás del modal) */
+.modal-overlay {
+    position: fixed; /* Fijar el modal sobre la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+    z-index: 9999; /* Asegura que el modal esté por encima de otros elementos */
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: #fff;
+    padding: 35px;
+    border-radius: 10px;
+    width: 450px; /* Ancho fijo */
+    max-width: 90%; /* Evita que el modal se expanda demasiado en pantallas pequeñas */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra alrededor del modal */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Empujar el contenido hacia arriba */
+    height: auto; /* Ajusta la altura según el contenido */
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Títulos dentro del modal */
+.card-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.card-subtitle {
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+/* Estilos para las tabs (los botones de login y register) */
+.nav-tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-item {
+    margin: 0 10px;
+}
+
+.nav-link {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.nav-link:hover {
+    background-color: #0056b3; /* Cambia al pasar el cursor */
+    color: #fff;
+}
+
+/* Estilo de los inputs y botones dentro del formulario */
+input.form-control {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0; /* Margen entre los campos */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+input.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+button.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+button.btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+}
+
+button.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Spinner de carga dentro del botón */
+.spinner-border {
+    margin-right: 10px;
+}
