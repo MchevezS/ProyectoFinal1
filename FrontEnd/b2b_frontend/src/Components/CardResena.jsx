@@ -1,6 +1,6 @@
-import '../Style/Testimonio3.css'
+import '../Style/cardResena.css'
 
-function Testimonio3() {
+function CardResena() {
   return (
     <div>
       {/* Testimonio 3 */}
@@ -10,9 +10,9 @@ function Testimonio3() {
             <p><strong>Jefa de Cultura Corporativa, Innovatech</strong></p>
             <p>El uso de este sistema nos permitió identificar rápidamente problemas relacionados con el bienestar mental de nuestros empleados. 
                 Las soluciones personalizadas nos han ayudado a crear un entorno más positivo y saludable.</p>
-          </div>
+      </div>
     </div>
   )
 }
 
-export default Testimonio3
+export default CardResena

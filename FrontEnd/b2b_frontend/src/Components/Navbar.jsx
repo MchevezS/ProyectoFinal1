@@ -13,16 +13,16 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" id='Inicio'>
       <div className="navbar-container">
         
-        
+      
         {/* Links del menú */}
-        <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
+        <ul className="nav-links">
           <li><a href="#Home">Inicio</a></li>
           <li><a href="#Reseñas">Reseñas</a></li>
           <li><a href="#services">Servicios</a></li>
-          <li><button onClick={()=>{navigate("/register")}}>Registrate</button></li>
+          <li><button className='btn btn-secondary'  onClick={()=>{navigate("/register")}}>Registrate</button></li>
         </ul>
       </div>
     </nav>
