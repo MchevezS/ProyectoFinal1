@@ -8,8 +8,8 @@ from .serializers import EmpresaSerializer, AreaTrabajoSerializer, AreaTrabajoUs
 
 # Vista para obtener todas las empresas o crear una nueva
 class EmpresaListCreateView(generics.ListCreateAPIView):
-    queryset = Empresa.objects.all()
-    serializer_class = EmpresaSerializer
+    queryset = Empresa.objects.all()  # Esto obtiene todas las empresas
+    serializer_class = EmpresaSerializer  # E
 
 # Vista para obtener todas las áreas de trabajo o crear una nueva
 class AreaTrabajoListCreateView(generics.ListCreateAPIView):

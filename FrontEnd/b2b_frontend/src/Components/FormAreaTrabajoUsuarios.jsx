@@ -4,10 +4,10 @@ import { post, get } from '../Services/Crud';
 
 const FormAreaTrabajoUsuarios = () => {
   // Estados para los datos del formulario
-  const [usuarios, setUsuarios] = useState([]);
+//   const [usuarios, setUsuarios] = useState([]);
   const [areasTrabajo, setAreasTrabajo] = useState([]);
   const [empresas, setEmpresas] = useState([]);
-  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState('');
+//   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState('');
   const [areaSeleccionada, setAreaSeleccionada] = useState('');
   const [empresaSeleccionada, setEmpresaSeleccionada] = useState('');
   const [errores, setErrores] = useState([]);
@@ -37,10 +37,10 @@ const FormAreaTrabajoUsuarios = () => {
     let esValido = true;
     let erroresTemp = [];
 
-    if (!usuarioSeleccionado) {
-      erroresTemp.push('El usuario es obligatorio');
-      esValido = false;
-    }
+    // if (!usuarioSeleccionado) {
+    //   erroresTemp.push('El usuario es obligatorio');
+    //   esValido = false;
+    // }
 
     if (!areaSeleccionada) {
       erroresTemp.push('El área de trabajo es obligatoria');
@@ -62,7 +62,7 @@ const FormAreaTrabajoUsuarios = () => {
 
     if (validarFormulario()) {
       const datosFormulario = {
-        usuario_id: usuarioSeleccionado,
+        // usuario_id: usuarioSeleccionado,
         area_trabajo_id: areaSeleccionada,
         empresa_id: empresaSeleccionada
       };
