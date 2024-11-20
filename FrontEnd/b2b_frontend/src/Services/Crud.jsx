@@ -1,3 +1,4 @@
+// eslint-disable-next-line react-refresh/only-export-components
 const URL = 'http://127.0.0.1:8000/api/'
 
 // Metodo post: Guarda los datos.
@@ -26,22 +27,14 @@ export{post}
 //Metodo Get: Obtiene informacio
 async function get( datosLogin, endpoint) {
     try { 
-        const response = await fetch(`${URL}${endpoint}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify()
-        });
-        
+        const response = await fetch(`${URL}${endpoint}`)
         if (!response.ok) {
             throw new Error('Error fetching users');
         }
         const data = await response.json()
         return data;
     } catch (error) {
-        // console.error('Error fetching users:', error);
-        throw error;
+        console.error('Error fetching users:', error);
     }
 }
 export { get};
@@ -49,7 +42,7 @@ export { get};
 // Metodo Put: Actualiza datos
 async function update( endpoint, id) {
     try {
-        const response = await fetch(`${URL}${endpoint}`, {
+        const response = await fetch(`${URL}${endpoint}/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

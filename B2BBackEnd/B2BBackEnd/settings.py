@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'encuestas',
     'empresas',
+    
 ]
 
 REST_FRAMEWORK = {
