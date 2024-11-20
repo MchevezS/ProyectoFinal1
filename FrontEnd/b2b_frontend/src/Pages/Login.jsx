@@ -1,11 +1,11 @@
 import React from 'react'
-import FormLogin from '../Components/formLogin'
+import RegistroLogin from '../Components/RegistroLogin'
 
 function Login() {
   return (
     <div>
-      <FormLogin/>
-
+    
+   <RegistroLogin/>
     </div>
   )
 }

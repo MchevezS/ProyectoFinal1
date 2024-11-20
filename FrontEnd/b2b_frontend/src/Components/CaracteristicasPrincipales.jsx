@@ -2,7 +2,7 @@ import '../Style/CaracteristicasPrincipales.css';
 
 const CaracteristicasPrincipales = () => {
   return (
-    <section id="Caracteristicas" className="caracteristicas">
+    <section id="Home" className="caracteristicas">
       <h2>Características Principales</h2>
       <div className="benefits">
         <h3>¿Por qué elegir nuestro sistema?</h3>

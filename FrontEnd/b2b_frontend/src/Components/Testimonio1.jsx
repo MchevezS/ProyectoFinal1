@@ -1,12 +1,7 @@
 import '../Style/Testimonio1.css';
-import { useState } from 'react';
 
 const Testimonio1 = () => {
-  const [showContact, setShowContact] = useState(false); // Hook para mostrar nuestro contacto
-
-  const toggleContactInfo = () => {
-    setShowContact(!showContact); // Función para alternar la visualización
-  };
+  
 
   return (
     <div>
@@ -19,8 +14,8 @@ const Testimonio1 = () => {
       </section>
 
       {/* Testimonios */}
-      <section className="testimonios" id='Testimonios'>
-        <h2>Testimonios destacados</h2>
+      <section className="testimonios" id='Reseñas'>
+        <h2>Nuestros clientes dicen: </h2>
         <div className="testimonial-cards">
           {/* Testimonio 1 */}
           <div className="testimonial-card">
@@ -37,21 +32,9 @@ const Testimonio1 = () => {
         {/* Sección de CTA */}
         <section className="cta">
         <h2>¿Listo para transformar el bienestar en tu empresa?</h2>
-        <button onClick={toggleContactInfo}>Contáctanos</button>
       </section>
 
-      {/* Modal de Contacto */}
-      {showContact && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <button className="close-btn" onClick={toggleContactInfo}>X</button>
-            <h2>Información de Contacto</h2>
-            <p>Correo: <strong>contacto@bienestar.com</strong></p>
-            <p>Teléfono: <strong>(+34) 123 456 789</strong></p>
-            <p>Dirección: Calle de la Innovación, 123, Madrid</p>
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 };
