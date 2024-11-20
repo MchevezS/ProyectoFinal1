@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { post } from '../Services/Crud';
 import { mostrarAlerta } from './MostrarAlerta';
-
 function FormRegister() {
   const [nombreUsuario, setNombreUsuario] = useState('');
   const [cedulaIndentidad, setCedulaIndentidad] = useState('');

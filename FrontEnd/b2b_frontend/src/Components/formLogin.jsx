@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { mostrarAlerta } from './MostrarAlerta';
 
-function formLogin() {
+function FormLogin() {
 const [nombreUsuarioL, setNombreUsuarioL] = useState('');
 const [emailL, setEmailL] = useState('');
 
@@ -10,8 +10,9 @@ const espaciosVacios = () => {
         mostrarAlerta("error", "Llenar espacios vacios");
         return;
     }
+    
 }
-
+espaciosVacios()
   return (
     <div>
         <input type='username' placeholder='Nombre' className='nombreUsuarioL' value={nombreUsuarioL} onChange={(e) => setNombreUsuarioL(e.target.value)} required/>
@@ -20,4 +21,4 @@ const espaciosVacios = () => {
   )
 }
 
-export default formLogin
+export default FormLogin

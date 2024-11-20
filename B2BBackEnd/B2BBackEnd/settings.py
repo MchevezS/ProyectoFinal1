@@ -47,6 +47,7 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # ),
 }
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=3), #cambiar tiempo
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), 
