@@ -46,7 +46,7 @@ function registroLogin() {
       if (response.success) {
         mostrarAlerta("success", "Te has logueado de manera exitosa");
         setTimeout(() => {
-            navigate("/registroLogin");
+            navigate("/home");
             setNombreUsuarioL('');
             setPasswordL('');
         }, 1000);
@@ -93,6 +93,8 @@ function registroLogin() {
       mostrarAlerta("error", "Hubo un error al registrar al usuario. Intenta nuevamente.");
     }
   };
+
+ 
 
   return (
     <div className="modal-overlay">

@@ -1,73 +1,54 @@
-/* Modal overlay */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
 /* Modal content */
 .modal-content {
     background-color: #fff;
-    padding: 20px;
+    padding: 35px; /* Añadir un poco de padding para un aspecto más aireado */
     border-radius: 10px;
-    width: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 450px; /* Hacer el modal un poco más ancho */
+    max-width: 90%; /* Asegurarse de que el modal no se expanda demasiado */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumentar la sombra para darle un buen contraste */
     text-align: center;
+    height: auto; /* Ajustar la altura automáticamente según el contenido */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuir el contenido de manera espaciosa */
+    transition: transform 0.3s ease-in-out; /* Añadir una transición suave al abrir el modal */
 }
 
-/* Estilo de los formularios */
+/* Modificar input para que ocupe el espacio */
 input {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 12px; /* Mantener el padding moderado */
+    margin: 15px 0; /* Margen generoso entre los campos */
     border: 1px solid #ddd;
     border-radius: 5px;
+    font-size: 16px; /* Tamaño de fuente cómodo y legible */
+    transition: border 0.3s ease; /* Suavizar el cambio de borde al interactuar */
 }
 
+input:focus {
+    border-color: #007bff; /* Cambiar color del borde al interactuar */
+    outline: none; /* Quitar el outline predeterminado */
+}
+
+/* Botón */
 button {
     width: 100%;
-    padding: 10px;
+    padding: 12px; /* Padding moderado */
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease; /* Transición suave al cambiar color */
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #e5ecf5; /* Color más oscuro al pasar el cursor */
 }
 
-/* Enlace para cambiar entre formularios */
-.switch-form {
-    font-size: 14px;
-    margin-top: 10px;
+button:active {
+    transform: scale(0.98); /* Efecto de pulsación al hacer clic */
 }
 
-.switch-form span {
-    color: #007bff;
-    cursor: pointer;
-}
-
-.switch-form span:hover {
-    text-decoration: underline;
-}
-
-/* Botón de cierre */
-.close-modal {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #333;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-}
+  
