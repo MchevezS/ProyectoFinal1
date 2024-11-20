@@ -22,7 +22,7 @@ const Navbar = () => {
           <li><a href="#Home">Inicio</a></li>
           <li><a href="#Reseñas">Reseñas</a></li>
           <li><a href="#services">Servicios</a></li>
-          <li><button className='btn btn-secondary'  onClick={()=>{navigate("/register")}}>Registrate</button></li>
+          <li><button className='btn btn-secondary'  onClick={()=>{navigate("/registroLogin")}}>Registrate</button></li>
         </ul>
       </div>
     </nav>
