@@ -1,21 +1,15 @@
-.testimonial3-cards {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap; /* Asegura que las tarjetas se acomoden bien */
-}
 
-.testimonial3-card, .testimonial3-card, .testimonial3-card {
+
+.testimonial3-card {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 30%;
+  width: auto
   margin-bottom: 20px;
   text-align: center;
   transition: transform 0.3s ease;
-  margin-top: -290px;
-  margin-left: 1350px;
+
 }
 
 .testimonial3-card:hover {
