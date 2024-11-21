@@ -2,14 +2,6 @@ import '../Style/Navbar.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
-  // Estado para controlar el menú hamburguesa
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  // Función para alternar el menú
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
   const navigate = useNavigate()
 
   return (
@@ -23,8 +15,6 @@ const Navbar = () => {
           <li><a href="#Reseñas">Reseñas</a></li>
           <li><a href="#services">Servicios</a></li>
           <li><button className='btn btn-secondary'  onClick={()=>{navigate("/registroLogin")}}>Registrate</button></li>
-          <li><a href="#contact">Registrate</a></li>
-          <li><a href="/encuestas">Encuestas</a></li>
         </ul>
       </div>
     </nav>

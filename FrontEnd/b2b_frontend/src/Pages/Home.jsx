@@ -1,5 +1,4 @@
 import Navbar from "../Components/Navbar"
-import FormEmpresas from "../Components/FormEmpresas";
 import Inicio from "../Components/Inicio";
 import Resenas from "../Components/Resenas";
 

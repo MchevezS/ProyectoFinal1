@@ -3,13 +3,13 @@ from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.response import Response
-
 from .serializers import RolSerializers
 from .models import Roles, Usuarios
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-import re
-from rest_framework.generics import ListCreateAPIView 
+from rest_framework.generics import ListCreateAPIView
+from .serializers import UsuariosSerializer
+
 # Create your views here.
 
 # Create your views here.
@@ -57,6 +57,12 @@ class LoginView(APIView):
             return Response({"error":'credenciales invalidas',},status=status.HTTP_400_BAD_REQUEST)    
         
 
+# Hacemos una vista que nos permite listar todos los usuarios y crear un nuevo usuario en la base de datos
+class UsuariosView(ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UsuariosSerializer
+    
+    
 class AsignarRolesView(ListCreateAPIView):
     queryset = Roles.objects.all()
     serializer_class = RolSerializers
