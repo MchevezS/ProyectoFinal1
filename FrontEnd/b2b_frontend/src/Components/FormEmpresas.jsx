@@ -1,12 +1,13 @@
 import '../Style/FormEmpresas.css'
 import { useState } from 'react';
-import { post } from '../Services/Crud';
+import { post,get } from '../Services/Crud';
 
 const FormEmpresas = () => {
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [cedulaJuridica, setCedulaJuridica] = useState('');
   const [correo, setCorreo] = useState('');
   const [propietario, setPropietario] = useState('');
+  const [empresas, setRegistroLogin] = useState([]);
   // Esta cadena muestra un mensaje de error si hay espacios vacios
   const [errores, setErrores] = useState({
     nombreEmpresa: '',
@@ -14,6 +15,20 @@ const FormEmpresas = () => {
     correo: '',
     propietario: ''
   });
+
+    // Obtine la lista de usuarios
+    useEffect(() => {
+      const fetchRegistroLogin = async () => {
+        try {
+          const response = await get('registroLogin/'); // El endpoint 'empresas' para obtener la lista
+          setRegistroLogin(response);
+        } catch (error) {
+          console.error(error);
+          alert('Hubo un problema al cargar las empresas');
+        }
+      };
+      fetchRegistroLogin();
+    }, []);
 
   // Validación de los campos
   const validarFormulario = () => {
