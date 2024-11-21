@@ -1,6 +1,7 @@
 import '../Style/Navbar.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Encuestas from '../Pages/Encuestas';
 const Navbar = () => {
   const navigate = useNavigate()
 
@@ -16,6 +17,7 @@ const Navbar = () => {
           <li><a  href="#services">Servicios</a></li>
           <li><button className='btn btn-secondary'  onClick={()=>{navigate("/registroLogin")}}>Registrate</button></li>
         </ul>
+
       </div>
     </nav>
   );
