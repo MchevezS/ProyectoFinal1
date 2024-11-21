@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.generics import ListCreateAPIView
 from .serializers import UsuariosSerializer
-
+import re
 # Create your views here.
 
 # Create your views here.
