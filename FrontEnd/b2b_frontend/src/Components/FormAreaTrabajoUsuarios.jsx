@@ -87,10 +87,7 @@ const FormAreaTrabajoUsuarios = () => {
     <form onSubmit={manejarEnvio}>  
       {/* <div>
         <label>Usuario:</label>
-        <select
-          value={usuarioSeleccionado}
-          onChange={(e) => setUsuarioSeleccionado(e.target.value)}
-        >
+        <select value={usuarioSeleccionado} onChange={(e) => setUsuarioSeleccionado(e.target.value)}>
           <option value="">Seleccione un usuario</option>
           {usuarios.map((usuario) => (
             <option key={usuario.id} value={usuario.id}>
@@ -102,10 +99,7 @@ const FormAreaTrabajoUsuarios = () => {
 
       <div>
         <label>Área de Trabajo:</label>
-        <select
-          value={areaSeleccionada}
-          onChange={(e) => setAreaSeleccionada(e.target.value)}
-        >
+        <select value={areaSeleccionada} onChange={(e) => setAreaSeleccionada(e.target.value)}>
           <option value="">Seleccione un área de trabajo</option>
           {areasTrabajo.map((area) => (
             <option key={area.id} value={area.id}>
@@ -117,10 +111,7 @@ const FormAreaTrabajoUsuarios = () => {
 
       <div>
         <label>Empresa:</label>
-        <select
-          value={empresaSeleccionada}
-          onChange={(e) => setEmpresaSeleccionada(e.target.value)}
-        >
+        <select value={empresaSeleccionada} onChange={(e) => setEmpresaSeleccionada(e.target.value)}>
           <option value="">Seleccione una empresas</option>
           {empresas.map((empresa) => (
             <option key={empresa.id} value={empresa.id}>

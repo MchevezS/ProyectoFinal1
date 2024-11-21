@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function Encuesta() {
   // Estado para almacenar las respuestas de la encuesta
