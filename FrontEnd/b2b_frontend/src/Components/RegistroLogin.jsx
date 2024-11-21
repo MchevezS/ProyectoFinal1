@@ -46,7 +46,7 @@ function registroLogin() {
       if (response.success) {
         mostrarAlerta("success", "Te has logueado de manera exitosa");
         setTimeout(() => {
-            navigate("/home");
+            navigate("/");
             setNombreUsuarioL('');
             setPasswordL('');
         }, 1000);
