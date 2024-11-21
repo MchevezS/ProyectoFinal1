@@ -1,6 +1,6 @@
 /* Contenedor del modal (superficie oscura detrás del modal) */
 .modal-overlay {
-    position: fixed; /* Fijar el modal sobre la pantalla */
+    position: relative; /* Fijar el modal sobre la pantalla */
     top: 0;
     left: 0;
     width: 100%;
@@ -8,8 +8,7 @@
     display: flex;
     justify-content: center; /* Centrado horizontal */
     align-items: center; /* Centrado vertical */
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
-    z-index: 9999; /* Asegura que el modal esté por encima de otros elementos */
+    margin-top: 2vh;
 }
 
 /* Contenido del modal */

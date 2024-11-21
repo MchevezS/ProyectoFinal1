@@ -3,8 +3,9 @@ import { mostrarAlerta } from './MostrarAlerta';
 import { post } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
 import '../Style/RegistroLogin.css'; // Importar el archivo de estilos CSS
+import Navbar from './Navbar';
 
-function registroLogin() {
+function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ function registroLogin() {
       if (response.success) {
         mostrarAlerta("success", "Te has logueado de manera exitosa");
         setTimeout(() => {
-            navigate("/home");
+            navigate("/");
             setNombreUsuarioL('');
             setPasswordL('');
         }, 1000);
@@ -97,6 +98,10 @@ function registroLogin() {
  
 
   return (
+      <>
+      
+    <Navbar/>
+
     <div className="modal-overlay">
       <div className="modal-content">
         <h2 className="card-title"> Bienvenidos</h2>
@@ -211,8 +216,9 @@ function registroLogin() {
         )}
       </div>
     </div>
+    </>
   );
 }
 
-export default registroLogin;
+export default RegistroLogin;
 

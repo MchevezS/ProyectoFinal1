@@ -7,7 +7,7 @@ const Resenas = () => {
     <div>
       {/* Sección de fondo */}
       <section className="hero" id='Reseñas'>
-        <div className="hero-overlay">
+        <div className="hero-overlay text-center">
           <h1>Lo que dicen nuestros clientes</h1>
           <p>Descubre cómo nuestro sistema de bienestar ha transformado la cultura empresarial y la satisfacción de los empleados.</p>
         </div>
@@ -19,10 +19,7 @@ const Resenas = () => {
           </section>
 
 
-        {/* Sección de CTA */}
-        <section className="cta">
-        <h2>¿Listo para transformar el bienestar en tu empresa?</h2>
-      </section>
+     
 
       
     </div>
