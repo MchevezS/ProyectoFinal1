@@ -3,6 +3,7 @@ import { mostrarAlerta } from './MostrarAlerta';
 import { post } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
 import '../Style/RegistroLogin.css'; // Importar el archivo de estilos CSS
+import Navbar from './Navbar';
 
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
@@ -97,6 +98,10 @@ function RegistroLogin() {
  
 
   return (
+      <>
+      
+    <Navbar/>
+
     <div className="modal-overlay">
       <div className="modal-content">
         <h2 className="card-title"> Bienvenidos</h2>
@@ -211,6 +216,7 @@ function RegistroLogin() {
         )}
       </div>
     </div>
+    </>
   );
 }
 
