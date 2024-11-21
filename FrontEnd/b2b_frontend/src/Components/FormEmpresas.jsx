@@ -31,8 +31,8 @@ const FormEmpresas = () => {
     if (!cedulaJuridica) {
       erroresTemp.cedulaJuridica = 'La cédula jurídica es obligatoria';
       esValido = false;
-    } else if (!/^\d{9}$/.test(cedulaJuridica)) { // Asegúrate de que la cédula tiene 9 dígitos
-      erroresTemp.cedulaJuridica = 'La cédula jurídica debe tener 9 dígitos';
+    } else if (!/^\d{10}$/.test(cedulaJuridica)) { // Asegúrate de que la cédula tiene 10 dígitos
+      erroresTemp.cedulaJuridica = 'La cédula jurídica debe tener 10 dígitos';
       esValido = false;
     }
 

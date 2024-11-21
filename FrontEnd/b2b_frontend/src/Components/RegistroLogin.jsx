@@ -4,7 +4,7 @@ import { post } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
 import '../Style/RegistroLogin.css'; // Importar el archivo de estilos CSS
 
-function registroLogin() {
+function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ function registroLogin() {
       if (response.success) {
         mostrarAlerta("success", "Te has logueado de manera exitosa");
         setTimeout(() => {
-            navigate("/home");
+            navigate("/");
             setNombreUsuarioL('');
             setPasswordL('');
         }, 1000);
@@ -214,5 +214,5 @@ function registroLogin() {
   );
 }
 
-export default registroLogin;
+export default RegistroLogin;
 
