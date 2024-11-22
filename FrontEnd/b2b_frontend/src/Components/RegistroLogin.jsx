@@ -3,16 +3,17 @@ import { mostrarAlerta } from './MostrarAlerta';
 import { post } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
 import '../Style/RegistroLogin.css'; // Importar el archivo de estilos CSS
-
+import Navbar from './Navbar';
+import {useCookies} from 'react-cookie'
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
+  const [cookie,setCookie] = useCookies(["usuarioID"])
   const navigate = useNavigate();
 
   // Estados de los formularios
   const [nombreUsuarioL, setNombreUsuarioL] = useState('');
   const [passwordL, setPasswordL] = useState('');
-
   const [nombreUsuario, setNombreUsuario] = useState('');
   const [cedulaIndentidad, setCedulaIndentidad] = useState('');
   const [emailRegistro, setEmailRegistro] = useState('');
@@ -49,12 +50,15 @@ function RegistroLogin() {
             navigate("/");
             setNombreUsuarioL('');
             setPasswordL('');
+            setCookie("usuarioID",response.id);
+          // guardamos el id del usuario para obtenerlo en empresas
         }, 1000);
       } else {
         mostrarAlerta("error", 'No se ha encontrado un usuario con ese nombre de usuario');
       }
     } catch (error) {
       mostrarAlerta("error", "Ocurrió un error al procesar tu solicitud. Inténtalo de nuevo más tarde.");
+      console.error(error);
     }
   };
 
@@ -91,12 +95,17 @@ function RegistroLogin() {
       }
     } catch (error) {
       mostrarAlerta("error", "Hubo un error al registrar al usuario. Intenta nuevamente.");
+      console.error(error);
     }
   };
 
  
 
   return (
+      <>
+      
+    <Navbar/>
+
     <div className="modal-overlay">
       <div className="modal-content">
         <h2 className="card-title"> Bienvenidos</h2>
@@ -211,6 +220,7 @@ function RegistroLogin() {
         )}
       </div>
     </div>
+    </>
   );
 }
 

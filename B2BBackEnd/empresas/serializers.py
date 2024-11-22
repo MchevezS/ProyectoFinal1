@@ -18,3 +18,4 @@ class AreaTrabajoUsuariosSerializer(serializers.ModelSerializer):
     class Meta:
         model = AreaTrabajoUsuarios
         fields = '__all__'
+        
