@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,11 +8,21 @@ from .serializers import EmpresaSerializer, AreaTrabajoSerializer, AreaTrabajoUs
 # Vista para obtener todas las empresas o crear una nueva
 class EmpresaListCreateView(generics.ListCreateAPIView):
     queryset = Empresa.objects.all()  # Esto obtiene todas las empresas
-    serializer_class = EmpresaSerializer  # E
+    serializer_class = EmpresaSerializer
+
+# Vista para obtener, actualizar o eliminar una empresa por ID
+class EmpresaDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Empresa.objects.all()  # Esto obtiene todas las empresas
+    serializer_class = EmpresaSerializer
 
 # Vista para obtener todas las áreas de trabajo o crear una nueva
 class AreaTrabajoListCreateView(generics.ListCreateAPIView):
     queryset = AreaTrabajo.objects.all()
+    serializer_class = AreaTrabajoSerializer
+
+# Vista para obtener, actualizar o eliminar un área de trabajo por ID
+class AreaTrabajoDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = AreaTrabajo.objects.all()  # Esto obtiene todas las áreas de trabajo
     serializer_class = AreaTrabajoSerializer
 
 # Vista para asignar un usuario a un área de trabajo dentro de una empresa

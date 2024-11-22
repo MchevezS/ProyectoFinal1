@@ -1,0 +1,58 @@
+/* Contenedor principal del administrador */
+.admin-container {
+    margin: 20px;
+}
+
+/* Estilos para la tabla de empresas */
+.empresas-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.empresas-table th,
+.empresas-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Estilos para los botones */
+.button-custom {
+    padding: 6px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    background-color: #2ecc71; /* Verde brillante */
+    color: white; /* Texto blanco para contraste */
+    border: none;
+    border-radius: 4px;
+}
+/* opcion 2
+padding: 6px 10px;
+margin: 0 5px;
+cursor: pointer;
+background-color: #3498db;
+color: white;
+border: none;
+border-radius: 4px; */
+
+
+/* Estilos cuando el cursor pasa sobre el botón */
+.button-custom:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilos para el enfoque del botón (cuando se hace clic) */
+.button-custom:focus {
+    outline: none;
+}
+
+.button-custom2{
+    padding: 6px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    background-color: #e74c3c; /* Rojo brillante */
+    color: white; /* Texto blanco para contraste */
+    border: none;
+    border-radius: 4px; /* Bordes redondeados */
+}
