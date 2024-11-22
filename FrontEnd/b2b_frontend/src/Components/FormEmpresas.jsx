@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { post } from '../Services/Crud';
-import { useCookies } from 'react-cookie'; // Accedemos al ID del usuario logueado
+import { useCookies } from 'react-cookie'; // Accedemos al ID del usuario registrado
 import '../Style/FormEmpresas.css';
 
 const FormEmpresas = () => {
@@ -74,15 +74,13 @@ const FormEmpresas = () => {
         const response = await post(datosFormulario, 'empresas');
         console.log('Respuesta del servidor:', response);  // Verifica la estructura de la respuesta
 
-        if (response && response.success) {
-          alert('Empresa registrada con éxito');
-        } else if (response && response.status === 'ok') {
+        if (response) {
           alert('Empresa registrada con éxito');
         } else {
-          alert('Empresa registrada con éxito');
+          alert('Hubo un error al registrar la empresa');
         }
       } catch (error) {
-        // Si ocurre un error durante el envío (problemas de red, servidor, etc.)
+        // Si ocurre un error durante el envío va aparecer esta alerta
         alert('Error al enviar el formulario');
         console.error('Error al enviar datos:', error);
       }
