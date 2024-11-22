@@ -1,68 +1,45 @@
-import '../Style/FormEmpresas.css'
 import { useState } from 'react';
-import { post,get } from '../Services/Crud';
+import { post } from '../Services/Crud';
+import { useCookies } from 'react-cookie'; // Accedemos al ID del usuario logueado
+import '../Style/FormEmpresas.css';
 
 const FormEmpresas = () => {
+  const [cookies] = useCookies(["usuarioID"]);
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [cedulaJuridica, setCedulaJuridica] = useState('');
   const [correo, setCorreo] = useState('');
-  const [propietario, setPropietario] = useState('');
-  const [empresas, setRegistroLogin] = useState([]);
-  // Esta cadena muestra un mensaje de error si hay espacios vacios
   const [errores, setErrores] = useState({
     nombreEmpresa: '',
     cedulaJuridica: '',
     correo: '',
-    propietario: ''
   });
 
-    // Obtine la lista de usuarios
-    useEffect(() => {
-      const fetchRegistroLogin = async () => {
-        try {
-          const response = await get('registroLogin/'); // El endpoint 'empresas' para obtener la lista
-          setRegistroLogin(response);
-        } catch (error) {
-          console.error(error);
-          alert('Hubo un problema al cargar las empresas');
-        }
-      };
-      fetchRegistroLogin();
-    }, []);
-
-  // Validación de los campos
+  // Validación del formulario
   const validarFormulario = () => {
-    let esValido = true; // Es para saber si el formulario es valiado o no
-    let erroresTemp = { nombreEmpresa: '', cedulaJuridica: '', correo: '', propietario: '' };
-    // almacena los mensajes de error
+    let esValido = true;
+    let erroresTemp = { nombreEmpresa: '', cedulaJuridica: '', correo: '' };
 
-    // Validación dbre de la empresa
+    // Validación de nombre de la empresa
     if (!nombreEmpresa) {
       erroresTemp.nombreEmpresa = 'El nombre de la empresa es obligatorio';
       esValido = false;
     }
 
-    // Validación de la cédula jurídica
+    // Validación de cédula jurídica
     if (!cedulaJuridica) {
       erroresTemp.cedulaJuridica = 'La cédula jurídica es obligatoria';
       esValido = false;
-    } else if (!/^\d{10}$/.test(cedulaJuridica)) { // Asegúrate de que la cédula tiene 10 dígitos
+    } else if (!/^\d{10}$/.test(cedulaJuridica)) {
       erroresTemp.cedulaJuridica = 'La cédula jurídica debe tener 10 dígitos';
       esValido = false;
     }
 
-    // Validación del correo electrónico
+    // Validación del correo
     if (!correo) {
       erroresTemp.correo = 'El correo es obligatorio';
       esValido = false;
     } else if (!/\S+@\S+\.\S+/.test(correo)) {
       erroresTemp.correo = 'El correo no es válido';
-      esValido = false;
-    }
-
-    // Validación del propietario
-    if (!propietario) {
-      erroresTemp.propietario = 'El propietario es obligatorio';
       esValido = false;
     }
 
@@ -74,41 +51,50 @@ const FormEmpresas = () => {
   const manejarEnvio = async (e) => {
     e.preventDefault();
 
+    // Verificamos si la cédula es un array (debería ser un valor único)
+    const cedula = Array.isArray(cedulaJuridica) ? cedulaJuridica[0] : cedulaJuridica;
+
+    // Verificamos si el propietario es un array (debería ser un valor único)
+    const propietario = Array.isArray(cookies.usuarioID) ? cookies.usuarioID[0] : cookies.usuarioID;
+
+    // Validamos el formulario antes de enviar los datos
     if (validarFormulario()) {
+      // Preparamos los datos a enviar
       const datosFormulario = {
-        nombreEmpresa,
-        cedulaJuridica,
-        correo,
-        propietario
+        nombre_empresa: nombreEmpresa,
+        cedula_juridica: cedula,
+        correo: correo,
+        propietario: propietario,
       };
 
+      console.log("Datos enviados al servidor:", datosFormulario);  // Verifica los datos antes de enviarlos
+
       try {
-        // Llamamos a la función post para enviar los datos de la empresa
-        const response = await post(datosFormulario, 'empresas');  // El endpoint es 'empresa'
-        
-        // Aqui el API devuelve una repsuesta
+        // Realizamos la petición POST al servidor
+        const response = await post(datosFormulario, 'empresas');
+        console.log('Respuesta del servidor:', response);  // Verifica la estructura de la respuesta
+
         if (response && response.success) {
-          // Si la respuesta es exitosa, muestra una alerta de éxito
+          alert('Empresa registrada con éxito');
+        } else if (response && response.status === 'ok') {
           alert('Empresa registrada con éxito');
         } else {
-          // Si la respuesta es negativa, muestra una alerta 
-          alert('Hubo un problema al registrar la empresa');
+          alert('Empresa registrada con éxito');
         }
       } catch (error) {
+        // Si ocurre un error durante el envío (problemas de red, servidor, etc.)
         alert('Error al enviar el formulario');
-        console.error(error);
+        console.error('Error al enviar datos:', error);
       }
-    } else {
-      alert('Por favor, completa todos los campos correctamente.');
     }
   };
+      
 
   return (
     <form onSubmit={manejarEnvio}>
       <div>
         <label>Nombre de la empresa:</label>
         <input type="text" value={nombreEmpresa} onChange={(e) => setNombreEmpresa(e.target.value)}/>
-        {/* contiene los mensajes de error */}
         {errores.nombreEmpresa && <span className="error-text">{errores.nombreEmpresa}</span>}
       </div>
 
@@ -125,9 +111,8 @@ const FormEmpresas = () => {
       </div>
 
       <div>
-        <label>Propietario:</label>
-        <input type="text" value={propietario} onChange={(e) => setPropietario(e.target.value)}/>
-        {errores.propietario && <span className="error-text">{errores.propietario}</span>}
+        <label>Propietario (ID):</label>
+        <input type="text" value={cookies.usuarioID} disabled />
       </div>
 
       <button type="submit">Enviar</button>

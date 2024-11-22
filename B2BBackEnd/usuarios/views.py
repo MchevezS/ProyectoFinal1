@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.generics import ListCreateAPIView
 from .serializers import UsuariosSerializer
+import re
 
 # Create your views here.
 
@@ -51,7 +52,7 @@ class LoginView(APIView):
         
         if datos_autenticacion is not None:
             refresh = RefreshToken.for_user(datos_autenticacion)
-            return Response({"success":'bienvenido', "correo": datos_autenticacion.email,"token_acceso": str(refresh.access_token),"token_refresco":str(refresh),},status=status.HTTP_200_OK)
+            return Response({"success":'bienvenido',"id":datos_autenticacion.id, "correo": datos_autenticacion.email,"token_acceso": str(refresh.access_token),"token_refresco":str(refresh),},status=status.HTTP_200_OK)
         
         else:
             return Response({"error":'credenciales invalidas',},status=status.HTTP_400_BAD_REQUEST)    
