@@ -6,6 +6,7 @@ import '../Style/AdministradorGeneral.css';
 const AdministradorGeneral = () => {
   const [empresas, setEmpresas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [seeker, setSeeker] = useState(''); // Estado del buscador(seeker)
   const navigate = useNavigate();
 
   // Obtener todas las empresas
@@ -45,9 +46,17 @@ const AdministradorGeneral = () => {
     navigate(`/editar-empresa/${id}`);
   };
 
+// Filtrar empresas para buscarlas
+const empresasFiltradas = empresas.filter((empresa) => {
+  return empresa.nombre_empresa.toLowerCase().includes(seeker.toLowerCase()) ||
+         empresa.cedula_juridica.toLowerCase().includes(seeker.toLowerCase()) ||
+         empresa.correo.toLowerCase().includes(seeker.toLowerCase());
+});
+
+
   useEffect(() => {
     obtenerEmpresas();
-  }, []); // Se ejecuta solo una vez cuando el componente se monta
+  }, []); // Se ejecuta solo una vez
 
   if (loading) {
     return <p>Cargando empresas...</p>;
@@ -55,7 +64,13 @@ const AdministradorGeneral = () => {
 
   return (
     <div className="admin-container">
-      <h2>Administrar Empresas</h2>
+      <h2 className='Titulo'>Administrar Empresas</h2>
+
+      {/* Barra de búsqueda */}
+      <div className='seeker-container'>
+        <input type='text' placeholder='Buscar empresa...' value={seeker} onChange={(e) => setSeeker(e.target.value)}/>
+        <button onClick={() => console.log('Buscar')}>Buscar</button>
+      </div>
       <table className="empresas-table">
         <thead>
           <tr>
@@ -66,7 +81,7 @@ const AdministradorGeneral = () => {
           </tr>
         </thead>
         <tbody>
-          {empresas.map((empresa) => (
+          {empresasFiltradas.map((empresa) => (
             <tr key={empresa.id}>
               <td>{empresa.nombre_empresa}</td>
               <td>{empresa.cedula_juridica}</td>
