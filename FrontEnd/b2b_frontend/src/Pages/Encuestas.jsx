@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import post from '../fetch';
 import {useCookies} from 'react-cookie';
+import CardPregunta from '../Components/CardPregunta';
 
 
 function Encuestas() {
@@ -35,6 +36,9 @@ async function enviarEncuesta() {
       <input type="text"placeholder='descripcion'onChange={(e)=>setdescripcionEncuesta(e.target.value)}/>
       {/* envia la encuesta  */}
       <button onClick={enviarEncuesta}>ENVIAR</button>
+
+
+      <CardPregunta/>
     </div>
   );
 }
