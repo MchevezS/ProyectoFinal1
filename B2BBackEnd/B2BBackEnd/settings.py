@@ -31,12 +31,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
-    'api',
-    'usuarios',
     'corsheaders',
+    'usuarios',
     'encuestas',
     'empresas',
-    
 ]
 
 REST_FRAMEWORK = {
@@ -68,6 +66,7 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
 
+
 ROOT_URLCONF = 'B2BBackEnd.urls'
 
 TEMPLATES = [
@@ -96,8 +95,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'B2B',  # El nombre de tu base de datos en MySQL
-        'USER': 'moha',  # Tu usuario de MySQL
-        'PASSWORD': '119690203',  # La contraseña de tu usuario MySQL
+        'USER': 'root',  # Tu usuario de MySQL
+        'PASSWORD': 'vialka16',  # La contraseña de tu usuario MySQL
         'HOST': '127.0.0.1',  # Si estás ejecutando MySQL localmente
         'PORT': '3306',  # El puerto por defecto de MySQL
     }

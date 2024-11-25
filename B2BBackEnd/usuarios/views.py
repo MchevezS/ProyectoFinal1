@@ -1,17 +1,15 @@
-from django.shortcuts import render
-from rest_framework.views import APIView
-from django.contrib.auth.models import User
-from rest_framework import status
-from rest_framework.response import Response
-from .serializers import RolSerializers
-from .models import Roles, Usuarios
-from django.contrib.auth import authenticate
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.generics import ListCreateAPIView
-from .serializers import UsuariosSerializer
-import re
+from rest_framework.views import APIView # para los metodos de las vistas
+from django.contrib.auth.models import User #modelo user de django
+from rest_framework import status #status backend codigo (200-400, etc)
+from rest_framework.response import Response #lo que devuelve el backend
+from .serializers import RolSerializers 
+from .serializers import UsuariosSerializer 
+from .models import Roles, Usuarios 
+from django.contrib.auth import authenticate #autenticacion para el login
+from rest_framework_simplejwt.tokens import RefreshToken #token
+from rest_framework.generics import ListCreateAPIView #get y post
+import re #expresiones regulares
 
-# Create your views here.
 
 # Create your views here.
 class RegistroView(APIView):
@@ -22,7 +20,7 @@ class RegistroView(APIView):
         cedula_usuario = request.data.get("cedula")
         
         #Usamos expresiones regulares para validar la informacion que se envia a la base de datos. 
-        nombre_usuario_regex = r'^[a-zA-Z]+$'
+        nombre_usuario_regex = r'^[a-zA-Z\s]+$'
         correo_usuario_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         cedula_usuario_regex = r'^[0-9]+$'
 
@@ -39,7 +37,7 @@ class RegistroView(APIView):
             return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
         else:
             usuario = User.objects.create_user(username=nombre_usuario,password=clave_usuario,email=correo_usuario)
-            Usuarios.objects.create(user=usuario,cedula_usuario=cedula_usuario) #El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 14
+            Usuarios.objects.create(user=usuario,cedula_usuario=cedula_usuario) #El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 20
             return Response({"success":'Usuario creado',},status=status.HTTP_201_CREATED)
         
         
@@ -48,6 +46,7 @@ class LoginView(APIView):
         nombre_usuario = request.data.get("username")
         clave_usuario = request.data.get("password")
         
+        #quita el cifrado de la contraseña para saber si es correcta
         datos_autenticacion = authenticate(request,username=nombre_usuario,password=clave_usuario)
         
         if datos_autenticacion is not None:
@@ -58,7 +57,7 @@ class LoginView(APIView):
             return Response({"error":'credenciales invalidas',},status=status.HTTP_400_BAD_REQUEST)    
         
 
-# Hacemos una vista que nos permite listar todos los usuarios y crear un nuevo usuario en la base de datos
+# Hacemos una vista que nos permite listar todos los usuarios.
 class UsuariosView(ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UsuariosSerializer

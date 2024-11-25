@@ -86,7 +86,7 @@ function RegistroLogin() {
     const dataRegister = { username: nombreUsuario, cedula: cedulaIndentidad, email: emailRegistro, password: claveRegistro };
 
     try {
-      const response = await post(dataRegister, "crear-usuario");
+      const response = await post(dataRegister, "crear-usuario"); //conexion a backend
       if (response && response.success) {
         mostrarAlerta("success", "Usuario registrado exitosamente");
         setActiveTab('login');
@@ -147,7 +147,7 @@ function RegistroLogin() {
                 type="password"
                 className="form-control"
                 id="loginPassword"
-                placeholder="••••••••"
+                placeholder="Contraseña"
                 value={passwordL}
                 onChange={(e) => setPasswordL(e.target.value)}
               />

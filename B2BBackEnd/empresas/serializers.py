@@ -11,11 +11,12 @@ class EmpresaSerializer(serializers.ModelSerializer):
 # Serializer para el modelo AreaTrabajo
 class AreaTrabajoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AreaTrabajo  # Modelo 'AreaTrabajo'
-        fields = '__all__'  # Incluye todos los campos del modelo 'AreaTrabajo'
+        model = AreaTrabajo  
+        fields = '__all__' 
+
 
 class AreaTrabajoUsuariosSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AreaTrabajoUsuarios
-        fields = '__all__'
+        model = AreaTrabajoUsuarios 
+        fields = '__all__'  
         

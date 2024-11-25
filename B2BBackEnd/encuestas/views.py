@@ -23,19 +23,20 @@ class RespuestaView(ListCreateAPIView):
     
 class EncuestaCompleta(APIView):
     def get(self,request,encuesta_id,format=None):
-        encuesta = Encuestas.objects.get(id=encuesta_id)
+        
+        encuesta = Encuestas.objects.get(id = encuesta_id)
         
         preguntas = Pregunta.objects.filter(encuesta_referencia = encuesta)
         
         respuestas = Respuesta.objects.filter(encuesta_referencia = encuesta)
         
-        pregunta_serializer = PreguntaSerializer(preguntas,many=True)
         
-        respuestas_serializer = RespuestaSerializer(respuestas,many= True)
+        pregunta_serializer = PreguntaSerializer(preguntas,many=True)
+        respuestas_serializer = RespuestaSerializer(respuestas,many= True) 
         
         
         return Response({
-            'encuesta': EncuestaSerializer(encuesta).data,
-            'preguntas': pregunta_serializer.data,
-            'respuestas': respuestas_serializer.data
+            'encuesta': EncuestaSerializer(encuesta).data, #devuelve los datos de la encuesta.
+            'preguntas': pregunta_serializer.data, #devuelve todas las preguntas de la encuesta en especifico (segun el id de la encuesta).
+            'respuestas': respuestas_serializer.data #devuelve todas las respuestas de la encuesta en especifico (segun el id de la encuesta).
         })
