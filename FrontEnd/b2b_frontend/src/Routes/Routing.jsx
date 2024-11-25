@@ -5,7 +5,6 @@ import Empresas from '../Pages/Empresas';
 import Login from '../Pages/Login';
 import FormularioEncuesta from '../Components/FormularioEncuesta';
 import RegistroEmpleados from '../Components/RegistroEmpleados';
-import RegistroLogin from '../Components/RegistroLogin';
 import AdministradorGeneral from '../Components/AdministradorGeneral';
 import CardPregunta from '../Components/CardPregunta';
 
