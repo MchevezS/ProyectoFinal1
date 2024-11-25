@@ -1,6 +1,6 @@
 import '../Style/Navbar.css';
 import { useNavigate } from 'react-router-dom';
-import Encuestas from '../Pages/Encuestas';
+import Encuestas from '../Pages/CrearEncuestas';
 const Navbar = () => {
   const navigate = useNavigate()
 

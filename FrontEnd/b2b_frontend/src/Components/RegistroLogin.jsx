@@ -42,8 +42,9 @@ function RegistroLogin() {
     if (!espaciosVacios()) return;
     if (!longitudPassword(passwordL)) return;
 
+    //METODO POST para iniciar sesion
     try {
-      const response = await post( datosLogin,"login-usuario");
+      const response = await post( datosLogin,"login-usuario/");
       if (response.success) {
         mostrarAlerta("success", "Te has logueado de manera exitosa");
         setTimeout(() => {
@@ -85,8 +86,9 @@ function RegistroLogin() {
   const registroUsuario = async () => {
     const dataRegister = { username: nombreUsuario, cedula: cedulaIndentidad, email: emailRegistro, password: claveRegistro };
 
+    //METODO POST para subir un usuario
     try {
-      const response = await post(dataRegister, "crear-usuario"); //conexion a backend
+      const response = await post(dataRegister, "crear-usuario/"); //conexion a backend
       if (response && response.success) {
         mostrarAlerta("success", "Usuario registrado exitosamente");
         setActiveTab('login');

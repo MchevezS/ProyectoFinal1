@@ -2,10 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import post from '../fetch';
 import {useCookies} from 'react-cookie';
+import Navbar from '../Components/Navbar';
+import { mostrarAlerta } from '../Components/MostrarAlerta';
 import CardPregunta from '../Components/CardPregunta';
 
 
-function Encuestas() {
+function CrearEncuestas() {
     //Estados para manejar el cambio de informacion en los inputs
     const [tituloEncuesta,setTituloEncuesta]=useState("")
     const [descripcionEncuesta,setdescripcionEncuesta]=useState("")
@@ -18,29 +20,41 @@ async function enviarEncuesta() {
     const datosEncuesta = {
         titulo_encuesta : tituloEncuesta,
         descripcion_encuesta:descripcionEncuesta
+
+        //METODO POST 
     }
     const enviarPeticion = await post("encuestas/",datosEncuesta)
+    if (enviarPeticion){
+      mostrarAlerta("success","se agregó la encuesta")
+      setTituloEncuesta("")
+      setdescripcionEncuesta("")
+    }
+    else{
+      mostrarAlerta("error", "error")
+    }
     //creacion de la cookie y detalles (nombre de la cookie, valor,{path donde va a ser accesible} y expiracion)
-    setCookies("Encuesta", datosEncuesta,{path:"/",maxAge:60}) //esta en segundos
-
-    console.log(enviarPeticion)
+    setCookies("Encuesta", datosEncuesta,{path:"/",maxAge:600}) //esta en segundos
 }
     
 
   return (
     <div>
+        <Navbar/>
+      
+
+      <div className='d-flex flex-column gap-3 mx-auto w-25 border border-primary'>
       <h1>Crear encuesta</h1>
       {/* evento para guardar el valor del titulo encuesta  */}
-      <input type="text"placeholder='ingresa el titulo de la encuesta'onChange={(e)=>setTituloEncuesta(e.target.value)}/> 
+      <input type="text"placeholder='ingresa el titulo de la encuesta'onChange={(e)=>setTituloEncuesta(e.target.value)} value={tituloEncuesta}/> 
       {/* evento para guaradar la descripcion de la encuesta */}
-      <input type="text"placeholder='descripcion'onChange={(e)=>setdescripcionEncuesta(e.target.value)}/>
+      <input type="text"placeholder='descripcion'onChange={(e)=>setdescripcionEncuesta(e.target.value)} value={descripcionEncuesta}/>
       {/* envia la encuesta  */}
-      <button onClick={enviarEncuesta}>ENVIAR</button>
-
+      <button onClick={enviarEncuesta} className='btn btn-success'>ENVIAR</button>
+      </div>
 
       <CardPregunta/>
     </div>
   );
 }
 
-export default Encuestas;
+export default CrearEncuestas;
