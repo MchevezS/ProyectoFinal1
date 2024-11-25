@@ -68,11 +68,11 @@ export{update}
 // Metodo Delete: Elimina datos.
 async function eliminar(endpoint, id) {
     try {
-        const response = await fetch(`${URL}${endpoint}`, {
+        const response = await fetch(`${URL}${endpoint}/${id}/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
         });
 
         if (!response.ok) {

@@ -19,9 +19,6 @@ const Resenas = () => {
           </section>
 
 
-     
-
-      
     </div>
   );
 };

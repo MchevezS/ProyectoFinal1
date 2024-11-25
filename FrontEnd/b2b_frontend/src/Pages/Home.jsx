@@ -2,6 +2,7 @@ import Navbar from "../Components/Navbar"
 import Inicio from "../Components/Inicio";
 import Resenas from "../Components/Resenas";
 
+
 function Home() {
   return (
     <div>

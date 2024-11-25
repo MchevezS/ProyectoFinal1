@@ -5,6 +5,10 @@ import Empresas from '../Pages/Empresas';
 import Login from '../Pages/Login';
 import FormularioEncuesta from '../Components/FormularioEncuesta';
 import RegistroEmpleados from '../Components/RegistroEmpleados';
+import RegistroLogin from '../Components/RegistroLogin';
+import AdministradorGeneral from '../Components/AdministradorGeneral';
+import CardPregunta from '../Components/CardPregunta';
+
 
 const Routing = () => {
     return (
@@ -12,10 +16,14 @@ const Routing = () => {
        <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/encuestas' element={<Encuestas/>}/>
-          <Route path='/registroLogin' element={<Login/>}/>
           <Route path='/empresas' element={<Empresas/>}/>
           <Route path='/formularioEncuestas' element={<FormularioEncuesta/>}/>
           <Route path='/registroEmpleados' element={<RegistroEmpleados/>}/>
+          <Route path='/registroLogin' element={<Login/>}/>
+          <Route path="/administradorGeneral" element={<AdministradorGeneral/>} />
+          <Route path='/cardPregunta' element={<CardPregunta/>}/>
+
+
        </Routes>
       </Router>
      );
