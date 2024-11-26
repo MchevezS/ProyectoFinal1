@@ -4,7 +4,7 @@ const URL = 'http://127.0.0.1:8000/api/'
 // Metodo post: Guarda los datos.
 async function post(dataRegister, endpoint) {
     try {
-        const response = await fetch(`${URL}${endpoint}/`, {
+        const response = await fetch(`${URL}${endpoint}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,9 +25,9 @@ export{post}
 
 
 //Metodo Get: Obtiene informacio
-async function get(endpoint) {
+async function get(endpoint,id="") {
     try { 
-        const response = await fetch(`${URL}${endpoint}`)
+        const response = await fetch(`${URL}${endpoint}/${id}`)
         if (!response.ok) {
             throw new Error('Error fetching users');
         }
@@ -60,7 +60,6 @@ async function update( endpoint, id) {
         throw error;
     }
 }
-
 
 export{update}
 

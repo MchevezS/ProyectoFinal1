@@ -31,12 +31,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
-    'api',
-    'usuarios',
     'corsheaders',
+    'usuarios',
     'encuestas',
     'empresas',
-    
 ]
 
 REST_FRAMEWORK = {
@@ -67,6 +65,7 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
+
 
 ROOT_URLCONF = 'B2BBackEnd.urls'
 

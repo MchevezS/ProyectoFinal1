@@ -38,12 +38,19 @@ function RegistroLogin() {
 
   const inicioSesion = async (e) => {
     e.preventDefault();
-    const datosLogin = { username: nombreUsuarioL, password: passwordL };
+    const datosLogin = { 
+      username: nombreUsuarioL.trim(),
+      password: passwordL.trim(),
+      };
+      setNombreUsuarioL(datosLogin.username)
+      setPasswordL(datosLogin.password)
+    
     if (!espaciosVacios()) return;
     if (!longitudPassword(passwordL)) return;
 
+    //METODO POST para iniciar sesion
     try {
-      const response = await post( datosLogin,"login-usuario");
+      const response = await post( datosLogin,"login-usuario/");
       if (response.success) {
         mostrarAlerta("success", "Te has logueado de manera exitosa");
         setTimeout(() => {
@@ -65,7 +72,6 @@ function RegistroLogin() {
   const validarCedulaTica = (cedula) => {
     cedula = cedula.replace(/[^0-9]/g, "");
     if (cedula.length === 9 && !isNaN(cedula)) {
-      mostrarAlerta("success", "Cédula ingresada correctamente");
       return true;
     } else {
       mostrarAlerta("error", "La cédula no es válida");
@@ -83,10 +89,20 @@ function RegistroLogin() {
   };
 
   const registroUsuario = async () => {
-    const dataRegister = { username: nombreUsuario, cedula: cedulaIndentidad, email: emailRegistro, password: claveRegistro };
+    const dataRegister = { 
+      username: nombreUsuario.trim(), 
+      cedula: cedulaIndentidad.trim(), 
+      email: emailRegistro.trim(), 
+      password: claveRegistro.trim() 
+    };
 
+    setNombreUsuario(dataRegister.username)
+    setCedulaIndentidad(dataRegister.cedula)
+    setEmailRegistro(dataRegister.email)
+    setClaveRegistro(dataRegister.password)
+    //METODO POST para subir un usuario
     try {
-      const response = await post(dataRegister, "crear-usuario");
+      const response = await post(dataRegister, "crear-usuario/"); //conexion a backend
       if (response && response.success) {
         mostrarAlerta("success", "Usuario registrado exitosamente");
         setActiveTab('login');
@@ -147,7 +163,7 @@ function RegistroLogin() {
                 type="password"
                 className="form-control"
                 id="loginPassword"
-                placeholder="••••••••"
+                placeholder="Contraseña"
                 value={passwordL}
                 onChange={(e) => setPasswordL(e.target.value)}
               />

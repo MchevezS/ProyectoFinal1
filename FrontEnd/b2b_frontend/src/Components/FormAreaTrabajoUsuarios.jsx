@@ -18,8 +18,8 @@ const FormAreaTrabajoUsuarios = () => {
     const fetchData = async () => {
       try {
         // const usuariosData = await get('usuarios');
-        const areasData = await get('AreaTrabajo/');
-        const empresasData = await get('empresas/');
+        const areasData = await get('AreaTrabajo');
+        const empresasData = await get('empresas');
         
         // setUsuarios(usuariosData);
         setAreasTrabajo(areasData);
