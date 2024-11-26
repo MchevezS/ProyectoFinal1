@@ -21,7 +21,7 @@ const Routing = () => {
           <Route path="/administradorGeneral" element={<AdministradorGeneral/>} />
           <Route path='/responderEncuestas' element={<ResponderEncuestas/>}/>
           <Route path='/verEncuesta' element={<VerEncuesta/>}/>
-
+         
 
 
 
