@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from encuestas.models import Encuestas, Pregunta,Respuesta
 from encuestas.serializers import EncuestaSerializer, PreguntaSerializer, RespuestaSerializer
 
-
 # Create your views here.
+# List create api view = GET/POST.
 class EncuestaView(ListCreateAPIView):
     queryset = Encuestas.objects.all()
     serializer_class = EncuestaSerializer
@@ -19,6 +19,7 @@ class PreguntaView(ListCreateAPIView):
 class RespuestaView(ListCreateAPIView):
     queryset = Respuesta.objects.all()
     serializer_class = RespuestaSerializer
+
     
     
 class EncuestaCompleta(APIView):
@@ -40,3 +41,5 @@ class EncuestaCompleta(APIView):
             'preguntas': pregunta_serializer.data, #devuelve todas las preguntas de la encuesta en especifico (segun el id de la encuesta).
             'respuestas': respuestas_serializer.data #devuelve todas las respuestas de la encuesta en especifico (segun el id de la encuesta).
         })
+        
+    

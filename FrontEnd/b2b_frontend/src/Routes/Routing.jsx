@@ -5,7 +5,8 @@ import Empresas from '../Pages/Empresas';
 import Login from '../Pages/Login';
 import RegistroEmpleados from '../Components/RegistroEmpleados';
 import AdministradorGeneral from '../Components/AdministradorGeneral';
-import CardPregunta from '../Components/CardPregunta';
+import ResponderEncuestas from '../Pages/ResponderEncuestas';
+import VerEncuesta from '../Pages/VerEncuesta';
 
 
 const Routing = () => {
@@ -18,7 +19,11 @@ const Routing = () => {
           <Route path='/registroEmpleados' element={<RegistroEmpleados/>}/>
           <Route path='/registroLogin' element={<Login/>}/>
           <Route path="/administradorGeneral" element={<AdministradorGeneral/>} />
-          <Route path='/cardPregunta' element={<CardPregunta/>}/>
+          <Route path='/responderEncuestas' element={<ResponderEncuestas/>}/>
+          <Route path='/verEncuesta' element={<VerEncuesta/>}/>
+
+
+
 
 
        </Routes>

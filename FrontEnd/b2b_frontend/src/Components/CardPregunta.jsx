@@ -65,14 +65,13 @@ const CardPregunta = () => {
             </p>
             <div className="form-outline mb-4">
               <textarea
+              placeholder='Retroalimentacion'
                 className="form-control"
                 id="form4Example3"
                 rows={4}
                 defaultValue={""}
               />
-              <label className="form-label" htmlFor="form4Example3">
-                Retroalimentación
-              </label>
+           
             </div>
           </form>
         </div>

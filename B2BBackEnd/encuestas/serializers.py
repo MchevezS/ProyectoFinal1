@@ -1,9 +1,8 @@
 from rest_framework.serializers import ModelSerializer
-
 from.models import Encuestas,Pregunta,Respuesta
-
 from rest_framework import serializers
-from encuestas.models import Encuestas
+
+
 
 class EncuestaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,4 +20,5 @@ class RespuestaSerializer(ModelSerializer):
     class Meta:
         model = Respuesta
         fields = '__all__'
+
         

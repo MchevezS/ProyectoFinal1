@@ -11,6 +11,8 @@ function CrearEncuestas() {
     //Estados para manejar el cambio de informacion en los inputs
     const [tituloEncuesta,setTituloEncuesta]=useState("")
     const [descripcionEncuesta,setdescripcionEncuesta]=useState("")
+    const [preguntaEncuesta,setpreguntaEncuesta]=useState("")
+    
     //HOOK (creacion de cookies) recibe el nombre de la cookie que va a tener 
     const [cookies,setCookies]=useCookies(["Encuesta"])
 
@@ -24,10 +26,18 @@ async function enviarEncuesta() {
         //METODO POST 
     }
     const enviarPeticion = await post("encuestas/",datosEncuesta)
+    const datosPreguntas = {
+      encuesta_referencia : enviarPeticion.id,
+      pregunta_texto : preguntaEncuesta
+    }
+
+     const enviarPregunta = await post("preguntas/", datosPreguntas)
+
     if (enviarPeticion){
       mostrarAlerta("success","se agregó la encuesta")
       setTituloEncuesta("")
       setdescripcionEncuesta("")
+      setpreguntaEncuesta("")
     }
     else{
       mostrarAlerta("error", "error")
@@ -45,10 +55,12 @@ async function enviarEncuesta() {
       <div className='d-flex flex-column gap-3 mx-auto w-25 border border-primary'>
       <h1>Crear encuesta</h1>
       {/* evento para guardar el valor del titulo encuesta  */}
-      <input type="text"placeholder='ingresa el titulo de la encuesta'onChange={(e)=>setTituloEncuesta(e.target.value)} value={tituloEncuesta}/> 
+      <input type="text"placeholder='Titulo de la encuesta'onChange={(e)=>setTituloEncuesta(e.target.value)} value={tituloEncuesta}/> 
       {/* evento para guaradar la descripcion de la encuesta */}
-      <input type="text"placeholder='descripcion'onChange={(e)=>setdescripcionEncuesta(e.target.value)} value={descripcionEncuesta}/>
+      <input type="text"placeholder='Descripcion'onChange={(e)=>setdescripcionEncuesta(e.target.value)} value={descripcionEncuesta}/>
       {/* envia la encuesta  */}
+      <input type="text"placeholder='Pregunta'onChange={(e)=>setpreguntaEncuesta(e.target.value)} value={preguntaEncuesta}/>
+
       <button onClick={enviarEncuesta} className='btn btn-success'>ENVIAR</button>
       </div>
 
