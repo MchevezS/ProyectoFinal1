@@ -20,7 +20,7 @@ class RegistroView(APIView):
         cedula_usuario = request.data.get("cedula")
         
         #Usamos expresiones regulares para validar la informacion que se envia a la base de datos. 
-        nombre_usuario_regex = r'^[a-zA-Z\s]+$'
+        nombre_usuario_regex = r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$'
         correo_usuario_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         cedula_usuario_regex = r'^[0-9]+$'
 
