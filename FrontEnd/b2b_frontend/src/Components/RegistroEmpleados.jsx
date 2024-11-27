@@ -88,7 +88,7 @@ function RegistroEmpleados() {
          type='username'
          className='nombreEmpleado'
          id='nombreEmpleado'
-         placeholder='Ingrese su usario'
+         placeholder='Nombre de usario'
          value={nombreEmpleado}
          onChange={(e) => setNombreEmpleado (e.target.value)}
         />
@@ -100,7 +100,7 @@ function RegistroEmpleados() {
           type='text'
           className='cedulaEmpleado'
           id='cedulaEmpleado'
-          placeholder='Ingrese su cédula de identidad'
+          placeholder='Cédula de identidad'
           value={cedulaEmpleado}
           onChange={(e) => setCedulaEmpleado(e.target.value)}
         />
@@ -112,7 +112,7 @@ function RegistroEmpleados() {
           type='email'   
           className='correoEmpleado'
           id='correoEmpleado'
-          placeholder='Ingrese su Correo electrónico'
+          placeholder='Correo Electrónico'
           value={correoEmpleado}
           onChange={(e) => setCorreoEmpleado (e.target.value)}
         />

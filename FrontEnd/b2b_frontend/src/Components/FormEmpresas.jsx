@@ -90,30 +90,33 @@ const FormEmpresas = () => {
 
   return (
     <form onSubmit={manejarEnvio}>
-      <div>
-        <label>Nombre de la empresa:</label>
-        <input type="text" value={nombreEmpresa} onChange={(e) => setNombreEmpresa(e.target.value)}/>
+      <div className='titulo'>
+      <h1 >Registra tu empresa</h1>
+      </div>
+      <div className='form-group2'>
+        <label className='nombreEmpresalabel'>Nombre de la empresa:</label>
+        <input placeholder='Nombre de la empresa' className='nombreEmpresa' type="text" value={nombreEmpresa} onChange={(e) => setNombreEmpresa(e.target.value)}/>
         {errores.nombreEmpresa && <span className="error-text">{errores.nombreEmpresa}</span>}
       </div>
 
-      <div>
-        <label>Cédula Jurídica:</label>
-        <input type="text" value={cedulaJuridica} onChange={(e) => setCedulaJuridica(e.target.value)}/>
+      <div className='form-group2'>
+        <label className='labelCedula'>Cédula Jurídica:</label>
+        <input placeholder='Cédula Jurídica' className='cedulaJuridica' type="text" value={cedulaJuridica} onChange={(e) => setCedulaJuridica(e.target.value)}/>
         {errores.cedulaJuridica && <span className="error-text">{errores.cedulaJuridica}</span>}
       </div>
 
-      <div>
-        <label>Correo:</label>
-        <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
+      <div className='form-group2'>
+        <label className='labelCorreo'>Correo:</label>
+        <input placeholder='Correo' className='correoEmpresas' type="email" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
         {errores.correo && <span className="error-text">{errores.correo}</span>}
       </div>
 
-      <div>
-        <label>Propietario (ID):</label>
-        <input type="text" value={cookies.usuarioID} disabled />
+      <div className='form-group'>
+        <label className='labelPropietario'>Propietario (ID):</label>
+        <input className='idPropietario' type="text" value={cookies.usuarioID} disabled />
       </div>
 
-      <button type="submit">Enviar</button>
+      <button className='btnEnviarEmpresas' type="submit">Enviar</button>
     </form>
   );
 };
