@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { get, eliminar } from '../Services/Crud';
+import { get, patch } from '../Services/Crud';  // Asegúrate de que 'patch' esté configurado
 import { useNavigate } from 'react-router-dom';
 import '../Style/AdministradorGeneral.css';
 
@@ -21,38 +21,39 @@ const AdministradorGeneral = () => {
     }
   };
 
-  // Eliminar una empresa
-  const eliminarEmpresa = async (id) => {
-    const confirmacion = window.confirm("¿Estás seguro de que deseas eliminar esta empresa?");
+  // Cambiar el estado (activar/desactivar) de una empresa
+  const cambiarEstadoEmpresa = async (id, estadoActual) => {
+    // window.confirm( abre una ventana y muestra un mensaje de texto )
+    const confirmacion = window.confirm(`¿Estás seguro de que deseas ${estadoActual ? "desactivar" : "activar"} esta empresa?`);
     if (confirmacion) {
       try {
-        const response = await eliminar('empresas', id); // El id es el identificador único
-        if (response) {
-          alert("Empresa eliminada con éxito");
+        const response = await patch(`empresa/estado`,id); // llamamos al metodo PATCH para que haga los cambios en la url (empresa/estado)
+        if (response) { 
+          // Muestra una alerta si quiere desactivar/activar la empresa con exito
+          alert(`Empresa ${estadoActual ? "desactivada" : "activada"} con éxito`);  
         } else {
-          alert("No se pudo eliminar la empresa");
+          // Muestra una alerta si no se puede cambiar el estado de la empresa
+          alert("No se pudo cambiar el estado de la empresa");
         }
-        obtenerEmpresas(); // Vuelve a cargar la lista después de eliminar
+        obtenerEmpresas(); // Vuelve a cargar la lista después de cambiar el estado
       } catch (error) {
         console.log(error);
-        alert("Error al eliminar la empresa");
+        alert("Error al cambiar el estado de la empresa");
       }
     }
   };
-  
-  // Editar una empresa
+
+  // Filtrar empresas para buscarlas
+  const empresasFiltradas = empresas.filter((empresa) => {
+    return empresa.nombre_empresa.toLowerCase().includes(seeker.toLowerCase()) ||
+           empresa.cedula_juridica.toLowerCase().includes(seeker.toLowerCase()) ||
+           empresa.correo.toLowerCase().includes(seeker.toLowerCase());
+  });
+
+  // Función para redirigir a la página de edición
   const editarEmpresa = (id) => {
-    // Redirige a otra página donde se edita la empresa
-    navigate(`/editar-empresa/${id}`);
+    navigate(`/editar-empresa/${id}`); // Redirige a la página de edición con el id de la empresa
   };
-
-// Filtrar empresas para buscarlas
-const empresasFiltradas = empresas.filter((empresa) => {
-  return empresa.nombre_empresa.toLowerCase().includes(seeker.toLowerCase()) ||
-         empresa.cedula_juridica.toLowerCase().includes(seeker.toLowerCase()) ||
-         empresa.correo.toLowerCase().includes(seeker.toLowerCase());
-});
-
 
   useEffect(() => {
     obtenerEmpresas();
@@ -68,15 +69,17 @@ const empresasFiltradas = empresas.filter((empresa) => {
 
       {/* Barra de búsqueda */}
       <div className='seeker-container'>
-        <input type='text' placeholder='Buscar empresa...' value={seeker} onChange={(e) => setSeeker(e.target.value)}/>
+        <input type='text' placeholder='Buscar empresa...' value={seeker} onChange={(e) => setSeeker(e.target.value)} />
         <button onClick={() => console.log('Buscar')}>Buscar</button>
       </div>
+
       <table className="empresas-table">
         <thead>
           <tr>
             <th>Nombre</th>
             <th>Cédula Jurídica</th>
             <th>Correo</th>
+            <th>Estado</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -86,9 +89,10 @@ const empresasFiltradas = empresas.filter((empresa) => {
               <td>{empresa.nombre_empresa}</td>
               <td>{empresa.cedula_juridica}</td>
               <td>{empresa.correo}</td>
+              <td>{empresa.activo ? "Activa" : "Desactivada"}</td>
               <td>
                 <button className="button-custom" onClick={() => editarEmpresa(empresa.id)}>Editar</button>
-                <button className="button-custom2" onClick={() => eliminarEmpresa(empresa.id)}>Eliminar</button>
+                <button className="button-custom2" onClick={() => cambiarEstadoEmpresa(empresa.id, empresa.activo)}>Activar/Desactivar</button>
               </td>
             </tr>
           ))}
