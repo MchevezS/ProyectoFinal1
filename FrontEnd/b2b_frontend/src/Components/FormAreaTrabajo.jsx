@@ -58,7 +58,7 @@ const FormAreaTrabajo = () => {
         empresa: empresaSeleccionada,
       }
       try {
-        const response = await post(datosFormulario, 'AreaTrabajo');
+        const response = await post(datosFormulario, 'AreaTrabajo/');
         if (response && response.success) {
           alert('Área de trabajo registrada con éxito');
         } else {
