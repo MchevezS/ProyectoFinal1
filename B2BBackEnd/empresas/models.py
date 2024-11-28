@@ -18,6 +18,7 @@ class Empresa(models.Model):
     correo = models.EmailField(unique=True) 
     #propietario de la empresa(relación con modelo Usuarios)
     propietario = models.ForeignKey("usuarios.Usuarios",on_delete=models.CASCADE) #La relacion se hace "app.Modelo"
+    activo = models.BooleanField(default=True)  # Este campo indica si la empresa está activa o desactivada
     
     def __str__(self):
         return self.nombre_empresa

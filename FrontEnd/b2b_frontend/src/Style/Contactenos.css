@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #007bff;
+}
+
+.navbar .nav-link {
+    color: white;
+}
+
+.navbar .nav-link:hover {
+    color: #0056b3;
+}
+
+.intro-message {
+    text-align: center;
+    padding: 50px;
+    background-color: #f8f9fa;
+}
+
+.faq-section, .service-section, .call-section {
+    padding: 20px;
+    background-color: #f1f1f1;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+button.btn-secondary {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+/* Contactenos.css */
+#preguntas-frecuentes, #servicio-al-cliente, #llamar {
+    margin-top: 80px; /* Ajusta este valor según el tamaño del navbar */
+  }
+  
+  /* Estilos para el navbar fijo */
+  .navbar.fixed-top {
+    z-index: 1050; /* Asegura que el navbar quede por encima de otros elementos */
+  }
+
+.container{
+    margin-top: 100px;
+}
