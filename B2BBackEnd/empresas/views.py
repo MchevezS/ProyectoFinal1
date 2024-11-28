@@ -57,3 +57,23 @@ class AsignarUsuarioAreaTrabajoView(APIView):
             return Response({'error': 'Área de trabajo no encontrada'}, status=status.HTTP_404_NOT_FOUND)
         except Empresa.DoesNotExist:
             return Response({'error': 'Empresa no encontrada'}, status=status.HTTP_404_NOT_FOUND)
+
+class CambiarEstadoEmpresaView(APIView):
+    def patch(self, request, empresa_id):
+        try:
+            # Obtener la empresa por su ID
+            empresa = Empresa.objects.get(id=empresa_id)
+
+            # Cambiar el estado de la empresa (activa/desactiva)
+            empresa.activo = not empresa.activo  # Cambia el valor de 'activo'
+            empresa.save()
+
+            # Responder con un mensaje de éxito
+            return Response({
+                'message': f"Empresa {'activada' if empresa.activo else 'desactivada'} correctamente",
+                'empresa': empresa.nombre_empresa,
+                'estado_actual': 'activa' if empresa.activo else 'desactivada'
+            }, status=status.HTTP_200_OK)
+        
+        except Empresa.DoesNotExist:
+            return Response({'error': 'Empresa no encontrada'}, status=status.HTTP_404_NOT_FOUND)

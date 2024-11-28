@@ -7,6 +7,8 @@ import RegistroEmpleados from '../Components/RegistroEmpleados';
 import AdministradorGeneral from '../Components/AdministradorGeneral';
 import ResponderEncuestas from '../Pages/ResponderEncuestas';
 import VerEncuesta from '../Pages/VerEncuesta';
+import EditarEmpresa from '../Components/EditarEmpresa';
+import Contactenos from '../Components/Contactenos';
 
 
 const Routing = () => {
@@ -19,13 +21,10 @@ const Routing = () => {
           <Route path='/registroEmpleados' element={<RegistroEmpleados/>}/>
           <Route path='/registroLogin' element={<Login/>}/>
           <Route path="/administradorGeneral" element={<AdministradorGeneral/>} />
+          <Route path="/editar-empresa/:id" element={<EditarEmpresa/>} />
           <Route path='/responderEncuestas' element={<ResponderEncuestas/>}/>
           <Route path='/verEncuesta' element={<VerEncuesta/>}/>
-
-
-
-
-
+          <Route path='/contactenos' element={<Contactenos/>}/>
        </Routes>
       </Router>
      );
