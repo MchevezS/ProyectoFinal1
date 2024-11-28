@@ -1,0 +1,15 @@
+.traffic-chart h6 {
+    font-size: 14px;
+    color: #9a9a9a;
+  }
+  
+  .traffic-chart h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .traffic-chart span {
+    font-size: 12px;
+  }
+  
