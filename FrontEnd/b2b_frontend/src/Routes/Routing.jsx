@@ -17,12 +17,11 @@ const Routing = () => {
           <Route path='/' element={<Home/>}/>
           <Route path='/CrearEncuestas' element={<CrearEncuestas/>}/>
           <Route path='/empresas' element={<Empresas/>}/>
-          <Route path='/registroEmpleados' element={<RegistroEmpleados/>}/>
           <Route path='/registroLogin' element={<Login/>}/>
           <Route path="/administradorGeneral" element={<AdministradorGeneral/>} />
           <Route path='/responderEncuestas' element={<ResponderEncuestas/>}/>
           <Route path='/verEncuesta' element={<VerEncuesta/>}/>
-          <Route path='/a' element={<Dashboard/>}/>
+          <Route path='/dasboard' element={<Dashboard/>}/>
        </Routes>
       </Router>
      );

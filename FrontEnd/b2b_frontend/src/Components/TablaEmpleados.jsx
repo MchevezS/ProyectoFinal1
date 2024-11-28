@@ -12,7 +12,7 @@ const TablaEmpleados = () => {
     },
     {
       name: "Wendy Barrantes",
-      status: "Activo",
+      status: "Inactivo",
       statusIcon: <FaTimesCircle className="text-danger" />,
       date: "03 Jun 2025"
     },

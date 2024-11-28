@@ -3,6 +3,7 @@ from .models import Empresa, AreaTrabajo, AreaTrabajoUsuarios
 
 # Serializer para el modelo Empresa
 class EmpresaSerializer(serializers.ModelSerializer):
+    nombre_propietario = serializers.CharField(source="propietario.user.username", read_only = True)
     class Meta:
         model = Empresa  # Modelo 'Empresa'
         fields = '__all__'  # Incluye todos los campos del modelo 'Empresa'

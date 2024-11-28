@@ -1,13 +1,15 @@
-// import FormAreaTrabajo from '../Components/FormAreaTrabajo';
+import FormAreaTrabajo from '../Components/FormAreaTrabajo';
 import FormEmpresas from '../Components/FormEmpresas';
-// import FormAreaTrabajoUsuarios from '../Components/FormAreaTrabajoUsuarios';
+import FormAreaTrabajoUsuarios from '../Components/FormAreaTrabajoUsuarios';
+import RegistroEmpleados from '../Components/RegistroEmpleados';
 
 function Empresas() {
   return (
     <div>
         <FormEmpresas/>
-        {/* <FormAreaTrabajo/>
-        <FormAreaTrabajoUsuarios/> */}
+        <RegistroEmpleados/>
+        <FormAreaTrabajo/>
+        <FormAreaTrabajoUsuarios/> 
     </div>
   )
 }

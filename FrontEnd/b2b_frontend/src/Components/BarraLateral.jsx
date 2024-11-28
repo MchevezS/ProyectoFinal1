@@ -6,13 +6,13 @@ function BarraLateral() {
       <h3 className="mb-4 text-primary">B2B</h3>
       <ul className="nav flex-column">
         <li className="nav-item mb-3">
-          <a href="#" className="nav-link d-flex align-items-center">
+          <a href="/dasboard" className="nav-link d-flex align-items-center">
             <i className="bi bi-house me-3"></i>
             Dashboard
           </a>
         </li>
         <li className="nav-item mb-3">
-          <a href="#" className="nav-link d-flex align-items-center">
+          <a href="/empresas" className="nav-link d-flex align-items-center">
             <i className="bi bi-table me-3"></i>
             Empresa
           </a>
