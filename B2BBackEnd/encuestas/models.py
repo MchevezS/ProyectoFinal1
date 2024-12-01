@@ -33,5 +33,5 @@ class Respuesta(models.Model):
     usuario_referencia = models.ForeignKey("usuarios.Usuarios", on_delete=models.CASCADE,related_name= "usuario_responde")
     respuesta_texto = models.CharField(choices=RESPUESTA_ELECCIONES, max_length = 11) #La respuesta que se dio
     fecha_respuesta = models.DateField(auto_now=True) #la fecha en la que se repondio
-    retroalimentacion = models.TextField() 
+    retroalimentacion = models.TextField(blank=True,null=True) #Retroalimentacion de la respuesta
     

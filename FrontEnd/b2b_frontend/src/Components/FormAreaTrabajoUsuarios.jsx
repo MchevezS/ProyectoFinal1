@@ -1,7 +1,7 @@
 import '../Style/FormAreaTrabajoUsuarios.css'
 import { useState, useEffect } from 'react';
 import { post, get } from '../Services/Crud';
-
+import '../Style/FormAreaTrabajoUsuarios.css'
 const FormAreaTrabajoUsuarios = () => {
   // Estados para los datos del formulario
 //   const [usuarios, setUsuarios] = useState([]);
@@ -37,10 +37,6 @@ const FormAreaTrabajoUsuarios = () => {
     let esValido = true;
     let erroresTemp = [];
 
-    // if (!usuarioSeleccionado) {
-    //   erroresTemp.push('El usuario es obligatorio');
-    //   esValido = false;
-    // }
 
     if (!areaSeleccionada) {
       erroresTemp.push('El área de trabajo es obligatoria');
@@ -85,22 +81,11 @@ const FormAreaTrabajoUsuarios = () => {
 
   return (
     <form onSubmit={manejarEnvio}>  
-      {/* <div>
-        <label>Usuario:</label>
-        <select value={usuarioSeleccionado} onChange={(e) => setUsuarioSeleccionado(e.target.value)}>
-          <option value="">Seleccione un usuario</option>
-          {usuarios.map((usuario) => (
-            <option key={usuario.id} value={usuario.id}>
-              {usuario.nombre} 
-            </option>
-          ))}
-        </select>
-      </div> */}
-
-      <div>
-        <label>Área de Trabajo:</label>
-        <select value={areaSeleccionada} onChange={(e) => setAreaSeleccionada(e.target.value)}>
-          <option value="">Seleccione un área de trabajo</option>
+   
+      <div className='form-group4'>
+        <label className='labelAreaU'>Área de Trabajo:</label>
+        <select className='areaSelect' value={areaSeleccionada} onChange={(e) => setAreaSeleccionada(e.target.value)}>
+          <option className='optionArea' value="">Seleccione un área de trabajo</option>
           {areasTrabajo.map((area) => (
             <option key={area.id} value={area.id}>
               {area.nombre_area} {/* Suponiendo que el modelo de AreaTrabajo tiene 'nombre_area' */}
@@ -109,10 +94,10 @@ const FormAreaTrabajoUsuarios = () => {
         </select>
       </div>
 
-      <div>
-        <label>Empresa:</label>
-        <select value={empresaSeleccionada} onChange={(e) => setEmpresaSeleccionada(e.target.value)}>
-          <option value="">Seleccione una empresas</option>
+      <div className='form-group4'>
+        <label className='labelEmpresaU'>Empresa:</label>
+        <select className='selectE' value={empresaSeleccionada} onChange={(e) => setEmpresaSeleccionada(e.target.value)}>
+          <option className='selectEmpresa' value="">Seleccione una empresas</option>
           {empresas.map((empresa) => (
             <option key={empresa.id} value={empresa.id}>
               {empresa.nombre_empresa} {/* Suponiendo que el modelo de Empresa tiene 'nombre_empresa' */}
@@ -121,7 +106,7 @@ const FormAreaTrabajoUsuarios = () => {
         </select>
       </div>
 
-      <button type="submit">Asignar</button>
+      <button className='btnAsignar' type="submit">Asignar</button>
 
       {/* Mostrar mensaje de error si existe */}
       {mensajeError && <div style={{ color: 'red' }}>{mensajeError}</div>}

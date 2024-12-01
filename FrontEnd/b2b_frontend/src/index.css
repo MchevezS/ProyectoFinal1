@@ -1,0 +1,86 @@
+.card {
+    border: none;
+    border-radius: 16px; /* Esquinas redondeadas */
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    background-color: #f8faff; /* Fondo suave */
+    padding: 20px; /* Espaciado interno */
+  }
+  
+  .card h6 {
+    font-weight: 600;
+    color: #6b6c7e; /* Tono gris sutil */
+  }
+  
+  .card h3 {
+    font-weight: bold;
+    color: #1f1f41; /* Texto oscuro */
+  }
+  
+  .card p {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .text-success {
+    font-weight: 600;
+    color: #2eca6a; /* Verde positivo */
+  }
+
+  
+  .recharts-cartesian-axis-tick text {
+    font-size: 12px;
+    fill: #9ea9c0; /* Color gris azulado para los textos de ejes */
+  }
+  
+  .recharts-default-tooltip {
+    background-color: #ffffff; /* Fondo blanco */
+    border: 1px solid #eaecef; /* Borde suave */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    font-size: 12px;
+    color: #333333; /* Color de texto */
+  }
+  
+  .line-chart-line {
+    stroke-width: 3px; /* Línea más gruesa */
+  }
+  
+  .recharts-wrapper {
+    margin-top: 20px; /* Espaciado entre el gráfico y los encabezados */
+  }
+  .card .d-flex {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card .d-flex i {
+    font-size: 18px;
+    color: #8884d8; /* Color del icono */
+    cursor: pointer; /* Interacción visual al pasar el mouse */
+  }
+  .text-success {
+    display: flex;
+    align-items: center;
+  }
+  
+  .text-success::before {
+    content: '●';
+    color: #2eca6a; /* Verde positivo */
+    font-size: 14px;
+    margin-right: 6px;
+  }
+  .traffic-chart h6 {
+    font-size: 14px;
+    color: #9a9a9a;
+  }
+  
+  .traffic-chart h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .traffic-chart span {
+    font-size: 12px;
+  }
+  

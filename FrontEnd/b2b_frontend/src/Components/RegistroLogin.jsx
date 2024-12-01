@@ -8,7 +8,7 @@ import {useCookies} from 'react-cookie'
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
-  const [cookie,setCookie] = useCookies(["usuarioID"])
+  const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario"])
   const navigate = useNavigate();
 
   // Estados de los formularios
@@ -58,6 +58,7 @@ function RegistroLogin() {
             setNombreUsuarioL('');
             setPasswordL('');
             setCookie("usuarioID",response.id);
+            setCookie("nombreUsuario",response.nombre);
           // guardamos el id del usuario para obtenerlo en empresas
         }, 1000);
       } else {

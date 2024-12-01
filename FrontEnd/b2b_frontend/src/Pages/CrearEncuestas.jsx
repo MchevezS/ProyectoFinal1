@@ -5,6 +5,7 @@ import {useCookies} from 'react-cookie';
 import Navbar from '../Components/Navbar';
 import { mostrarAlerta } from '../Components/MostrarAlerta';
 import CardPregunta from '../Components/CardPregunta';
+import { useLocation } from 'react-router-dom';
 
 
 function CrearEncuestas() {
@@ -12,6 +13,7 @@ function CrearEncuestas() {
     const [tituloEncuesta,setTituloEncuesta]=useState("")
     const [descripcionEncuesta,setdescripcionEncuesta]=useState("")
     const [preguntaEncuesta,setpreguntaEncuesta]=useState("")
+  
     
     //HOOK (creacion de cookies) recibe el nombre de la cookie que va a tener 
     const [cookies,setCookies]=useCookies(["Encuesta"])
@@ -60,10 +62,13 @@ async function enviarEncuesta() {
       <input type="text"placeholder='Descripcion'onChange={(e)=>setdescripcionEncuesta(e.target.value)} value={descripcionEncuesta}/>
       {/* envia la encuesta  */}
       <input type="text"placeholder='Pregunta'onChange={(e)=>setpreguntaEncuesta(e.target.value)} value={preguntaEncuesta}/>
-
+        
+      
       <button onClick={enviarEncuesta} className='btn btn-success'>ENVIAR</button>
+  
+  
       </div>
-
+          
       <CardPregunta/>
     </div>
   );

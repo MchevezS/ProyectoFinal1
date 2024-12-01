@@ -1,36 +1,45 @@
 import { useEffect, useState } from "react"
 import { get } from "../Services/Crud"
+import CardPregunta from "../Components/CardPregunta"
+import Navbar from "../Components/Navbar"
+import NavbarEncuestas from "../Components/NavbarEncuestas"
 
 const VerEncuesta = ()=>{
     const [encuesta, setEncuesta] = useState([])
-    const [pregunta, setPregunta] = useState([])
+    const [preguntas, setPreguntas] = useState([])
     useEffect(()=>{
         const traerEncuestas = async()=>{
             const peticion = await get("encuestas", localStorage.getItem("id_encuesta"))
             console.log(peticion);
             
             setEncuesta(peticion.encuesta)
-            setPregunta(peticion.preguntas)
-            console.log(pregunta);
-            
+            setPreguntas(peticion.preguntas)
+            console.log(peticion.preguntas.id);
         }
         traerEncuestas()
     },[])
 
     return(
-        <>
 
+
+
+        <>
+<NavbarEncuestas/>
 
 <h1>{encuesta.titulo_encuesta}</h1>
 
+<p>descripcion:</p>
 <p>{encuesta.descripcion_encuesta}</p>
 
-<ul>{pregunta.map((i)=>{
+<p>pregunta:</p>
+<ul>{preguntas.map((i)=>(
 <li key={i.id}>
+    {localStorage.setItem("id_pregunta",i.id)}
 {i.pregunta_texto}
 </li>
-})}</ul>
+))}</ul>
 
+<CardPregunta/>
 
         </>
     )

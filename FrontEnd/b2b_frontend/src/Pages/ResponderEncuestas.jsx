@@ -29,7 +29,7 @@ const ResponderEncuestas =()=>{
     fechaSubida={encuesta.fecha_creacion}
     responder={()=> { 
 
-        localStorage.setItem("id_encuesta", encuesta.id)
+     localStorage.setItem("id_encuesta", encuesta.id)
         navigate("/verEncuesta")
     
     }}
