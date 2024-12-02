@@ -11,14 +11,12 @@ import re #expresiones regulares
 import random
 import string
 
-from mailersend import emails
+from mailersend import emails #importacion de la api mailersend
 
-
-
-
-
-
+# api token de mailersend 
 correo = emails.NewEmail("mlsn.fe3c04fac13c0e6f5f7e85e0e65dd186c8f61706d8c5bcf0c1042855144b387b")
+
+
 # Create your views here.
 class RegistroView(APIView):
     def post(self,request):
@@ -76,9 +74,10 @@ class RegistroEmpleadoView(APIView):
         nombre_usuario = request.data.get("username")
         correo_usuario = request.data.get("email")
         cedula_usuario = request.data.get("cedula")
-        empresa_usuario = request.data.get("empresa")
         rol_usuario= request.data.get("rol")
         clave_usuario = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+        
+           
         #Usamos expresiones regulares para validar la informacion que se envia a la base de datos. 
         nombre_usuario_regex = r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$'
         correo_usuario_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -98,9 +97,12 @@ class RegistroEmpleadoView(APIView):
         else:
             usuario_creado = User.objects.create_user(username=nombre_usuario,password=clave_usuario,email=correo_usuario)
             Usuarios.objects.create(user=usuario_creado,cedula_usuario=cedula_usuario,rol=rol_usuario) #El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 20
-            enviar_correo(nombre_usuario,correo_usuario,clave_usuario)
+            enviar_correo(nombre_usuario,correo_usuario,clave_usuario) # Se usa la funcion enviar correo y se le pasa por argumento el nombre de usuario y el correo usuario que se envian en la peticion, la contraseña se genera de manera automatica.
             return Response({"success":'Usuario creado',},status=status.HTTP_201_CREATED)
         
+        
+    # Damos por parametro el nombre del usuario que se esta registrando, el correo al que le vayan a llegar las credenciales
+    # y la contraseña
 def enviar_correo(nombre_usuario,correo_usuario,clave_usuario):
     mail_body={}
     
@@ -115,14 +117,14 @@ def enviar_correo(nombre_usuario,correo_usuario,clave_usuario):
             "email":correo_usuario
         }
     ]
-    
+    # Formato del correo
     correo.set_mail_from(mail_from,mail_body)
     correo.set_mail_to(recipient,mail_body)
     correo.set_subject("credenciales para la empresa", mail_body)
     correo.set_html_content(f"<h1>Hola {nombre_usuario} esta es tu contraseña {clave_usuario}</h1>", mail_body)
     correo.set_plaintext_content("B2B",mail_body)
     
-    
+    # Estructura de la respuesta de la api
     try:
         response = correo.send(mail_body)
         if response == 202:
