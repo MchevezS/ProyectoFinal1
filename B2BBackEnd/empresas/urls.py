@@ -12,4 +12,5 @@ urlpatterns = [
     
     # Ruta para asignar usuario a área de trabajo
     path('asignar_usuario/', views.AsignarUsuarioAreaTrabajoView.as_view(), name='asignar_usuario'),
+    
 ]

@@ -3,7 +3,6 @@ import { post } from '../Services/Crud';
 import { useCookies } from 'react-cookie'; // Accedemos al ID del usuario registrado
 import '../Style/FormEmpresas.css';
 import { mostrarAlerta } from './MostrarAlerta';
-import BarraLateral from './BarraLateral';
 
 const FormEmpresas = () => {
   const [cookies] = useCookies(["usuarioID","nombreUsuario"]);
@@ -91,7 +90,6 @@ const FormEmpresas = () => {
 
   return (
     <>
-    <BarraLateral/>
     
     <form onSubmit={manejarEnvio}>
       <div className='titulo'>

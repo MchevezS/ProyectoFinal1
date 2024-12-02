@@ -18,6 +18,7 @@ class Empresa(models.Model):
     correo = models.EmailField(unique=True) 
     #propietario de la empresa(relación con modelo Usuarios)
     propietario = models.ForeignKey("usuarios.Usuarios",on_delete=models.CASCADE) #La relacion se hace "app.Modelo"
+    empleado = models.ForeignKey("usuarios.Usuarios",on_delete=models.CASCADE,related_name="empleado") #La relacion se hace "app.Modelo"
     
     def __str__(self):
         return self.nombre_empresa

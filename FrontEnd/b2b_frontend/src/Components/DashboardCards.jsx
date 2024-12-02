@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
 import { get } from '../Services/Crud';
+
+
 function DashboardCards() {
   const fecha = new Date().toLocaleDateString()
   const [cantidadEncuestas,setCantidadEncuestas] = useState(0)
@@ -51,6 +53,7 @@ function DashboardCards() {
       ))}
     </div>
   );
+
 }
 
 export default DashboardCards;
