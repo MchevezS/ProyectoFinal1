@@ -13,7 +13,7 @@ const FormAreaTrabajo = () => {
   useEffect(() => {
     const fetchEmpresas = async () => {
       try {
-        const response = await get('empresas/'); // El endpoint 'empresas' para obtener la lista
+        const response = await get('empresas'); // El endpoint 'empresas' para obtener la lista
         setEmpresas(response);
       } catch (error) {
         console.error('Error al obtener empresas:', error);

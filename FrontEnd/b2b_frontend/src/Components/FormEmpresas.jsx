@@ -73,7 +73,7 @@ const FormEmpresas = () => {
 
       try {
         // Realizamos la petición POST al servidor
-        const response = await post(datosFormulario, 'empresas/');
+        const response = await post(datosFormulario, 'empresas');
         console.log('Respuesta del servidor:', response);  // Verifica la estructura de la respuesta
 
         if (response) {
