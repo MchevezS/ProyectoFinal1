@@ -1,3 +1,5 @@
+import '../Style/CardEncuesta.css'
+
 const CardEncuesta = ({ titulo, descripcion, fechaSubida, responder}) => {
   return (
     <div className="card">

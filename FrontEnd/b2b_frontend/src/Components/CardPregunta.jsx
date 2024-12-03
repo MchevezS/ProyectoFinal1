@@ -5,7 +5,7 @@ import post from '../fetch';
 import { mostrarAlerta } from './MostrarAlerta';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
+import '../Style/CardPregunta.css';
 
 
 const CardPregunta = ({opcionSeleccionada}) => {
@@ -66,7 +66,7 @@ console.log(respuestaSeleccionada);
                 id="radio3Example2"
               />
               <label className="form-check-label" htmlFor="radio3Example2">
-               Buena
+               Buena2
               </label>
             </div>
             <div className="form-check mb-2">
