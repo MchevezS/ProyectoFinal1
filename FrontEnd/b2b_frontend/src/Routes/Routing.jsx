@@ -23,7 +23,7 @@ const Routing = () => {
           <Route path="/editar-empresa/:id" element={<EditarEmpresa/>} />
           <Route path='/responderEncuestas' element={<ResponderEncuestas/>}/>
           <Route path='/verEncuesta' element={<VerEncuesta/>}/>
-          <Route path='/dashboard' element={<Dashboard/>}/>
+          <Route path='/dasboard' element={<Dashboard/>}/>
           <Route path='/contactenos' element={<Contactenos/>}/>
        </Routes>
       </Router>
