@@ -9,6 +9,7 @@ import VerEncuesta from '../Pages/VerEncuesta';
 import EditarEmpresa from '../Components/EditarEmpresa';
 import Contactenos from '../Components/Contactenos';
 import Dashboard from '../Components/Dashboard';
+import FormularioEmailJS from '../Components/FormularioEmailJS';
 
 
 const Routing = () => {
@@ -25,6 +26,7 @@ const Routing = () => {
           <Route path='/verEncuesta' element={<VerEncuesta/>}/>
           <Route path='/dasboard' element={<Dashboard/>}/>
           <Route path='/contactenos' element={<Contactenos/>}/>
+          <Route path='/formularioEmailJS' element={<FormularioEmailJS/>}/>
        </Routes>
       </Router>
      );
