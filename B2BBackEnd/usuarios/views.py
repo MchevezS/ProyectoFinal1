@@ -57,7 +57,8 @@ class LoginView(APIView):
         
         if datos_autenticacion is not None:
             refresh = RefreshToken.for_user(datos_autenticacion)
-            return Response({"success":'bienvenido',"id":datos_autenticacion.id, "nombre": datos_autenticacion.username, "correo": datos_autenticacion.email,"token_acceso": str(refresh.access_token),"token_refresco":str(refresh),},status=status.HTTP_200_OK)
+            rol= Usuarios.objects.get(user_id=datos_autenticacion.id)
+            return Response({"success":'bienvenido',"id":datos_autenticacion.id,"rol":rol.rol,"nombre": datos_autenticacion.username, "correo": datos_autenticacion.email,"token_acceso": str(refresh.access_token),"token_refresco":str(refresh),},status=status.HTTP_200_OK)
         
         else:
             return Response({"error":'credenciales invalidas',},status=status.HTTP_400_BAD_REQUEST)    

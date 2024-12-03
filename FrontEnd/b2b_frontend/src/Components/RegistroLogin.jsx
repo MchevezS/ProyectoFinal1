@@ -8,7 +8,7 @@ import {useCookies} from 'react-cookie'
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
-  const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario"])
+  const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario","rolUsuario"])
   const navigate = useNavigate();
 
   // Estados de los formularios
@@ -54,11 +54,20 @@ function RegistroLogin() {
       if (response.success) {
         mostrarAlerta("success", "Te has logueado de manera exitosa");
         setTimeout(() => {
-            navigate("/");
-            setNombreUsuarioL('');
-            setPasswordL('');
-            setCookie("usuarioID",response.id);
-            setCookie("nombreUsuario",response.nombre);
+          setNombreUsuarioL('');
+          setPasswordL('');
+          setCookie("usuarioID",response.id);
+          setCookie("nombreUsuario",response.nombre);
+          setCookie("rolUsuario" , response.rol);
+
+
+          if (cookie.rolUsuario==="usuario") {
+            navigate("/empresas");
+          }
+
+          if (cookie.rolUsuario==="trabajador"){
+            navigate("/")
+          }
           // guardamos el id del usuario para obtenerlo en empresas
         }, 1000);
       } else {
