@@ -83,7 +83,6 @@ const FormEmpresas = () => {
 
   return (
     <>
-      <BarraLateral />
 
       <form onSubmit={manejarEnvio}>
         <div className="development-table-container">
