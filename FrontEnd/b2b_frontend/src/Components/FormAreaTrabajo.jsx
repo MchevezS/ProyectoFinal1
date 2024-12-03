@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { post, get } from '../Services/Crud';
-
+import '../Style/FormAreaTrabajo.css'
 const FormAreaTrabajo = () => {
   const [nombreArea, setNombreArea] = useState('');
   const [responsable, setResponsable] = useState('');
@@ -13,13 +13,8 @@ const FormAreaTrabajo = () => {
   useEffect(() => {
     const fetchEmpresas = async () => {
       try {
-        const response = await get('empresas');
-        if (Array.isArray(response)) {
-          setEmpresas(response);
-        } else {
-          console.error('La respuesta no es un array:', response);
-          alert('Hubo un problema al cargar las empresas');
-        }
+        const response = await get('empresas'); // El endpoint 'empresas' para obtener la lista
+        setEmpresas(response);
       } catch (error) {
         console.error('Error al obtener empresas:', error);
         alert('Hubo un problema al cargar las empresas');
@@ -64,7 +59,7 @@ const FormAreaTrabajo = () => {
         empresa: empresaSeleccionada,
       }
       try {
-        const response = await post(datosFormulario, 'AreaTrabajo');
+        const response = await post(datosFormulario, 'AreaTrabajo/');
         if (response && response.success) {
           alert('Área de trabajo registrada con éxito');
         } else {
@@ -81,20 +76,20 @@ const FormAreaTrabajo = () => {
 
   return (
     <form onSubmit={manejarEnvio}>
-      <div>
-        <label>Nombre del área de trabajo:</label>
-        <input type="text" value={nombreArea} onChange={(e) => setNombreArea(e.target.value)}/>
+      <div className='form-group3'>
+        <label className='labelNombreArea'>Nombre del área de trabajo:</label>
+        <input placeholder='Nombre del área de trabajo' className='nombreAreaTrabajo' type="text" value={nombreArea} onChange={(e) => setNombreArea(e.target.value)}/>
       </div>
 
-      <div>
-        <label>Responsable del área:</label>
-        <input type="text" value={responsable} onChange={(e) => setResponsable(e.target.value)}/>
+      <div  className='form-group3'>
+        <label className='labelResponsableArea'>Responsable del área:</label>
+        <input placeholder='Responsable del área ' className='inputResponsableArea' type="text" value={responsable} onChange={(e) => setResponsable(e.target.value)}/>
       </div>
 
-      <div>
-        <label>Empresa:</label>
-        <select value={empresaSeleccionada} onChange={(e) => setEmpresaSeleccionada(e.target.value)}>
-          <option value="">Seleccione una empresa</option>
+      <div className='form-group3'>
+        <label className='labelEmpresa'>Empresa:</label>
+        <select className='selectEmpresa' value={empresaSeleccionada} onChange={(e) => setEmpresaSeleccionada(e.target.value)}>
+          <option className='seleccionarEmpresa' value="">Seleccione una empresa</option>
           {empresas.map((empresa) => (
             <option key={empresa.id} value={empresa.id}>
               {empresa.nombre_empresa}
@@ -103,7 +98,7 @@ const FormAreaTrabajo = () => {
         </select>
       </div>
 
-      <button type="submit">Registrar Área de Trabajo</button>
+      <button className='btnRegistrarArea' type="submit">Registrar Área de Trabajo</button>
 
       {/* Muestra errores que se van creando durante la validación de los campos */}
       {mensajeError && <div className="alerta-error">{mensajeError}</div>}
