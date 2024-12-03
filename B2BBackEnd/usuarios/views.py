@@ -136,3 +136,22 @@ def enviar_correo(nombre_usuario,correo_usuario,clave_usuario):
 
     except Exception:
         return None
+
+
+# funcion para actualizar el estado de un unico usuario a traves del patch
+class ActivarDescactivarUsuarioView(APIView):
+    def patch(self,request):
+        nombre_usuario = request.data.get("username") # por medio de username eligimos a quien le vamos a cambiar el estado
+        
+        usuario = User.objects.get(username=nombre_usuario) # buscamos en la base de datos al usuario que elegimos
+
+        
+        if usuario.is_active:
+            usuario.is_active=False
+            usuario.save()
+            return Response({'message': 'Usuario desactivado'}, status=status.HTTP_200_OK)
+        
+        else:
+            usuario.is_active=True
+            usuario.save()
+            return Response({'message': 'Usuario activado'}, status=status.HTTP_200_OK)
