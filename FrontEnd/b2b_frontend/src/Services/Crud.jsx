@@ -64,9 +64,9 @@ async function update( endpoint, id) {
 export{update}
 
 // Método PATCH: Actualiza los datos de la empresa
-async function patch(endpoint, id, data) {
+async function patch(endpoint, id="", data) {
     try {
-      const response = await fetch(`${URL}${endpoint}/${id}/`, {
+      const response = await fetch(`${URL}${endpoint}${id}/`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -18,7 +18,6 @@ class Empresa(models.Model):
     correo = models.EmailField(unique=True) 
     #propietario de la empresa(relación con modelo Usuarios)
     propietario = models.ForeignKey("usuarios.Usuarios",on_delete=models.CASCADE) #La relacion se hace "app.Modelo"
-    empleado = models.ForeignKey("usuarios.Usuarios",on_delete=models.CASCADE,related_name="empleado") #La relacion se hace "app.Modelo"
     activo = models.BooleanField(default=True)  # Este campo indica si la empresa está activa o desactivada
     
     def __str__(self):
@@ -43,3 +42,9 @@ class AreaTrabajoUsuarios(models.Model):
     
     def __str__(self):
         return f"{self.usuario.nombre} - {self.area_trabajo.nombre_area}"
+
+
+class Empleados(models.Model):
+    trabajador= models.ForeignKey("usuarios.Usuarios", on_delete=models.CASCADE, related_name="trabajador_empresa")
+    empresa= models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name="empresa_trabajador")
+    

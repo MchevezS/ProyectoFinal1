@@ -3,9 +3,10 @@ import { post } from '../Services/Crud';
 import { useCookies } from 'react-cookie'; // Accedemos al ID del usuario registrado
 import '../Style/FormEmpresas.css';
 import { mostrarAlerta } from './MostrarAlerta';
+import { patch } from '../Services/Crud';
 
 const FormEmpresas = () => {
-  const [cookies] = useCookies(["usuarioID", "nombreUsuario"]);
+  const [cookies,setCookies] = useCookies(["usuarioID", "nombreUsuario", "empresaId"]);
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [cedulaJuridica, setCedulaJuridica] = useState('');
   const [correo, setCorreo] = useState('');
@@ -49,25 +50,30 @@ const FormEmpresas = () => {
   const manejarEnvio = async (e) => {
     e.preventDefault();
 
-    const cedula = Array.isArray(cedulaJuridica) ? cedulaJuridica[0] : cedulaJuridica;
-    const propietario = Array.isArray(cookies.usuarioID) ? cookies.usuarioID[0] : cookies.usuarioID;
+    
 
     if (validarFormulario()) {
       const datosFormulario = {
         nombre_empresa: nombreEmpresa,
-        cedula_juridica: cedula,
+        cedula_juridica: cedulaJuridica,
         correo: correo,
-        propietario: propietario,
+        propietario: cookies.usuarioID,
+
       };
 
       console.log("Datos enviados al servidor:", datosFormulario);
 
       try {
-        const response = await post(datosFormulario, 'empresas');
+        const response = await post(datosFormulario, 'empresas/');
         console.log('Respuesta del servidor:', response);
 
         if (response) {
           mostrarAlerta("success", 'Empresa registrada con éxito');
+          const peticion = await patch('cambiar-rol','',{
+            usuario_id: cookies.usuarioID,
+            rol: 'propietario'
+          })
+          console.log('Respuesta del servidor:', peticion);
         } else {
           mostrarAlerta("error", 'Hubo un error al registrar la empresa');
         }

@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Empresa, AreaTrabajo, AreaTrabajoUsuarios
+from  usuarios.models import Usuarios
 from .serializers import EmpresaSerializer, AreaTrabajoSerializer, AreaTrabajoUsuariosSerializer
 
 # Vista para obtener todas las empresas o crear una nueva
@@ -77,3 +78,23 @@ class CambiarEstadoEmpresaView(APIView):
         
         except Empresa.DoesNotExist:
             return Response({'error': 'Empresa no encontrada'}, status=status.HTTP_404_NOT_FOUND)
+
+
+# Vista para cambiar el rol de los usuarios
+class CambiarRolUsuarioView(APIView):
+    # Se usa método patch para únicamente actualizar el rol del usuario
+    def patch(self,request):
+        usuario_id = request.data.get('usuario_id') #Se obtiene la referencia del usuario por medio del id
+        rol_usuario = request.data.get('rol') # Se obtiene el rol al que será modificado
+
+        usuario=Usuarios.objects.get(user_id=usuario_id) # Tomaamos el ussuario de la BD para modificarlo
+
+        usuario.rol = rol_usuario # Se le cambia el rol
+        
+        usuario.save() # Se guardan los cambios
+
+        # Se responde con un mensaje de éxito
+        return Response({
+            'message': f"Rol de usuario cambiado correctamente",
+            'rol': usuario.rol
+        }, status=status.HTTP_200_OK)
