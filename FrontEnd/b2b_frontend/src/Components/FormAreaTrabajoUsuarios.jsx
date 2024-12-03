@@ -1,27 +1,21 @@
-import '../Style/FormAreaTrabajoUsuarios.css'
+import '../Style/FormAreaTrabajoUsuarios.css';
 import { useState, useEffect } from 'react';
 import { post, get } from '../Services/Crud';
-import '../Style/FormAreaTrabajoUsuarios.css'
+
 const FormAreaTrabajoUsuarios = () => {
-  // Estados para los datos del formulario
-//   const [usuarios, setUsuarios] = useState([]);
   const [areasTrabajo, setAreasTrabajo] = useState([]);
   const [empresas, setEmpresas] = useState([]);
-//   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState('');
   const [areaSeleccionada, setAreaSeleccionada] = useState('');
   const [empresaSeleccionada, setEmpresaSeleccionada] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
-  
-  // Cargar usuarios, áreas de trabajo y empresas
+
+  // Cargar áreas de trabajo y empresas
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const usuariosData = await get('usuarios');
         const areasData = await get('AreaTrabajo');
         const empresasData = await get('empresas');
-        
-        // setUsuarios(usuariosData);
         setAreasTrabajo(areasData);
         setEmpresas(empresasData);
       } catch (error) {
@@ -31,12 +25,11 @@ const FormAreaTrabajoUsuarios = () => {
     };
     fetchData();
   }, []);
-  
+
   // Validación del formulario
   const validarFormulario = () => {
     let esValido = true;
     let erroresTemp = [];
-
 
     if (!areaSeleccionada) {
       erroresTemp.push('El área de trabajo es obligatoria');
@@ -58,7 +51,6 @@ const FormAreaTrabajoUsuarios = () => {
 
     if (validarFormulario()) {
       const datosFormulario = {
-        // usuario_id: usuarioSeleccionado,
         area_trabajo_id: areaSeleccionada,
         empresa_id: empresaSeleccionada
       };
@@ -66,9 +58,9 @@ const FormAreaTrabajoUsuarios = () => {
       try {
         const response = await post(datosFormulario, 'asignar_usuario_area');
         if (response && response.success) {
-        alert('Usuario asignado correctamente');
+          alert('Usuario asignado correctamente');
         } else {
-            alert('Hubo un problema al asignar un usuario')
+          alert('Hubo un problema al asignar el usuario');
         }
       } catch (error) {
         console.error(error);
@@ -81,46 +73,65 @@ const FormAreaTrabajoUsuarios = () => {
 
   return (
     <form onSubmit={manejarEnvio}>  
-   
-      <div className='form-group4'>
-        <label className='labelAreaU'>Área de Trabajo:</label>
-        <select className='areaSelect' value={areaSeleccionada} onChange={(e) => setAreaSeleccionada(e.target.value)}>
-          <option className='optionArea' value="">Seleccione un área de trabajo</option>
-          {areasTrabajo.map((area) => (
-            <option key={area.id} value={area.id}>
-              {area.nombre_area} {/* Suponiendo que el modelo de AreaTrabajo tiene 'nombre_area' */}
-            </option>
-          ))}
-        </select>
+      <div className="development-table-container">
+        <h2 className="form-title1">Asignar Usuario a Área de Trabajo</h2>
+
+        <table className="table">
+          <tbody>
+            <tr>
+              <td><label className="labelAreaU">Área de Trabajo:</label></td>
+              <td>
+                <select
+                  className="areaSelect"
+                  value={areaSeleccionada}
+                  onChange={(e) => setAreaSeleccionada(e.target.value)}
+                >
+                  <option className="optionArea" value="">Seleccione un área de trabajo</option>
+                  {areasTrabajo.map((area) => (
+                    <option key={area.id} value={area.id}>
+                      {area.nombre_area}
+                    </option>
+                  ))}
+                </select>
+              </td>
+            </tr>
+
+            <tr>
+              <td><label className="labelEmpresaU">Empresa:</label></td>
+              <td>
+                <select
+                  className="selectE"
+                  value={empresaSeleccionada}
+                  onChange={(e) => setEmpresaSeleccionada(e.target.value)}
+                >
+                  <option className="selectEmpresa" value="">Seleccione una empresa</option>
+                  {empresas.map((empresa) => (
+                    <option key={empresa.id} value={empresa.id}>
+                      {empresa.nombre_empresa}
+                    </option>
+                  ))}
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button className="btnAsignar" type="submit">Asignar</button>
+
+        {/* Mostrar mensaje de error si existe */}
+        {mensajeError && <div style={{ color: 'red' }}>{mensajeError}</div>}
+        
+        {/* Mostrar lista de errores */}
+        {errores.length > 0 && (
+          <div style={{ color: 'red' }}>
+            <ul>
+              {errores.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
-
-      <div className='form-group4'>
-        <label className='labelEmpresaU'>Empresa:</label>
-        <select className='selectE' value={empresaSeleccionada} onChange={(e) => setEmpresaSeleccionada(e.target.value)}>
-          <option className='selectEmpresa' value="">Seleccione una empresas</option>
-          {empresas.map((empresa) => (
-            <option key={empresa.id} value={empresa.id}>
-              {empresa.nombre_empresa} {/* Suponiendo que el modelo de Empresa tiene 'nombre_empresa' */}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <button className='btnAsignar' type="submit">Asignar</button>
-
-      {/* Mostrar mensaje de error si existe */}
-      {mensajeError && <div style={{ color: 'red' }}>{mensajeError}</div>}
-      
-      {/* Mostrar lista de errores */}
-      {errores.length > 0 && (
-        <div style={{ color: 'red' }}>
-          <ul>
-            {errores.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
-        </div>
-      )}
     </form>
   );
 };

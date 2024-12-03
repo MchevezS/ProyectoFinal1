@@ -1,0 +1,227 @@
+.bienvenidos{
+    margin-right: 2000px;
+}
+
+.contactenos-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    font-family: 'Arial', sans-serif;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contactenos-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.contactenos-table th,
+.contactenos-table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.contactenos-table th {
+    background-color: #c2e1ef;
+    color: white;
+}
+
+.service-column,
+.faq-column,
+.contact-column {
+    padding: 20px;
+}
+
+.service-column {
+    width: 30%;
+}
+
+.faq-column {
+    width: 40%;
+}
+
+.contact-column {
+    width: 30%;
+}
+
+.accordion-button {
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+    padding: 10px 20px;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.accordion-body {
+    font-size: 1rem;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+}
+
+#servicio-al-cliente,
+#preguntas-frecuentes,
+#llamar {
+    margin-top: 20px;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.5rem;
+}
+
+p {
+    color: #555;
+    line-height: 1.5;
+}
+
+strong {
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+    .table-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .empresas-table {
+        width: 100%;
+    }
+
+    .service-column,
+    .faq-column,
+    .contact-column {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+/* Estilo para el contenedor del mapa */
+.map-container {
+    /* Asegura que el contenedor ocupe todo el ancho disponible */
+    width: 100%;
+    /* Puedes poner un poco de espacio alrededor del mapa si lo deseas */
+    padding: 20px 0;
+    /* Opcional: un borde alrededor del contenedor */
+    border: 1px solid #ddd;
+    /* Añadir un poco de sombra */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Centra el mapa horizontalmente */
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilo para el iframe del mapa */
+.map-container iframe {
+    /* Asegura que el iframe ocupe todo el ancho del contenedor */
+    width: 90%;
+    /* Mantiene la proporción del mapa */
+    height: 450px;
+    /* Puedes ajustar esta altura según lo necesites */
+    max-width: 100%;
+    /* Para que no exceda el tamaño del contenedor */
+    border: 0;
+    /* Eliminar el borde predeterminado */
+}
+
+/* Estilo para el botón cuando el acordeón está colapsado */
+.accordion-button.collapsed {
+    background-color: #e7edf5;
+    /* Color azul cuando está cerrado */
+    color: rgb(66, 66, 66);
+    /* Color del texto */
+    border: 1px solid #007bff;
+    /* Borde del botón */
+}
+
+/* Estilo para el botón cuando el acordeón está expandido */
+.accordion-button:not(.collapsed) {
+    background-color: #0b5180;
+    /* Color azul cuando está abierto */
+    color: white;
+    /* Color del texto */
+    border: 1px solid #28a745;
+    /* Borde del botón */
+}
+
+/* cuando el usuario hace clic en el botón */
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 166, 68, 0.25);
+    /* Efecto de sombra cuando se hace clic */
+}
+
+/* Estilo para el formulario */
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"], input[type="email"], textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  textarea {
+    resize: vertical;
+    height: 100px;
+  }
+  
+  button.submit-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button.submit-button:hover {
+    background-color: #0056b3;
+  }
+  

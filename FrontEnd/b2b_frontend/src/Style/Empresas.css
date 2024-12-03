@@ -1,0 +1,8 @@
+.table-wrapper {
+    display: flex; /* Alinear tablas horizontalmente */
+    gap: 10px; /* Espacio entre tablas */
+  }
+  
+  .development-table-container {
+    flex: 1; /* Ajustar el ancho de cada tabla para que ocupen el espacio equitativamente */
+  }
