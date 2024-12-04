@@ -6,6 +6,7 @@ import Navbar from '../Components/Navbar';
 import { mostrarAlerta } from '../Components/MostrarAlerta';
 import CardPregunta from '../Components/CardPregunta';
 import { useLocation } from 'react-router-dom';
+import '../Style/CrearEncuestas.css'
 
 
 function CrearEncuestas() {
@@ -51,27 +52,52 @@ async function enviarEncuesta() {
 
   return (
     <div>
-        <Navbar/>
-      
+    <Navbar />
+    <div className="container">
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: '100vh' }}
+      >
+        <div className="d-flex gap-5" style={{ width: '1000vh' }}>
+          <div className="d-flex flex-column gap-3 mx-auto w-50 border border-primary form-container">
+            <h1 className="encuesta">Crear encuesta</h1>
+            {/* Evento para guardar el valor del titulo encuesta */}
+            <input
+              className="fiel"
+              type="text"
+              placeholder="Titulo de la encuesta"
+              onChange={(e) => setTituloEncuesta(e.target.value)}
+              value={tituloEncuesta}
+            />
+            {/* Evento para guardar la descripcion de la encuesta */}
+            <input
+              className="fiel"
+              type="text"
+              placeholder="Descripcion"
+              onChange={(e) => setdescripcionEncuesta(e.target.value)}
+              value={descripcionEncuesta}
+            />
+            {/* Envía la encuesta */}
+            <input
+              className="fiel"
+              type="text"
+              placeholder="Pregunta"
+              onChange={(e) => setpreguntaEncuesta(e.target.value)}
+              value={preguntaEncuesta}
+            />
 
-      <div className='d-flex flex-column gap-3 mx-auto w-25 border border-primary'>
-      <h1>Crear encuesta</h1>
-      {/* evento para guardar el valor del titulo encuesta  */}
-      <input type="text"placeholder='Titulo de la encuesta'onChange={(e)=>setTituloEncuesta(e.target.value)} value={tituloEncuesta}/> 
-      {/* evento para guaradar la descripcion de la encuesta */}
-      <input type="text"placeholder='Descripcion'onChange={(e)=>setdescripcionEncuesta(e.target.value)} value={descripcionEncuesta}/>
-      {/* envia la encuesta  */}
-      <input type="text"placeholder='Pregunta'onChange={(e)=>setpreguntaEncuesta(e.target.value)} value={preguntaEncuesta}/>
-        
-      
-      <button onClick={enviarEncuesta} className='btn btn-success'>ENVIAR</button>
-  
-  
+            <button onClick={enviarEncuesta} className="submit-button">
+              ENVIAR
+            </button>
+          </div>
+          <div className="card">
+            <CardPregunta />
+          </div>
+        </div>
       </div>
-          
-      <CardPregunta/>
     </div>
-  );
+    </div>
+);
 }
 
 export default CrearEncuestas;
