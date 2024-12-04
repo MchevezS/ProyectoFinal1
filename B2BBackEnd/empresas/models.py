@@ -26,7 +26,14 @@ class Empresa(models.Model):
     
 class AreaTrabajo(models.Model):
     #Responsable del área(relación con modelo Usuarios)
-    nombre_area = models.CharField(max_length=100)
+    AREA_OPCIONES = [
+    ('marketing', 'MARKETING'),
+    ('ti', 'TI'),
+    ('atencion_cliente', 'ATENCION_CLIENTE'),
+    ('recursos_humanos', 'RECURSOS_HUMANOS'),
+    ('finanzas', 'FINANZAS'),
+]
+    nombre_area = models.CharField(choices=AREA_OPCIONES,max_length=30)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE) # que empresa tiene esa area 
     def __str__(self):
         
@@ -35,6 +42,7 @@ class AreaTrabajo(models.Model):
 class AreaTrabajoUsuarios(models.Model):
     usuario = models.ForeignKey("usuarios.Usuarios", on_delete=models.CASCADE)
     area_trabajo = models.ForeignKey(AreaTrabajo, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
 
     
     class Meta:

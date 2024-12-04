@@ -1,28 +1,16 @@
 import { useState, useEffect } from 'react';
 import { post, get } from '../Services/Crud';
 import '../Style/FormAreaTrabajo.css';
+import { useCookies } from 'react-cookie';
+import { mostrarAlerta } from './MostrarAlerta';
+
 
 const FormAreaTrabajo = () => {
+  const [cookies,setcookies]= useCookies(["empresaId"])
+
   const [nombreArea, setNombreArea] = useState('');
-  const [responsable, setResponsable] = useState('');
-  const [empresaSeleccionada, setEmpresaSeleccionada] = useState('');
-  const [empresas, setEmpresas] = useState([]);
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
-
-  // Obtiene la lista de empresas
-  useEffect(() => {
-    const fetchEmpresas = async () => {
-      try {
-        const response = await get('empresas'); // El endpoint 'empresas' para obtener la lista
-        setEmpresas(response);
-      } catch (error) {
-        console.error('Error al obtener empresas:', error);
-        alert('Hubo un problema al cargar las empresas');
-      }
-    };
-    fetchEmpresas();
-  }, []);
 
   // Validación del formulario
   const validarFormulario = () => {
@@ -31,16 +19,6 @@ const FormAreaTrabajo = () => {
 
     if (!nombreArea) {
       erroresTemp.push('El nombre del área de trabajo es obligatorio');
-      esValido = false;
-    }
-
-    if (!responsable) {
-      erroresTemp.push('El responsable es obligatorio');
-      esValido = false;
-    }
-
-    if (!empresaSeleccionada) {
-      erroresTemp.push('Debes seleccionar una empresa');
       esValido = false;
     }
 
@@ -55,26 +33,21 @@ const FormAreaTrabajo = () => {
     if (validarFormulario()) {
       const datosFormulario = {
         nombre_area: nombreArea,
-        responsable_del_area: responsable,
-        empresa: empresaSeleccionada,
+        empresa: cookies.empresaId
       };
-
       try {
-        const response = await post(datosFormulario, 'AreaTrabajo/');
-        if (response && response.success) {
-          alert('Área de trabajo registrada con éxito');
-        } else {
-          alert('Hubo un problema al registrar el área de trabajo');
-        }
+        const response = await post(datosFormulario,'AreaTrabajo/');
+        if (response.id) {
+          mostrarAlerta("success", 'Área de trabajo registrada con éxito');
+        } 
       } catch (error) {
-        alert('Error al enviar el formulario');
+        mostrarAlerta("success", 'Error al enviar el formulario');
         console.error(error);
       }
     } else {
-      setMensajeError('Por favor, completa todos los campos correctamente.');  // Mensaje de alerta
+      setMensajeError('Por favor, completa todos los campos correctamente.'); // Mensaje de alerta
     }
   };
-
   return (
     <form onSubmit={manejarEnvio}>
       <div className="development-table-container">
@@ -85,44 +58,20 @@ const FormAreaTrabajo = () => {
             <tr>
               <td><label className="labelNombreArea">Nombre del área de trabajo:</label></td>
               <td>
-                <input
-                  placeholder="Nombre del área de trabajo"
-                  className="nombreAreaTrabajo"
-                  type="text"
-                  value={nombreArea}
-                  onChange={(e) => setNombreArea(e.target.value)}
-                />
+             <select onChange={(e)=>setNombreArea(e.target.value)}> 
+              <option value="" disabled select> Seleccione el área</option>
+              <option value="marketing"> Marketing</option>
+              <option value="ti"> TI</option>
+              <option value="atencion_cliente"> Atención al cliente</option>
+              <option value="recursos_humanos"> Recursos Humanos</option>
+              <option value="finanzas">Finanzas</option>
+             </select>
               </td>
             </tr>
-
-            <tr>
-              <td><label className="labelResponsableArea">Responsable del área:</label></td>
-              <td>
-                <input
-                  placeholder="Responsable del área"
-                  className="inputResponsableArea"
-                  type="text"
-                  value={responsable}
-                  onChange={(e) => setResponsable(e.target.value)}
-                />
-              </td>
-            </tr>
-
             <tr>
               <td><label className="labelEmpresa">Empresa:</label></td>
               <td>
-                <select
-                  className="selectEmpresa"
-                  value={empresaSeleccionada}
-                  onChange={(e) => setEmpresaSeleccionada(e.target.value)}
-                >
-                  <option className="seleccionarEmpresa" value="">Seleccione una empresa</option>
-                  {empresas.map((empresa) => (
-                    <option key={empresa.id} value={empresa.id}>
-                      {empresa.nombre_empresa}
-                    </option>
-                  ))}
-                </select>
+             <input type="text" disabled />
               </td>
             </tr>
           </tbody>

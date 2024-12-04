@@ -37,7 +37,22 @@ async function get(endpoint,id="") {
         console.error('Error fetching users:', error);
     }
 }
-export { get};
+export { get };
+
+async function getEmpleados(endpoint,id="") {
+    try { 
+        const response = await fetch(`${URL}${endpoint}?empresa_id=${id}`)
+        if (!response.ok) {
+            throw new Error('Error fetching users');
+        }
+        const data = await response.json()
+        return data;
+    } catch (error) {
+        console.error('Error fetching users:', error);
+    }
+}
+
+export { getEmpleados};
 
 // Metodo Put: Actualiza datos
 async function update( endpoint, id) {
@@ -108,5 +123,7 @@ async function eliminar(endpoint, id) {
         throw error;
     }
 }
+
+
 
 export { eliminar };

@@ -1,14 +1,20 @@
 import '../Style/FormAreaTrabajoUsuarios.css';
 import { useState, useEffect } from 'react';
-import { post, get } from '../Services/Crud';
-
+import { post, get,getEmpleados } from '../Services/Crud';
+import { useCookies } from 'react-cookie';
+import { mostrarAlerta } from './MostrarAlerta';
 const FormAreaTrabajoUsuarios = () => {
+  const [cookies,setCookies] = useCookies(['empresaId']);
   const [areasTrabajo, setAreasTrabajo] = useState([]);
+  const [listaEmpleados, setListaEmpleados] = useState([]);
   const [empresas, setEmpresas] = useState([]);
   const [areaSeleccionada, setAreaSeleccionada] = useState('');
   const [empresaSeleccionada, setEmpresaSeleccionada] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
+
+  const [empleado, setEmpleado] = useState('');
+
 
   // Cargar áreas de trabajo y empresas
   useEffect(() => {
@@ -23,7 +29,14 @@ const FormAreaTrabajoUsuarios = () => {
         setMensajeError('Error al cargar los datos');
       }
     };
+
+    const traerEmpleados = async () =>{
+      const empleadosEmpresa = await getEmpleados('traer-empleados',cookies.empresaId);
+      setListaEmpleados(empleadosEmpresa);
+      console.log(empleadosEmpresa);
+    }
     fetchData();
+    traerEmpleados();
   }, []);
 
   // Validación del formulario
@@ -36,10 +49,6 @@ const FormAreaTrabajoUsuarios = () => {
       esValido = false;
     }
 
-    if (!empresaSeleccionada) {
-      erroresTemp.push('La empresa es obligatoria');
-      esValido = false;
-    }
 
     setErrores(erroresTemp);
     return esValido;
@@ -51,20 +60,21 @@ const FormAreaTrabajoUsuarios = () => {
 
     if (validarFormulario()) {
       const datosFormulario = {
-        area_trabajo_id: areaSeleccionada,
-        empresa_id: empresaSeleccionada
+        usuario: empleado,
+        area_trabajo: areaSeleccionada,
+        empresa: cookies.empresaId
       };
 
       try {
-        const response = await post(datosFormulario, 'asignar_usuario_area');
-        if (response && response.success) {
-          alert('Usuario asignado correctamente');
+        const response = await post(datosFormulario, 'asignar_usuario/');
+        if (response.id) {
+          mostrarAlerta("success",'Usuario asignado correctamente');
         } else {
-          alert('Hubo un problema al asignar el usuario');
+          mostrarAlerta("success",'Hubo un problema al asignar el usuario');
         }
       } catch (error) {
         console.error(error);
-        alert('Error al asignar el usuario');
+        console.log ('Error al asignar el usuario');
       }
     } else {
       setMensajeError('Por favor, completa todos los campos.');
@@ -95,24 +105,21 @@ const FormAreaTrabajoUsuarios = () => {
                 </select>
               </td>
             </tr>
-
             <tr>
-              <td><label className="labelEmpresaU">Empresa:</label></td>
               <td>
-                <select
-                  className="selectE"
-                  value={empresaSeleccionada}
-                  onChange={(e) => setEmpresaSeleccionada(e.target.value)}
-                >
-                  <option className="selectEmpresa" value="">Seleccione una empresa</option>
-                  {empresas.map((empresa) => (
-                    <option key={empresa.id} value={empresa.id}>
-                      {empresa.nombre_empresa}
-                    </option>
-                  ))}
-                </select>
+                <label htmlFor="">Seleccione el empleado</label>
               </td>
-            </tr>
+              <td>
+                <select onChange={(e)=>setEmpleado(e.target.value)}>
+                  <option  disabled selected>Lista de empledos</option>
+                  {listaEmpleados.map((empleado)=>{
+                    return(
+                      <option key={empleado.id} value={empleado.id} >{empleado.username}</option>
+                    )
+                  })}
+                </select>
+                </td>
+              </tr>
           </tbody>
         </table>
 

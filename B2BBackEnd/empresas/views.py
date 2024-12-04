@@ -5,6 +5,7 @@ from rest_framework import status
 from .models import Empresa, AreaTrabajo, AreaTrabajoUsuarios, Empleados
 from  usuarios.models import Usuarios
 from .serializers import EmpresaSerializer, AreaTrabajoSerializer, AreaTrabajoUsuariosSerializer, EmpleadosSerializer
+from rest_framework.generics import ListCreateAPIView
 
 # Vista para obtener todas las empresas o crear una nueva
 class EmpresaListCreateView(generics.ListCreateAPIView):
@@ -33,37 +34,10 @@ class AsignarEmpleadosEmpresasView(generics.ListCreateAPIView):
     
 
 # Vista para asignar un usuario a un área de trabajo dentro de una empresa
-class AsignarUsuarioAreaTrabajoView(APIView):
+class AsignarUsuarioAreaTrabajoView(ListCreateAPIView):
+    queryset = AreaTrabajoUsuarios.objects.all()
+    serializer_class = AreaTrabajoUsuariosSerializer
 
-    def post(self, request):
-        # Obtener los parámetros enviados en la solicitud
-        usuario_id = request.data.get('usuario_id')
-        area_trabajo_id = request.data.get('area_trabajo_id')
-        empresa_id = request.data.get('empresa_id')
-
-        try:
-            # Obtener los objetos relacionados
-            usuario = Usuario.objects.get(id=usuario_id)
-            area_trabajo = AreaTrabajo.objects.get(id=area_trabajo_id)
-            empresa = Empresa.objects.get(id=empresa_id)
-
-            # Crear la asignación en la tabla intermedia
-            AreaTrabajoUsuarios.objects.create(usuario=usuario, area_trabajo=area_trabajo, empresa=empresa)
-
-            # Responder con el éxito de la asignación
-            return Response({
-                'message': 'Usuario asignado correctamente',
-                'usuario': usuario.nombre,
-                'area_trabajo': area_trabajo.nombre_area,
-                'empresa': empresa.nombre_empresa
-            }, status=status.HTTP_201_CREATED)
-
-        except Usuario.DoesNotExist:
-            return Response({'error': 'Usuario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
-        except AreaTrabajo.DoesNotExist:
-            return Response({'error': 'Área de trabajo no encontrada'}, status=status.HTTP_404_NOT_FOUND)
-        except Empresa.DoesNotExist:
-            return Response({'error': 'Empresa no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
 class CambiarEstadoEmpresaView(APIView):
     def patch(self, request, empresa_id):
@@ -104,3 +78,22 @@ class CambiarRolUsuarioView(APIView):
             'message': f"Rol de usuario cambiado correctamente",
             'rol': usuario.rol
         }, status=status.HTTP_200_OK)
+
+# Vista para traer todos los empleados de una empresa 
+class TraerEmpleadosEmpresaView(APIView):
+    def get(self,request):
+        
+        id_empresa = request.query_params.get('empresa_id')
+
+        lista_empleados_filtrados = Empleados.objects.filter(empresa= id_empresa).select_related('trabajador') # este lista empleados, solo tiene los empleados de la empresa que le paso en el id
+
+
+        empleados = []
+        for empleado in lista_empleados_filtrados:
+            empleados.append({
+                'id': empleado.trabajador.user.id,
+                'username': empleado.trabajador.user.username,  
+                'email': empleado.trabajador.user.email,
+            })
+        
+        return Response(empleados, status=status.HTTP_200_OK)

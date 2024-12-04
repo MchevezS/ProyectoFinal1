@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CambiarEstadoEmpresaView, CambiarRolUsuarioView, AsignarEmpleadosEmpresasView
-
+from .views import CambiarEstadoEmpresaView, CambiarRolUsuarioView, AsignarEmpleadosEmpresasView,TraerEmpleadosEmpresaView
 urlpatterns = [
     # Rutas para las empresas
     path('empresas/', views.EmpresaListCreateView.as_view(), name='empresa-list'),
@@ -18,6 +17,10 @@ urlpatterns = [
     # Ruta para cambiar el rol de un usuario
     path("cambiar-rol/", CambiarRolUsuarioView.as_view()),
     
-    path("asignar-empleados/",AsignarEmpleadosEmpresasView.as_view())
+    path("asignar-empleados/",AsignarEmpleadosEmpresasView.as_view()),
+
+    path("traer-empleados/", TraerEmpleadosEmpresaView.as_view())
     
 ]
+
+# traer-empleados/?empresa_id=8

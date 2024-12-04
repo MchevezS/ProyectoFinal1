@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../Style/BarraLateral.css';
 
 function BarraLateral() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   return (
     visible ? (
