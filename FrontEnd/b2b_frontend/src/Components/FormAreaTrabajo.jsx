@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { post, get } from '../Services/Crud';
 import '../Style/FormAreaTrabajo.css';
+import { mostrarAlerta } from './MostrarAlerta';
 
 const FormAreaTrabajo = () => {
   const [nombreArea, setNombreArea] = useState('');
@@ -9,6 +10,7 @@ const FormAreaTrabajo = () => {
   const [empresas, setEmpresas] = useState([]);
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
+  const [formVisible, setFormVisible] = useState(true); // Estado para controlar la visibilidad del formulario
 
   // Obtiene la lista de empresas
   useEffect(() => {
@@ -18,7 +20,7 @@ const FormAreaTrabajo = () => {
         setEmpresas(response);
       } catch (error) {
         console.error('Error al obtener empresas:', error);
-        alert('Hubo un problema al cargar las empresas');
+        mostrarAlerta("error",'Hubo un problema al cargar las empresas');
       }
     };
     fetchEmpresas();
@@ -62,12 +64,12 @@ const FormAreaTrabajo = () => {
       try {
         const response = await post(datosFormulario, 'AreaTrabajo/');
         if (response && response.success) {
-          alert('Área de trabajo registrada con éxito');
+          mostrarAlerta("success",'Área de trabajo registrada con éxito');
         } else {
-          alert('Hubo un problema al registrar el área de trabajo');
+          mostrarAlerta("error",'Hubo un problema al registrar el área de trabajo');
         }
       } catch (error) {
-        alert('Error al enviar el formulario');
+        mostrarAlerta("error",'Error al enviar el formulario');
         console.error(error);
       }
     } else {
@@ -75,75 +77,87 @@ const FormAreaTrabajo = () => {
     }
   };
 
+  const toggleFormVisibility = () => {
+    setFormVisible(!formVisible); // Alternar visibilidad del formulario
+  };
+
   return (
-    <form onSubmit={manejarEnvio}>
-      <div className="development-table-container">
-        <h2 className="form-title1">Registrar Área de Trabajo</h2>
-
-        <table className="table">
-          <tbody>
-            <tr>
-              <td><label className="labelNombreArea">Nombre del área de trabajo:</label></td>
-              <td>
-                <input
-                  placeholder="Nombre del área de trabajo"
-                  className="nombreAreaTrabajo"
-                  type="text"
-                  value={nombreArea}
-                  onChange={(e) => setNombreArea(e.target.value)}
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <td><label className="labelResponsableArea">Responsable del área:</label></td>
-              <td>
-                <input
-                  placeholder="Responsable del área"
-                  className="inputResponsableArea"
-                  type="text"
-                  value={responsable}
-                  onChange={(e) => setResponsable(e.target.value)}
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <td><label className="labelEmpresa">Empresa:</label></td>
-              <td>
-                <select
-                  className="selectEmpresa"
-                  value={empresaSeleccionada}
-                  onChange={(e) => setEmpresaSeleccionada(e.target.value)}
-                >
-                  <option className="seleccionarEmpresa" value="">Seleccione una empresa</option>
-                  {empresas.map((empresa) => (
-                    <option key={empresa.id} value={empresa.id}>
-                      {empresa.nombre_empresa}
-                    </option>
-                  ))}
-                </select>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <button className="btnRegistrarArea" type="submit">Registrar Área de Trabajo</button>
-
-        {/* Muestra errores de validación */}
-        {mensajeError && <div className="alerta-error">{mensajeError}</div>}
-
-        {errores.length > 0 && (
-          <div className="alerta-error">
-            <ul>
-              {errores.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+    <div className="development-table-container">
+      <div className="form-title1">
+        <h2>Registrar Área de Trabajo</h2>
+        {/* Flecha para mostrar/ocultar el formulario */}
+        <span className="toggle-arrow" onClick={toggleFormVisibility}>
+          {formVisible ? '↓' : '↑'}
+        </span>
       </div>
-    </form>
+
+      {formVisible && (
+        <form onSubmit={manejarEnvio}>
+          <table className="table">
+            <tbody>
+              <tr>
+                <td><label className="labelNombreArea">Nombre del área de trabajo:</label></td>
+                <td>
+                  <input
+                    placeholder="Nombre del área de trabajo"
+                    className="nombreAreaTrabajo"
+                    type="text"
+                    value={nombreArea}
+                    onChange={(e) => setNombreArea(e.target.value)}
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <td><label className="labelResponsableArea">Responsable del área:</label></td>
+                <td>
+                  <input
+                    placeholder="Responsable del área"
+                    className="inputResponsableArea"
+                    type="text"
+                    value={responsable}
+                    onChange={(e) => setResponsable(e.target.value)}
+                  />
+                </td>
+              </tr>
+
+              <tr>
+                <td><label className="labelEmpresa">Empresa:</label></td>
+                <td>
+                  <select
+                    className="selectEmpresa"
+                    value={empresaSeleccionada}
+                    onChange={(e) => setEmpresaSeleccionada(e.target.value)}
+                  >
+                    <option className="seleccionarEmpresa" value="">Seleccione una empresa</option>
+                    {empresas.map((empresa) => (
+                      <option key={empresa.id} value={empresa.id}>
+                        {empresa.nombre_empresa}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button className="btnRegistrarArea" type="submit">Registrar Área de Trabajo</button>
+
+          {/* Muestra errores de validación */}
+          {mensajeError && <div className="alerta-error">{mensajeError}</div>}
+
+          {errores.length > 0 && (
+            <div className="alerta-error">
+              <ul>
+                {errores.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </form>
+      )}
+    </div>
   );
 };
 

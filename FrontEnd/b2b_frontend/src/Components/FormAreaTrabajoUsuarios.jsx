@@ -1,6 +1,7 @@
 import '../Style/FormAreaTrabajoUsuarios.css';
 import { useState, useEffect } from 'react';
 import { post, get } from '../Services/Crud';
+import { mostrarAlerta } from './MostrarAlerta';
 
 const FormAreaTrabajoUsuarios = () => {
   const [areasTrabajo, setAreasTrabajo] = useState([]);
@@ -9,6 +10,7 @@ const FormAreaTrabajoUsuarios = () => {
   const [empresaSeleccionada, setEmpresaSeleccionada] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
+  const [formVisible, setFormVisible] = useState(true); // Estado para controlar la visibilidad del formulario
 
   // Cargar áreas de trabajo y empresas
   useEffect(() => {
@@ -58,81 +60,94 @@ const FormAreaTrabajoUsuarios = () => {
       try {
         const response = await post(datosFormulario, 'asignar_usuario_area');
         if (response && response.success) {
-          alert('Usuario asignado correctamente');
+          mostrarAlerta("success",'Usuario asignado correctamente');
         } else {
-          alert('Hubo un problema al asignar el usuario');
+          mostrarAlerta("error",'Hubo un problema al asignar el usuario');
         }
       } catch (error) {
         console.error(error);
-        alert('Error al asignar el usuario');
+        mostrarAlerta("error",'Error al asignar el usuario');
       }
     } else {
       setMensajeError('Por favor, completa todos los campos.');
     }
   };
 
+  // Función para alternar la visibilidad del formulario
+  const toggleFormVisibility = () => {
+    setFormVisible(!formVisible); // Alterna la visibilidad del formulario
+  };
+
   return (
-    <form onSubmit={manejarEnvio}>  
-      <div className="development-table-container">
-        <h2 className="form-title1">Asignar Usuario a Área de Trabajo</h2>
-
-        <table className="table">
-          <tbody>
-            <tr>
-              <td><label className="labelAreaU">Área de Trabajo:</label></td>
-              <td>
-                <select
-                  className="areaSelect"
-                  value={areaSeleccionada}
-                  onChange={(e) => setAreaSeleccionada(e.target.value)}
-                >
-                  <option className="optionArea" value="">Seleccione un área de trabajo</option>
-                  {areasTrabajo.map((area) => (
-                    <option key={area.id} value={area.id}>
-                      {area.nombre_area}
-                    </option>
-                  ))}
-                </select>
-              </td>
-            </tr>
-
-            <tr>
-              <td><label className="labelEmpresaU">Empresa:</label></td>
-              <td>
-                <select
-                  className="selectE"
-                  value={empresaSeleccionada}
-                  onChange={(e) => setEmpresaSeleccionada(e.target.value)}
-                >
-                  <option className="selectEmpresa" value="">Seleccione una empresa</option>
-                  {empresas.map((empresa) => (
-                    <option key={empresa.id} value={empresa.id}>
-                      {empresa.nombre_empresa}
-                    </option>
-                  ))}
-                </select>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <button className="btnAsignar" type="submit">Asignar</button>
-
-        {/* Mostrar mensaje de error si existe */}
-        {mensajeError && <div style={{ color: 'red' }}>{mensajeError}</div>}
-        
-        {/* Mostrar lista de errores */}
-        {errores.length > 0 && (
-          <div style={{ color: 'red' }}>
-            <ul>
-              {errores.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+    <div className="development-table-container">
+      <div className="form-title1">
+        <h2>Asignar Usuario a Área de Trabajo</h2>
+        {/* Flecha para mostrar/ocultar el formulario */}
+        <span className="toggle-arrow" onClick={toggleFormVisibility}>
+          {formVisible ? '↓' : '↑'}
+        </span>
       </div>
-    </form>
+
+      {formVisible && (
+        <form onSubmit={manejarEnvio}>
+          <table className="table">
+            <tbody>
+              <tr>
+                <td><label className="labelAreaU">Área de Trabajo:</label></td>
+                <td>
+                  <select
+                    className="areaSelect"
+                    value={areaSeleccionada}
+                    onChange={(e) => setAreaSeleccionada(e.target.value)}
+                  >
+                    <option className="optionArea" value="">Seleccione un área de trabajo</option>
+                    {areasTrabajo.map((area) => (
+                      <option key={area.id} value={area.id}>
+                        {area.nombre_area}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+
+              <tr>
+                <td><label className="labelEmpresaU">Empresa:</label></td>
+                <td>
+                  <select
+                    className="selectE"
+                    value={empresaSeleccionada}
+                    onChange={(e) => setEmpresaSeleccionada(e.target.value)}
+                  >
+                    <option className="selectEmpresa" value="">Seleccione una empresa</option>
+                    {empresas.map((empresa) => (
+                      <option key={empresa.id} value={empresa.id}>
+                        {empresa.nombre_empresa}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button className="btnAsignar" type="submit">Asignar</button>
+
+          {/* Mostrar mensaje de error si existe */}
+          {mensajeError && <div className="error-text">{mensajeError}</div>}
+
+          {/* Mostrar lista de errores */}
+          {errores.length > 0 && (
+            <div className="error-text">
+              <ul>
+                {errores.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </form>
+      )}
+    </div>
   );
 };
 

@@ -8,6 +8,7 @@ function RegistroEmpleados() {
   const [cedulaEmpleado, setCedulaEmpleado] = useState('');
   const [correoEmpleado, setCorreoEmpleado] = useState('');
   const [claveEmpleado, setClaveEmpleado] = useState('');
+  const [formVisible, setFormVisible] = useState(true); // Estado para controlar la visibilidad del formulario
 
   const formatoNombre = () => {
     const regex = /^[a-zA-Z]+$/;
@@ -64,67 +65,82 @@ function RegistroEmpleados() {
     }
   };
 
+  const toggleFormVisibility = () => {
+    setFormVisible(!formVisible); // Alternar visibilidad del formulario
+  };
+
   return (
     <div className="development-table-container">
-      <h2 className="form-title1">Registrar Empleado</h2>
-      <table className="table">
-        <tbody>
-          <tr>
-            <td><label htmlFor="nombreEmpleado">Nombre de usuario</label></td>
-            <td>
-              <input
-                type="text"
-                id="nombreEmpleado"
-                className="nombreEmpleado"
-                placeholder="Nombre de usuario"
-                value={nombreEmpleado}
-                onChange={(e) => setNombreEmpleado(e.target.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td><label htmlFor="cedulaEmpleado">Cédula de Identidad</label></td>
-            <td>
-              <input
-                type="text"
-                id="cedulaEmpleado"
-                className="cedulaEmpleado"
-                placeholder="Cédula de identidad"
-                value={cedulaEmpleado}
-                onChange={(e) => setCedulaEmpleado(e.target.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td><label htmlFor="correoEmpleado">Correo Electrónico</label></td>
-            <td>
-              <input
-                type="email"
-                id="correoEmpleado"
-                className="correoEmpleado"
-                placeholder="Correo Electrónico"
-                value={correoEmpleado}
-                onChange={(e) => setCorreoEmpleado(e.target.value)}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td><label htmlFor="claveEmpleado">Contraseña</label></td>
-            <td>
-              <input
-                type="password"
-                id="claveEmpleado"
-                className="claveEmpleado"
-                placeholder="•••••"
-                value={claveEmpleado}
-                onChange={(e) => setClaveEmpleado(e.target.value)}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="form-title1">
+        <h2>Registrar Empleado</h2>
+        {/* Flecha para mostrar/ocultar el formulario */}
+        <span className="toggle-arrow" onClick={toggleFormVisibility}>
+          {formVisible ? '↓' : '↑'}
+        </span>
+      </div>
 
-      <button type="button" className="btnRegistarEmpleado" onClick={espaciosVacios}>Registrar Empleado</button>
+      {formVisible && (
+        <div className="form-container">
+          <table className="table">
+            <tbody>
+              <tr>
+                <td><label htmlFor="nombreEmpleado">Nombre de usuario</label></td>
+                <td>
+                  <input
+                    type="text"
+                    id="nombreEmpleado"
+                    className="nombreEmpleado"
+                    placeholder="Nombre de usuario"
+                    value={nombreEmpleado}
+                    onChange={(e) => setNombreEmpleado(e.target.value)}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><label htmlFor="cedulaEmpleado">Cédula de Identidad</label></td>
+                <td>
+                  <input
+                    type="text"
+                    id="cedulaEmpleado"
+                    className="cedulaEmpleado"
+                    placeholder="Cédula de identidad"
+                    value={cedulaEmpleado}
+                    onChange={(e) => setCedulaEmpleado(e.target.value)}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><label htmlFor="correoEmpleado">Correo Electrónico</label></td>
+                <td>
+                  <input
+                    type="email"
+                    id="correoEmpleado"
+                    className="correoEmpleado"
+                    placeholder="Correo Electrónico"
+                    value={correoEmpleado}
+                    onChange={(e) => setCorreoEmpleado(e.target.value)}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td><label htmlFor="claveEmpleado">Contraseña</label></td>
+                <td>
+                  <input
+                    type="password"
+                    id="claveEmpleado"
+                    className="claveEmpleado"
+                    placeholder="•••••"
+                    value={claveEmpleado}
+                    onChange={(e) => setClaveEmpleado(e.target.value)}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button type="button" className="btnRegistarEmpleado" onClick={espaciosVacios}>Registrar Empleado</button>
+        </div>
+      )}
     </div>
   );
 }
