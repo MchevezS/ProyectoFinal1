@@ -1,22 +1,22 @@
 import '../Style/FormAreaTrabajoUsuarios.css';
 import { useState, useEffect } from 'react';
-import { post, get,getEmpleados } from '../Services/Crud';
+import { post, get, getEmpleados } from '../Services/Crud';
 import { useCookies } from 'react-cookie';
 import { mostrarAlerta } from './MostrarAlerta';
+
 const FormAreaTrabajoUsuarios = () => {
-  const [cookies,setCookies] = useCookies(['empresaId']);
+  const [cookies] = useCookies(['empresaId']);
   const [areasTrabajo, setAreasTrabajo] = useState([]);
   const [listaEmpleados, setListaEmpleados] = useState([]);
   const [empresas, setEmpresas] = useState([]);
   const [areaSeleccionada, setAreaSeleccionada] = useState('');
   const [empresaSeleccionada, setEmpresaSeleccionada] = useState('');
+  const [empleado, setEmpleado] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
+  const [formVisible, setFormVisible] = useState(true);
 
-  const [empleado, setEmpleado] = useState('');
-
-
-  // Cargar áreas de trabajo y empresas
+  // Cargar áreas de trabajo, empresas y empleados
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,28 +30,30 @@ const FormAreaTrabajoUsuarios = () => {
       }
     };
 
-    const traerEmpleados = async () =>{
-      const empleadosEmpresa = await getEmpleados('traer-empleados',cookies.empresaId);
-      setListaEmpleados(empleadosEmpresa);
-      console.log(empleadosEmpresa);
-    }
+    const traerEmpleados = async () => {
+      try {
+        const empleadosEmpresa = await getEmpleados('traer-empleados', cookies.empresaId);
+        setListaEmpleados(empleadosEmpresa);
+      } catch (error) {
+        console.error(error);
+        setMensajeError('Error al cargar los empleados');
+      }
+    };
+
     fetchData();
     traerEmpleados();
-  }, []);
+  }, [cookies.empresaId]);
 
   // Validación del formulario
   const validarFormulario = () => {
     let esValido = true;
     let erroresTemp = [];
 
-    if (!areaSeleccionada) {
-      erroresTemp.push('El área de trabajo es obligatoria');
-      esValido = false;
-    }
-
+    if (!areaSeleccionada) erroresTemp.push('El área de trabajo es obligatoria');
+    if (!empleado) erroresTemp.push('Debe seleccionar un empleado');
 
     setErrores(erroresTemp);
-    return esValido;
+    return erroresTemp.length === 0;
   };
 
   // Manejo del envío del formulario
@@ -62,84 +64,98 @@ const FormAreaTrabajoUsuarios = () => {
       const datosFormulario = {
         usuario: empleado,
         area_trabajo: areaSeleccionada,
-        empresa: cookies.empresaId
+        empresa: cookies.empresaId,
       };
 
       try {
         const response = await post(datosFormulario, 'asignar_usuario/');
         if (response.id) {
-          mostrarAlerta("success",'Usuario asignado correctamente');
+          mostrarAlerta('success', 'Usuario asignado correctamente');
         } else {
-          mostrarAlerta("success",'Hubo un problema al asignar el usuario');
+          mostrarAlerta('error', 'Hubo un problema al asignar el usuario');
         }
       } catch (error) {
         console.error(error);
-        console.log ('Error al asignar el usuario');
+        mostrarAlerta('error', 'Error al asignar el usuario');
       }
     } else {
       setMensajeError('Por favor, completa todos los campos.');
     }
   };
 
-  return (
-    <form onSubmit={manejarEnvio}>  
-      <div className="development-table-container">
-        <h2 className="form-title1">Asignar Usuario a Área de Trabajo</h2>
+  // Alternar visibilidad del formulario
+  const toggleFormVisibility = () => {
+    setFormVisible(!formVisible);
+  };
 
-        <table className="table">
-          <tbody>
-            <tr>
-              <td><label className="labelAreaU">Área de Trabajo:</label></td>
-              <td>
-                <select
-                  className="areaSelect"
-                  value={areaSeleccionada}
-                  onChange={(e) => setAreaSeleccionada(e.target.value)}
-                >
-                  <option className="optionArea" value="">Seleccione un área de trabajo</option>
-                  {areasTrabajo.map((area) => (
-                    <option key={area.id} value={area.id}>
-                      {area.nombre_area}
-                    </option>
-                  ))}
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label htmlFor="">Seleccione el empleado</label>
-              </td>
-              <td>
-                <select onChange={(e)=>setEmpleado(e.target.value)}>
-                  <option  disabled selected>Lista de empledos</option>
-                  {listaEmpleados.map((empleado)=>{
-                    return(
-                      <option key={empleado.id} value={empleado.id} >{empleado.username}</option>
-                    )
-                  })}
-                </select>
+  return (
+    <div className="development-table-container">
+      <div className="form-title1">
+        <h2>Asignar Usuario a Área de Trabajo</h2>
+        <span className="toggle-arrow" onClick={toggleFormVisibility}>
+          {formVisible ? '↓' : '↑'}
+        </span>
+      </div>
+
+      {formVisible && (
+        <form onSubmit={manejarEnvio}>
+          <table className="table">
+            <tbody>
+              <tr>
+                <td><label className="labelAreaU">Área de Trabajo:</label></td>
+                <td>
+                  <select
+                    className="areaSelect"
+                    value={areaSeleccionada}
+                    onChange={(e) => setAreaSeleccionada(e.target.value)}
+                  >
+                    <option value="" disabled>Seleccione un área de trabajo</option>
+                    {areasTrabajo.map((area) => (
+                      <option key={area.id} value={area.id}>
+                        {area.nombre_area}
+                      </option>
+                    ))}
+                  </select>
                 </td>
               </tr>
-          </tbody>
-        </table>
+              <tr>
+                <td><label className="labelEmpleado">Seleccione el empleado:</label></td>
+                <td>
+                  <select
+                    className="empleadoSelect"
+                    value={empleado}
+                    onChange={(e) => setEmpleado(e.target.value)}
+                  >
+                    <option value="" disabled>Lista de empleados</option>
+                    {listaEmpleados.map((emp) => (
+                      <option key={emp.id} value={emp.id}>
+                        {emp.username}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-        <button className="btnAsignar" type="submit">Asignar</button>
+          <button className="btnAsignar" type="submit">Asignar</button>
 
-        {/* Mostrar mensaje de error si existe */}
-        {mensajeError && <div style={{ color: 'red' }}>{mensajeError}</div>}
-        
-        {/* Mostrar lista de errores */}
-        {errores.length > 0 && (
-          <div style={{ color: 'red' }}>
-            <ul>
-              {errores.map((error, index) => (
-                <li key={index}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    </form>
+          {/* Mostrar mensaje de error si existe */}
+          {mensajeError && <div className="error-text">{mensajeError}</div>}
+
+          {/* Mostrar lista de errores */}
+          {errores.length > 0 && (
+            <div className="error-text">
+              <ul>
+                {errores.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </form>
+      )}
+    </div>
   );
 };
 
