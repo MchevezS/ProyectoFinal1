@@ -99,7 +99,7 @@ class RegistroEmpleadoView(APIView):
             usuario_creado = User.objects.create_user(username=nombre_usuario,password=clave_usuario,email=correo_usuario)
             Usuarios.objects.create(user=usuario_creado,cedula_usuario=cedula_usuario,rol=rol_usuario) #El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 20
             enviar_correo(nombre_usuario,correo_usuario,clave_usuario) # Se usa la funcion enviar correo y se le pasa por argumento el nombre de usuario y el correo usuario que se envian en la peticion, la contraseña se genera de manera automatica.
-            return Response({"success":'Usuario creado',},status=status.HTTP_201_CREATED)
+            return Response({"success":'Usuario creado',"id":usuario_creado.id,},status=status.HTTP_201_CREATED)
         
         
     # Damos por parametro el nombre del usuario que se esta registrando, el correo al que le vayan a llegar las credenciales

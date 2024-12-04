@@ -2,9 +2,9 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Empresa, AreaTrabajo, AreaTrabajoUsuarios
+from .models import Empresa, AreaTrabajo, AreaTrabajoUsuarios, Empleados
 from  usuarios.models import Usuarios
-from .serializers import EmpresaSerializer, AreaTrabajoSerializer, AreaTrabajoUsuariosSerializer
+from .serializers import EmpresaSerializer, AreaTrabajoSerializer, AreaTrabajoUsuariosSerializer, EmpleadosSerializer
 
 # Vista para obtener todas las empresas o crear una nueva
 class EmpresaListCreateView(generics.ListCreateAPIView):
@@ -25,6 +25,12 @@ class AreaTrabajoListCreateView(generics.ListCreateAPIView):
 class AreaTrabajoDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = AreaTrabajo.objects.all()  # Esto obtiene todas las áreas de trabajo
     serializer_class = AreaTrabajoSerializer
+
+# Vista para asignar los empleados a las empresas.
+class AsignarEmpleadosEmpresasView(generics.ListCreateAPIView):
+    queryset = Empleados.objects.all() 
+    serializer_class = EmpleadosSerializer
+    
 
 # Vista para asignar un usuario a un área de trabajo dentro de una empresa
 class AsignarUsuarioAreaTrabajoView(APIView):

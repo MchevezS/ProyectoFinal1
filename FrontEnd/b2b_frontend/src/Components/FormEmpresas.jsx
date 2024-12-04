@@ -73,6 +73,7 @@ const FormEmpresas = () => {
             usuario_id: cookies.usuarioID,
             rol: 'propietario'
           })
+          setCookies("empresaId",response.id)
           console.log('Respuesta del servidor:', peticion);
         } else {
           mostrarAlerta("error", 'Hubo un error al registrar la empresa');
@@ -85,6 +86,7 @@ const FormEmpresas = () => {
 
   return (
     <>
+
       <form onSubmit={manejarEnvio}>
         <div className="titulo">
           <h1>Registra tu empresa</h1>

@@ -1,33 +1,38 @@
+/* BarraLateral.css */
 .barra-lateral {
   background-color: #f8f9fa;
-  width: 250px;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
-  font-family: 'Roboto', sans-serif; 
+  width: 250px; /* Ajustar ancho para evitar conflictos */
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  padding: 20px; /* Espaciado interno adecuado */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+  position: fixed; /* Barra lateral fija */
+  top: 0;
+  left: 0;
 }
 
 .barra-lateral h3 {
   font-size: 18px;
   font-weight: bold;
-  color: #6a5ae0; 
+  color: #6a5ae0;
 }
 
 .barra-lateral .nav-link {
   font-size: 14px;
   font-weight: 500;
-  color: #6c757d; 
+  color: #6c757d;
   border-radius: 8px;
   padding: 10px 15px;
   transition: all 0.3s;
 }
 
 .barra-lateral .nav-link:hover {
-  background-color: #ececec; 
-  color: #333; 
+  background-color: #ececec;
+  color: #333;
 }
 
 .barra-lateral .nav-link i {
-  font-size: 18px; 
+  font-size: 18px;
   color: #6a5ae0;
 }
 

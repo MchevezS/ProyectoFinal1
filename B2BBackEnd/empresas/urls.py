@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CambiarEstadoEmpresaView, CambiarRolUsuarioView
+from .views import CambiarEstadoEmpresaView, CambiarRolUsuarioView, AsignarEmpleadosEmpresasView
 
 urlpatterns = [
     # Rutas para las empresas
@@ -16,5 +16,8 @@ urlpatterns = [
     path('asignar_usuario/', views.AsignarUsuarioAreaTrabajoView.as_view(), name='asignar_usuario'),
     
     # Ruta para cambiar el rol de un usuario
-    path("cambiar-rol/", CambiarRolUsuarioView.as_view())
+    path("cambiar-rol/", CambiarRolUsuarioView.as_view()),
+    
+    path("asignar-empleados/",AsignarEmpleadosEmpresasView.as_view())
+    
 ]

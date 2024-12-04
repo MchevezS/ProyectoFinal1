@@ -7,10 +7,10 @@ import ContenedorGraficos from "./ContenedorGraficos"
 const Dashboard = ()=>{
     return(
         <>
-           <div className="d-flex">
-      <div className="sidebar" style={{ width: '250px' }}>
+      <div className="sidebar" style={{ width: '50px' }}>
         <BarraLateral/>
       </div>
+      <div className="d-flex">
       <div className="content flex-grow-1">
         <Header />
         <div className="container mt-4">

@@ -5,7 +5,6 @@ import {useCookies} from 'react-cookie';
 import Navbar from '../Components/Navbar';
 import { mostrarAlerta } from '../Components/MostrarAlerta';
 import CardPregunta from '../Components/CardPregunta';
-import { useLocation } from 'react-router-dom';
 
 
 function CrearEncuestas() {

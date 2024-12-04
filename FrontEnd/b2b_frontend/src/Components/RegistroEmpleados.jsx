@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import { mostrarAlerta } from './MostrarAlerta';
 import { post } from '../Services/Crud';
 import '../Style/RegistroEmpleados.css';
+import { useCookies } from 'react-cookie';
 
 
 function RegistroEmpleados() {
+
+  //HOOK (creacion de cookies) recibe el nombre de la cookie que va a tener 
+  const [cookies,setCookies]=useCookies(["empresaId"])
+
   const [nombreEmpleado, setNombreEmpleado] = useState('');
   const [cedulaEmpleado, setCedulaEmpleado] = useState('');
   const [correoEmpleado, setCorreoEmpleado] = useState('');
@@ -37,7 +42,7 @@ function RegistroEmpleados() {
   };
 
   const espaciosVacios = () => {
-    if (nombreEmpleado.trim() === "" || cedulaEmpleado.trim() === "" || correoEmpleado.trim() === "" || claveEmpleado.trim() === "") {
+    if (nombreEmpleado.trim() === "" || cedulaEmpleado.trim() === "" || correoEmpleado.trim() === "") {
       mostrarAlerta("error", "Llenar espacios vacíos");
       return;
     }
@@ -55,12 +60,22 @@ function RegistroEmpleados() {
       rol: rolEmpleado
       //password: claveEmpleado   (LA CLAVE SE GENERA DESDE EL BACKEND)
     };
+    console.log(rolEmpleado);
+    
 
     try {
-      const response = await post(dataEmpleados, 'crear-usuario/');
+      const response = await post(dataEmpleados, 'crear-empleado/');
       console.log(response);
       if (response && response.success) {
         mostrarAlerta("success", "Registrado exitosamente");
+
+const asignar = {
+  empresa:cookies.empresaId,
+  trabajador:response.id
+}
+        const responseEmpleados = await post(asignar,"asignar-empleados/")
+        console.log(responseEmpleados);
+        
       };
     } catch (error) {
       console.error('Error al procesar la solicitud:', error);
@@ -117,9 +132,11 @@ function RegistroEmpleados() {
               <label htmlFor=""> Rol del empleado</label>
             </td>
             <td>
-              <select name="" id=""> 
-                <option value="">Recursos humanos</option>
-                <option value="">Trabajador</option>
+              <select onChange={(e)=>setRolEmpleado(e.target.value)}> 
+              <option value=""selected disabled> Seleccione el rol</option>
+              <option value="recursos_humanos">Recursos humanos</option>
+              <option value="trabajador">Trabajador</option>
+
               </select>
             </td>
           </tr>

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Empresa, AreaTrabajo, AreaTrabajoUsuarios
+from .models import Empresa, AreaTrabajo, AreaTrabajoUsuarios, Empleados
 
 # Serializer para el modelo Empresa
 class EmpresaSerializer(serializers.ModelSerializer):
@@ -20,4 +20,12 @@ class AreaTrabajoUsuariosSerializer(serializers.ModelSerializer):
     class Meta:
         model = AreaTrabajoUsuarios 
         fields = '__all__'  
+        
+        
+        
+class EmpleadosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Empleados
+        fields = '__all__' 
+        
         
