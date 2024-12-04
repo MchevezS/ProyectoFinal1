@@ -3,11 +3,14 @@ import { mostrarAlerta } from './MostrarAlerta';
 import { post } from '../Services/Crud';
 import '../Style/RegistroEmpleados.css';
 
+
 function RegistroEmpleados() {
   const [nombreEmpleado, setNombreEmpleado] = useState('');
   const [cedulaEmpleado, setCedulaEmpleado] = useState('');
   const [correoEmpleado, setCorreoEmpleado] = useState('');
-  const [claveEmpleado, setClaveEmpleado] = useState('');
+  const [rolEmpleado, setRolEmpleado] = useState ('');
+  //const [claveEmpleado, setClaveEmpleado] = useState('');       (La clave se genera directamente desde el backend)
+
 
   const formatoNombre = () => {
     const regex = /^[a-zA-Z]+$/;
@@ -49,7 +52,8 @@ function RegistroEmpleados() {
       username: nombreEmpleado,
       cedula: cedulaEmpleado,
       email: correoEmpleado,
-      password: claveEmpleado
+      rol: rolEmpleado
+      //password: claveEmpleado   (LA CLAVE SE GENERA DESDE EL BACKEND)
     };
 
     try {
@@ -109,6 +113,17 @@ function RegistroEmpleados() {
             </td>
           </tr>
           <tr>
+            <td>
+              <label htmlFor=""> Rol del empleado</label>
+            </td>
+            <td>
+              <select name="" id=""> 
+                <option value="">Recursos humanos</option>
+                <option value="">Trabajador</option>
+              </select>
+            </td>
+          </tr>
+          {/* /<tr>
             <td><label htmlFor="claveEmpleado">Contraseña</label></td>
             <td>
               <input
@@ -120,7 +135,7 @@ function RegistroEmpleados() {
                 onChange={(e) => setClaveEmpleado(e.target.value)}
               />
             </td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
 

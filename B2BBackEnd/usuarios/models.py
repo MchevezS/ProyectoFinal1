@@ -7,7 +7,6 @@ class Usuarios(models.Model):
         ("usuario", "USUARIO"),
         ("propietario","PROPIETARIO"),
         ("trabajador","TRABAJADOR"),
-        ("recursos_humanos","RECURSOS_HUMANOS")
     )
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     cedula_usuario = models.CharField(max_length=18)
