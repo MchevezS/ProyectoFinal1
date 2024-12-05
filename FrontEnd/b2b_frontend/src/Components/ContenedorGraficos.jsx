@@ -9,8 +9,8 @@ import TablaEmpleados from './TablaEmpleados';
 
 function ContenedorGraficos() {
   return (
-    <div className="row g-4">
-      <div className="col-md-6">
+    <div className="row">
+      <div className="col-md-6 mb-3">
         <div className="card p-3" style={{height:"55vh"}}>
           <div className="d-flex justify-content-between">
             <h6>Nivel de satisfacción</h6>

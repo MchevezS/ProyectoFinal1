@@ -11,9 +11,9 @@ const Dashboard = ()=>{
         <BarraLateral/>
       </div>
       <div className="d-flex">
-      <div className="content flex-grow-1">
+      <div className="content flex-grow-1 ">
         <Header />
-        <div className="container mt-4">
+        <div className="container mt-4 ">
           <DashboardCards />
         </div>
         <div className="container mt-4">

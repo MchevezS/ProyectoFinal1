@@ -62,7 +62,7 @@ const GraficoBarras3 = () => {
   };
 
   return (
-    <div className="traffic-chart p-4 bg-white rounded shadow-sm">
+    <div className="traffic-chart p-6 bg-white rounded shadow-sm">
       <h6 className="text-muted">Cantidad de empleados en areas de trabajo</h6>
       <Chart
         options={chartOptions}
