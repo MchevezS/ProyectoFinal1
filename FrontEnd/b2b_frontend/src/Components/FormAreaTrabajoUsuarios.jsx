@@ -28,7 +28,7 @@ const FormAreaTrabajoUsuarios = () => {
     
     const traerEmpleados = async () => {
       try {
-        const empleadosEmpresa = await getFilter('traer-empleados', cookies.empresaId || 0);
+        const empleadosEmpresa = await getFilter('traer-empleados', cookies.empresaId || 0,'empresa_id');
         setListaEmpleados(empleadosEmpresa);
       } catch (error) {
         console.error(error);
@@ -38,7 +38,7 @@ const FormAreaTrabajoUsuarios = () => {
     };
     const traerAreas = async () =>{
       try{
-        const areasEmpresa = await getFilter('areas-trabajo', cookies.empresaId || 0);
+        const areasEmpresa = await getFilter('areas-trabajo', cookies.empresaId || 0, 'empresa_id');
         setAreasTrabajo(areasEmpresa);
       }catch(error){
         console.error(error);

@@ -9,16 +9,17 @@ import { useNavigate } from "react-router-dom";
 
 const ResponderEncuestas =()=>{
     const [encuestas, setEncuestas]= useState([])
+    const [cookie,setcookie]= useCookies(["id_encuesta",'empresaId'])
     const navigate = useNavigate()
     useEffect(()=>{
         const traerEncuestas = async()=>{
-            const peticion = await get("encuestas") 
-            setEncuestas(peticion)                                                                                      
+            const peticion = await get("encuestas")
+            const encuestasEmpresa = peticion.filter((encuesta)=>encuesta.empresa===cookie.empresaId)
+            setEncuestas(encuestasEmpresa)                                                                                      
         }
         traerEncuestas()
     },[])
 
-    const [cookie,setcookie]= useCookies(["id_encuesta"])
     return(
         <>
  {encuestas.map((encuesta)=>{

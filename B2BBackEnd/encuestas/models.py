@@ -18,7 +18,7 @@ class Encuestas(models.Model):
     empresa = models.ForeignKey("empresas.Empresa", on_delete=models.CASCADE,related_name="encuestas_empresa")
     
     def __str__(self):
-        return self.titulo_encuesta 
+        return self.categoria_encuesta 
     
     
   # Modelo pregunta contiene la referencia del la encuesta
@@ -42,4 +42,4 @@ class Respuesta(models.Model):
     respuesta_texto = models.CharField(choices=RESPUESTA_ELECCIONES, max_length = 11) #La respuesta que se dio
     fecha_respuesta = models.DateField(auto_now=True) #la fecha en la que se repondio
     retroalimentacion = models.TextField(blank=True,null=True) #Retroalimentacion de la respuesta
-    
+    empresa = models.ForeignKey("empresas.Empresa", on_delete=models.CASCADE,related_name="respuestas_empresa")

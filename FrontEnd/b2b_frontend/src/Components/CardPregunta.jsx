@@ -13,7 +13,7 @@ const CardPregunta = ({opcionSeleccionada}) => {
   console.log(urlpagina.pathname);
 const navigate = useNavigate()
 const [retroalimentacion,setRetroalimentacion] = useState("")
- const [cookie,setcookie]= useCookies(["usuarioID"])
+ const [cookie,setcookie]= useCookies(["usuarioID",'empresaId'])
  const [respuestaSeleccionada, setRespuestaSeleccionada] = useState ("")
  const cambiOpcion = (e)=> {
  const valor = e.target.value 
@@ -22,11 +22,12 @@ console.log(respuestaSeleccionada);
  }
  const envioRespuesta = async (e)=>{
   const guardarYenviar = {
-    encuesta_referencia : localStorage.getItem("id_encuesta") ,
-    pregunta_referencia : localStorage.getItem("id_pregunta") ,
-    usuario_referencia : cookie.usuarioID,
-    respuesta_texto : respuestaSeleccionada, 
-    retroalimentacion:retroalimentacion
+    encuesta_referencia: localStorage.getItem("id_encuesta"),
+    pregunta_referencia: localStorage.getItem("id_pregunta"),
+    usuario_referencia: cookie.usuarioID,
+    respuesta_texto: respuestaSeleccionada, 
+    retroalimentacion: retroalimentacion,
+    empresa: cookie.empresaId
   }
   const peticion = await post("respuestas/", guardarYenviar)
   console.log(peticion);
@@ -66,7 +67,7 @@ console.log(respuestaSeleccionada);
                 id="radio3Example2"
               />
               <label className="form-check-label" htmlFor="radio3Example2">
-               Buena2
+               Buena
               </label>
             </div>
             <div className="form-check mb-2">
