@@ -29,13 +29,14 @@ function DashboardCards() {
       setCantidadRetroalimentacion(retroalimentacion.length)
     }
     const traerEmpleadosActivos = async () => {
-      const cantidad = await getFilter('traer-empleados/',cookies.empresaId)
+      const cantidad = await getFilter('traer-empleados/',cookies.empresaId || 0,'propietario_id')
       setEmpleadosActivos(cantidad.length)
     }
     const traerAreasTrabajo = async () => {
-      const cantidad = await getFilter('areas-trabajo/',cookies.empresaId)
+      const cantidad = await getFilter('areas-trabajo/',cookies.empresaId || 0,'propietario_id')
       setAreasTrabajo(cantidad.length)
     }
+
 
     traerCantEncuestas()
     traerCantEncuestasRespondidas()

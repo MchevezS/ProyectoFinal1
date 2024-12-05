@@ -116,3 +116,20 @@ class TraerAreasTrabajoEmpresaView(APIView):
         return Response(areas_trabajo, status=status.HTTP_200_OK)
 
 
+class ObtenerIDEmpresaView(APIView):
+    def get(self,request):
+        id_empleado = request.query_params.get('empresa_id') # aqui voy a mandar la cookie del inicio sesion
+        id_propietario = request.query_params.get('propietario_id')
+        if id_empleado:
+            empleado = Empleados.objects.filter(trabajador=id_empleado).first()
+            return Response({'id_empresa':empleado.empresa.id},status=status.HTTP_200_OK)
+        elif id_propietario:
+            propietario = Empresa.objects.filter(propietario=id_propietario).first()
+            return Response({'id_empresa':propietario.id},status=status.HTTP_200_OK)
+        else:
+            return Response({'error':'No se encontró el id de la empresa'},status=status.HTTP_404_NOT_FOUND)
+
+        
+
+
+    

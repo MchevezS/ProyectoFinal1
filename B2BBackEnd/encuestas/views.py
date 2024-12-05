@@ -41,5 +41,12 @@ class EncuestaCompleta(APIView):
             'preguntas': pregunta_serializer.data, #devuelve todas las preguntas de la encuesta en especifico (segun el id de la encuesta).
             'respuestas': respuestas_serializer.data #devuelve todas las respuestas de la encuesta en especifico (segun el id de la encuesta).
         })
-        
-    
+
+class TraerEncuestasID(ListCreateAPIView):
+    queryset = Encuestas.objects.all()
+    serializer_class = EncuestaSerializer
+    lookup_field = 'empresa'
+
+    def get_queryset(self):
+        empresa = self.kwargs['empresa']
+        return self.queryset.filter(empresa=empresa)

@@ -39,9 +39,9 @@ async function get(endpoint,id="") {
 }
 export { get };
 
-async function getFilter(endpoint,id="") {
+async function getFilter(endpoint,id="",filtro) {
     try { 
-        const response = await fetch(`${URL}${endpoint}?empresa_id=${id}`)
+        const response = await fetch(`${URL}${endpoint}?${filtro}=${id}`)
         if (!response.ok) {
             throw new Error('Error fetching data');
         }

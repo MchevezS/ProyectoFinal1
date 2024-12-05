@@ -4,10 +4,18 @@ from django.db import models
 
 # Modelo padre
 class Encuestas(models.Model):
-    titulo_encuesta = models.CharField(max_length=200)
+    ENCUESTAS_CATEGORIAS = [
+        ("Salud Mental","Salud Mental"),
+        ("Ambiente Laboral","Ambiente Laboral"),
+        ("Equilibrio Vida-Trabajo","Equilibrio Vida-Trabajo"),
+        ("Beneficios y Compensaciones","Beneficios y Compensaciones"),
+        ("Comunicación Interna","Comunicación Interna"),
+        ("Oportunidades de Crecimiento","Oportunidades de Crecimiento")
+    ]
+    categoria_encuesta = models.CharField(choices=ENCUESTAS_CATEGORIAS, max_length=50)
     descripcion_encuesta = models.TextField()
     fecha_creacion = models.DateField(auto_now=True)
-    
+    empresa = models.ForeignKey("empresas.Empresa", on_delete=models.CASCADE,related_name="encuestas_empresa")
     
     def __str__(self):
         return self.titulo_encuesta 

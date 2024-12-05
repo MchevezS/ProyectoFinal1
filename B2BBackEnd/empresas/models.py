@@ -14,7 +14,8 @@ class Empresa(models.Model):
     cedula_juridica = models.CharField(
         max_length = 10, 
         unique=True,
-        validators=[cedula_juridica_validator]) 
+        validators=[cedula_juridica_validator]
+    ) 
     correo = models.EmailField(unique=True) 
     #propietario de la empresa(relación con modelo Usuarios)
     propietario = models.ForeignKey("usuarios.Usuarios",on_delete=models.CASCADE) #La relacion se hace "app.Modelo"
@@ -53,6 +54,6 @@ class AreaTrabajoUsuarios(models.Model):
 
 
 class Empleados(models.Model):
-    trabajador= models.ForeignKey("usuarios.Usuarios", on_delete=models.CASCADE, related_name="trabajador_empresa")
+    trabajador = models.ForeignKey("usuarios.Usuarios", on_delete=models.CASCADE, related_name="trabajador_empresa")
     empresa= models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name="empresa_trabajador")
     

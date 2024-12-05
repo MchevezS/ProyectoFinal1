@@ -16,6 +16,15 @@ function BarraLateral() {
                 Dashboard
               </a>
           </li>
+          } 
+          {
+          cookies.rolUsuario === 'propietario'  &&
+          <li className="nav-item mb-3">
+              <a href="/CrearEncuestas" className="nav-link d-flex align-items-center">
+                <i className="bi bi-house me-3"></i>
+                Encuestas
+              </a>
+          </li>
           }
           <li className="nav-item mb-3">
             <a href="/empresas" className="nav-link d-flex align-items-center">
