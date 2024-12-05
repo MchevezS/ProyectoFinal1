@@ -27,11 +27,11 @@ class Empresa(models.Model):
 class AreaTrabajo(models.Model):
     #Responsable del área(relación con modelo Usuarios)
     AREA_OPCIONES = [
-    ('marketing', 'MARKETING'),
-    ('ti', 'TI'),
-    ('atencion_cliente', 'ATENCION_CLIENTE'),
-    ('recursos_humanos', 'RECURSOS_HUMANOS'),
-    ('finanzas', 'FINANZAS'),
+    ('Marketing', 'MARKETING'),
+    ('TI', 'TI'),
+    ('Atencion al cliente', 'ATENCION_CLIENTE'),
+    ('Recursos humanos', 'RECURSOS_HUMANOS'),
+    ('Finanzas', 'FINANZAS'),
 ]
     nombre_area = models.CharField(choices=AREA_OPCIONES,max_length=30)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE) # que empresa tiene esa area 

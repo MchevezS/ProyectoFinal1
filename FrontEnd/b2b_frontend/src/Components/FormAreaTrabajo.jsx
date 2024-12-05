@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 import { mostrarAlerta } from './MostrarAlerta';
 
 const FormAreaTrabajo = () => {
-  const [cookies] = useCookies(["empresaId"]);
+  const [cookies] = useCookies(["empresaId", "nombreEmpresa"]);
   const [nombreArea, setNombreArea] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
@@ -74,18 +74,18 @@ const FormAreaTrabajo = () => {
                 <td>
                   <select onChange={(e) => setNombreArea(e.target.value)}>
                     <option value="" disabled selected>Seleccione el área</option>
-                    <option value="marketing">Marketing</option>
-                    <option value="ti">TI</option>
-                    <option value="atencion_cliente">Atención al cliente</option>
-                    <option value="recursos_humanos">Recursos Humanos</option>
-                    <option value="finanzas">Finanzas</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="TI">TI</option>
+                    <option value="Atencion al cliente">Atención al cliente</option>
+                    <option value="Recursos humanos">Recursos Humanos</option>
+                    <option value="Finanzas">Finanzas</option>
                   </select>
                 </td>
               </tr>
               <tr>
                 <td><label className="labelEmpresa">Empresa:</label></td>
                 <td>
-                  <input type="text" value={cookies.empresaId || ''} disabled />
+                  <input type="text" value={cookies.nombreEmpresa || ''} disabled />
                 </td>
               </tr>
             </tbody>

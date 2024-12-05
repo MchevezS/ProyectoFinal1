@@ -1,16 +1,14 @@
 import '../Style/FormAreaTrabajoUsuarios.css';
 import { useState, useEffect } from 'react';
-import { post, get, getEmpleados } from '../Services/Crud';
+import { post, get, getFilter } from '../Services/Crud';
 import { useCookies } from 'react-cookie';
 import { mostrarAlerta } from './MostrarAlerta';
 
 const FormAreaTrabajoUsuarios = () => {
-  const [cookies] = useCookies(['empresaId']);
+  const [cookies] = useCookies(['empresaId','nombreEmpresa']);
   const [areasTrabajo, setAreasTrabajo] = useState([]);
   const [listaEmpleados, setListaEmpleados] = useState([]);
-  const [empresas, setEmpresas] = useState([]);
   const [areaSeleccionada, setAreaSeleccionada] = useState('');
-  const [empresaSeleccionada, setEmpresaSeleccionada] = useState('');
   const [empleado, setEmpleado] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
@@ -21,28 +19,37 @@ const FormAreaTrabajoUsuarios = () => {
     const fetchData = async () => {
       try {
         const areasData = await get('AreaTrabajo');
-        const empresasData = await get('empresas');
         setAreasTrabajo(areasData);
-        setEmpresas(empresasData);
       } catch (error) {
         console.error(error);
         setMensajeError('Error al cargar los datos');
       }
     };
-
+    
     const traerEmpleados = async () => {
       try {
-        const empleadosEmpresa = await getEmpleados('traer-empleados', cookies.empresaId);
+        const empleadosEmpresa = await getFilter('traer-empleados', cookies.empresaId || 0);
         setListaEmpleados(empleadosEmpresa);
       } catch (error) {
         console.error(error);
         setMensajeError('Error al cargar los empleados');
       }
+      
     };
-
+    const traerAreas = async () =>{
+      try{
+        const areasEmpresa = await getFilter('areas-trabajo', cookies.empresaId || 0);
+        setAreasTrabajo(areasEmpresa);
+      }catch(error){
+        console.error(error);
+        setMensajeError('Error al cargar las áreas de trabajo');
+      }
+    }
+    
     fetchData();
     traerEmpleados();
-  }, [cookies.empresaId]);
+    traerAreas();
+  }, [cookies.empresaId, listaEmpleados]);
 
   // Validación del formulario
   const validarFormulario = () => {
@@ -107,7 +114,7 @@ const FormAreaTrabajoUsuarios = () => {
                   <select
                     className="areaSelect"
                     value={areaSeleccionada}
-                    onChange={(e) => setAreaSeleccionada(e.target.value)}
+                    onChange={(e)=>setAreaSeleccionada(e.target.value)}
                   >
                     <option value="" disabled>Seleccione un área de trabajo</option>
                     {areasTrabajo.map((area) => (
@@ -124,7 +131,7 @@ const FormAreaTrabajoUsuarios = () => {
                   <select
                     className="empleadoSelect"
                     value={empleado}
-                    onChange={(e) => setEmpleado(e.target.value)}
+                    onChange={(e)=>setEmpleado(e.target.value)}
                   >
                     <option value="" disabled>Lista de empleados</option>
                     {listaEmpleados.map((emp) => (
@@ -135,8 +142,14 @@ const FormAreaTrabajoUsuarios = () => {
                   </select>
                 </td>
               </tr>
+              <tr>
+              <td><label className="labelEmpleado">Empresa</label></td>
+                <td>
+                    <input value={cookies.nombreEmpresa} disabled/>
+                </td>
+              </tr>
             </tbody>
-          </table>
+          </table> 
 
           <button className="btnAsignar" type="submit">Asignar</button>
 

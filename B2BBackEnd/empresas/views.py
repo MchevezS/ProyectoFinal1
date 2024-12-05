@@ -97,3 +97,22 @@ class TraerEmpleadosEmpresaView(APIView):
             })
         
         return Response(empleados, status=status.HTTP_200_OK)
+
+
+class TraerAreasTrabajoEmpresaView(APIView):
+    def get(self,request):
+
+        id_empresa = request.query_params.get('empresa_id')
+
+        lista_areas_trabajo = AreaTrabajo.objects.filter(empresa=id_empresa).select_related('empresa')
+
+        areas_trabajo = []
+        for area in lista_areas_trabajo:
+            areas_trabajo.append({
+                'id': area.id,
+                'nombre_area': area.nombre_area
+            })
+
+        return Response(areas_trabajo, status=status.HTTP_200_OK)
+
+

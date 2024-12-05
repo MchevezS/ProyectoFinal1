@@ -90,8 +90,17 @@ const asignar = {
 
   return (
     <div className="development-table-container">
-      <h2 className="form-title1">Registrar Empleado</h2>
-      <table className="table">
+      <div className="form-title1">
+        <h2>Registrar Empleado</h2>
+        {/* Flecha para mostrar/ocultar el formulario */}
+        <span className="toggle-arrow" onClick={toggleFormVisibility}>
+          {formVisible ? '↓' : '↑'}
+        </span>
+      </div>
+
+      {formVisible && (
+        <>
+            <table className="table">
         <tbody>
           <tr>
             <td><label htmlFor="nombreEmpleado">Nombre de usuario</label></td>
@@ -160,61 +169,8 @@ const asignar = {
           </tr> */}
         </tbody>
       </table>
-      <div className="form-title1">
-        <h2>Registrar Empleado</h2>
-        {/* Flecha para mostrar/ocultar el formulario */}
-        <span className="toggle-arrow" onClick={toggleFormVisibility}>
-          {formVisible ? '↓' : '↑'}
-        </span>
-      </div>
-
-      {formVisible && (
-        <div className="form-container">
-          <table className="table">
-            <tbody>
-              <tr>
-                <td><label htmlFor="nombreEmpleado">Nombre de usuario</label></td>
-                <td>
-                  <input
-                    type="text"
-                    id="nombreEmpleado"
-                    className="nombreEmpleado"
-                    placeholder="Nombre de usuario"
-                    value={nombreEmpleado}
-                    onChange={(e) => setNombreEmpleado(e.target.value)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td><label htmlFor="cedulaEmpleado">Cédula de Identidad</label></td>
-                <td>
-                  <input
-                    type="text"
-                    id="cedulaEmpleado"
-                    className="cedulaEmpleado"
-                    placeholder="Cédula de identidad"
-                    value={cedulaEmpleado}
-                    onChange={(e) => setCedulaEmpleado(e.target.value)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td><label htmlFor="correoEmpleado">Correo Electrónico</label></td>
-                <td>
-                  <input
-                    type="email"
-                    id="correoEmpleado"
-                    className="correoEmpleado"
-                    placeholder="Correo Electrónico"
-                    value={correoEmpleado}
-                    onChange={(e) => setCorreoEmpleado(e.target.value)}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
           <button type="button" className="btnRegistarEmpleado" onClick={espaciosVacios}>Registrar Empleado</button>
-        </div>
+        </>
       )}
     </div>
   );

@@ -1,13 +1,19 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
-import { get } from '../Services/Crud';
-
+import { get,getFilter } from '../Services/Crud';
+import {useCookies} from 'react-cookie';
 
 function DashboardCards() {
   const fecha = new Date().toLocaleDateString()
+  const [cookies] = useCookies(['empresaId'])
+
   const [cantidadEncuestas,setCantidadEncuestas] = useState(0)
   const [encuestasRespondidas,setEncuestasRespondidas] = useState(0)
   const [cantidadRetroalimentacion,setCantidadRetroalimentacion] = useState(0)
+  
+  const [empleadosActivos,setEmpleadosActivos] = useState(0)
+  const [areasTrabajo,setAreasTrabajo] = useState(0)
+  
   useEffect(()=>{
     const traerCantEncuestas = async () => {
       const cantidad = await get('encuestas')
@@ -22,17 +28,28 @@ function DashboardCards() {
       const retroalimentacion = cantidad.filter(cantRetroalimentacion=> cantRetroalimentacion.retroalimentacion !== "")
       setCantidadRetroalimentacion(retroalimentacion.length)
     }
+    const traerEmpleadosActivos = async () => {
+      const cantidad = await getFilter('traer-empleados/',cookies.empresaId)
+      setEmpleadosActivos(cantidad.length)
+    }
+    const traerAreasTrabajo = async () => {
+      const cantidad = await getFilter('areas-trabajo/',cookies.empresaId)
+      setAreasTrabajo(cantidad.length)
+    }
+
     traerCantEncuestas()
     traerCantEncuestasRespondidas()
     traerCantRetroalimentacion()
+    traerEmpleadosActivos()
+    traerAreasTrabajo()
   },[])
 
   const cards = [
     { title: 'Encuestas realizadas', value: cantidadEncuestas, icon: 'bi bi-bar-chart' },
-    { title: 'Empleados activos', value: 2, icon: 'bi bi-cash' },
+    { title: 'Empleados activos', value: empleadosActivos, icon: 'bi bi-cash' },
     { title: 'Retroalimentación', value: cantidadRetroalimentacion, icon: 'bi bi-graph-up'},
     { title: 'Encuestas respondidas', value: encuestasRespondidas, icon: 'bi bi-wallet'},
-    { title: 'Areas de trabajo', value: 10, icon: 'bi bi-check-circle' },
+    { title: 'Areas de trabajo', value: areasTrabajo, icon: 'bi bi-check-circle' },
     { title: 'Fecha actual', value: fecha, icon: 'bi bi-file-earmark' },
   ];
 

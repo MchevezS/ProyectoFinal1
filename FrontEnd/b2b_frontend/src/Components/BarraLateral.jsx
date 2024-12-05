@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import '../Style/BarraLateral.css';
-
+import {useCookies} from 'react-cookie'
 function BarraLateral() {
   const [visible, setVisible] = useState(false);
-
+  const [cookies] = useCookies(['rolUsuario'])
   return (
     visible ? (
       <div className="d-flex flex-column vh-100 barra-lateral">
         <h3 onClick={()=>setVisible(false)}  className="mb-4 text-primary">B2B</h3>
         <ul className="nav flex-column">
+          {cookies.rolUsuario === 'propietario' &&
           <li className="nav-item mb-3">
-            <a href="/dashboard" className="nav-link d-flex align-items-center">
-              <i className="bi bi-house me-3"></i>
-              Dashboard
-            </a>
+              <a href="/dashboard" className="nav-link d-flex align-items-center">
+                <i className="bi bi-house me-3"></i>
+                Dashboard
+              </a>
           </li>
+          }
           <li className="nav-item mb-3">
             <a href="/empresas" className="nav-link d-flex align-items-center">
               <i className="bi bi-table me-3"></i>

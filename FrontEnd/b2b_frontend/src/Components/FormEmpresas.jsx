@@ -6,7 +6,7 @@ import { mostrarAlerta } from './MostrarAlerta';
 import { patch } from '../Services/Crud';
 
 const FormEmpresas = () => {
-  const [cookies,setCookies] = useCookies(["usuarioID", "nombreUsuario", "empresaId"]);
+  const [cookies,setCookies] = useCookies(["usuarioID", "nombreUsuario", "empresaId","nombreEmpresa",'rolUsuario']);
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [cedulaJuridica, setCedulaJuridica] = useState('');
   const [correo, setCorreo] = useState('');
@@ -68,15 +68,21 @@ const FormEmpresas = () => {
 
       try {
         const response = await post(datosFormulario, 'empresas/');
+        setCookies("empresaId",response.id)
+        
         console.log('Respuesta del servidor:', response);
-
+        
+        const empresa = response
+        console.log(empresa.nombre_empresa);
+        setCookies("nombreEmpresa", empresa.nombre_empresa)
+        
         if (response) {
           mostrarAlerta("success", 'Empresa registrada con éxito');
           const peticion = await patch('cambiar-rol','',{
             usuario_id: cookies.usuarioID,
             rol: 'propietario'
           })
-          setCookies("empresaId",response.id)
+          setCookies("rolUsuario", "propietario")
           console.log('Respuesta del servidor:', peticion);
         } else {
           mostrarAlerta("error", 'Hubo un error al registrar la empresa');

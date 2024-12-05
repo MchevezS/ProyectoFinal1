@@ -60,10 +60,12 @@ function RegistroLogin() {
           setCookie("nombreUsuario",response.nombre);
           setCookie("rolUsuario" , response.rol);
 
+console.log(cookie.rolUsuario);
 
           if (cookie.rolUsuario==="usuario") {
             navigate("/empresas");
           }
+
 
           if (cookie.rolUsuario==="trabajador"){
             navigate("/")
