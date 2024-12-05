@@ -66,9 +66,12 @@ console.log(cookie.rolUsuario);
             navigate("/empresas");
           }
 
+          if (cookie.rolUsuario==="propietario") {
+            navigate("/dashboard");
+          }
 
           if (cookie.rolUsuario==="trabajador"){
-            navigate("/")
+            navigate("/verEncuesta")
           }
           // guardamos el id del usuario para obtenerlo en empresas
         }, 1000);
