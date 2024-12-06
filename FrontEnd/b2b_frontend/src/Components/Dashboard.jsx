@@ -17,7 +17,8 @@ const Dashboard = ()=>{
       const empresa = await getFilter("empresa-id/",cookies.usuarioID,'propietario_id')
       console.log(empresa)
       setIdEmpresa(empresa.id_empresa) 
-      console.log(empresa.id_empresa);
+      setCookies('empresaId',empresa.id_empresa)
+      console.log(empresa.id_empresa);  
       console.log(idEmpresa);
       cookies.empresaId = empresa.id_empresa
     }

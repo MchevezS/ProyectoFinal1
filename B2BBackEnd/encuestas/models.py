@@ -43,3 +43,4 @@ class Respuesta(models.Model):
     fecha_respuesta = models.DateField(auto_now=True) #la fecha en la que se repondio
     retroalimentacion = models.TextField(blank=True,null=True) #Retroalimentacion de la respuesta
     empresa = models.ForeignKey("empresas.Empresa", on_delete=models.CASCADE,related_name="respuestas_empresa")
+    

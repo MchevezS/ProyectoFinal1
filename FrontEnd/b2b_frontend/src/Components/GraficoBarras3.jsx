@@ -2,6 +2,7 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import '../Style/GraficoBarras3.css';
 const GraficoBarras3 = () => {
+  
   const chartOptions = {
     chart: {
       type: 'bar',

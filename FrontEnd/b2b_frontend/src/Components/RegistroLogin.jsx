@@ -62,15 +62,15 @@ function RegistroLogin() {
 
 console.log(cookie.rolUsuario);
 
-          if (cookie.rolUsuario==="usuario") {
+          if (cookie.rolUsuario==="usuario" || response.rol === 'usuario') {
             navigate("/empresas");
           }
 
-          if (cookie.rolUsuario==="propietario") {
+          if (cookie.rolUsuario==="propietario" || response.rol === 'propietario') {
             navigate("/dashboard");
           }
 
-          if (cookie.rolUsuario==="trabajador"){
+          if (cookie.rolUsuario==="trabajador" || response.rol === 'trabajador') {
             navigate("/verEncuesta")
           }
           // guardamos el id del usuario para obtenerlo en empresas
