@@ -94,6 +94,8 @@ class TraerEmpleadosEmpresaView(APIView):
                 'id': empleado.trabajador.user.id,
                 'username': empleado.trabajador.user.username,  
                 'email': empleado.trabajador.user.email,
+                'is_active': empleado.trabajador.user.is_active,
+                'date_joined': empleado.trabajador.user.date_joined,
             })
         
         return Response(empleados, status=status.HTTP_200_OK)
@@ -130,6 +132,20 @@ class ObtenerIDEmpresaView(APIView):
             return Response({'error':'No se encontró el id de la empresa'},status=status.HTTP_404_NOT_FOUND)
 
         
+class TraerAreasTrabajoUsuarioEmpresaView(APIView):
+    def get(self,request):
 
+        id_empresa = request.query_params.get('empresa_id')
 
+        lista_areas_trabajo = AreaTrabajoUsuarios.objects.filter(empresa=id_empresa).select_related('empresa')
+
+        areas_trabajo = []
+        for area in lista_areas_trabajo:
+            areas_trabajo.append({
+                'id': area.id,
+                'nombre_area': area.area_trabajo.nombre_area,
+                'usuario': area.usuario.user.username
+            })
+
+        return Response(areas_trabajo, status=status.HTTP_200_OK)
     

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from rest_framework import status
 from encuestas.models import Encuestas, Pregunta,Respuesta
 from encuestas.serializers import EncuestaSerializer, PreguntaSerializer, RespuestaSerializer
 
@@ -50,3 +50,20 @@ class TraerEncuestasID(ListCreateAPIView):
     def get_queryset(self):
         empresa = self.kwargs['empresa']
         return self.queryset.filter(empresa=empresa)
+
+class EncuestasRespondidasSinResponderView(APIView):
+    def get(self,request):
+
+        encuestas_ids = Respuesta.objects.values_list('encuesta_referencia',flat=True).distinct()
+
+        encuestas_respondidas = Encuestas.objects.filter(id__in = encuestas_ids)
+
+        encuestas_sin_responder = Encuestas.objects.exclude(id__in = encuestas_ids) 
+
+        data = {
+            'encuestas_respondidas': EncuestaSerializer(encuestas_respondidas,many=True).data,
+            'encuestas_sin_responder': EncuestaSerializer(encuestas_sin_responder,many=True).data
+        }
+
+        return Response(data,status=status.HTTP_200_OK)
+

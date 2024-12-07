@@ -1,8 +1,41 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import '../Style/GraficoBarras3.css';
+import { useState,useEffect } from 'react';
+import { get,getFilter} from '../Services/Crud';
+import {useCookies} from 'react-cookie';
 const GraficoBarras3 = () => {
-  
+  const [recursosHumanos, setRecursosHumanos] = useState(0);
+  const [atencionCliente, setAtencionCliente] = useState(0);
+  const [finanzas, setFinanzas] = useState(0);
+  const [marketing, setMarketing] = useState(0);
+  const [ti, setTi] = useState(0);
+  const [cookies]=useCookies(["empresaId"])
+
+
+  useEffect(()=>{
+    const traerEmpleadosPorArea = async () => {
+      const peticion = await getFilter('areas-trabajo-usuario',cookies.empresaId,'empresa_id');
+
+        const empleadoRecursosHumanos = peticion.filter((empleado)=>empleado.nombre_area === 'Recursos humanos')
+        setRecursosHumanos(empleadoRecursosHumanos.length)
+
+        const empleadoAtencion = peticion.filter((empleado)=>empleado.nombre_area === 'Atencion al cliente')
+        setAtencionCliente(empleadoAtencion.length)
+         
+        const empleadoFinanzas = peticion.filter((empleado)=>empleado.nombre_area === 'Finanzas')
+        setFinanzas(empleadoFinanzas.length)
+        
+        const empleadoMarketing = peticion.filter((empleado)=>empleado.nombre_area === 'Marketing')
+        setMarketing(empleadoMarketing.length)
+
+        const empleadoTi = peticion.filter((empleado)=>empleado.nombre_area === 'TI')
+        setTi(empleadoTi.length)
+
+    }
+    traerEmpleadosPorArea()
+  },[])
+
   const chartOptions = {
     chart: {
       type: 'bar',
@@ -57,7 +90,7 @@ const GraficoBarras3 = () => {
     series: [
       {
         name: 'Visitors',
-        data: [15, 25, 35, 45, 30],
+        data: [recursosHumanos, atencionCliente, finanzas, marketing, ti]
       },
     ],
   };
