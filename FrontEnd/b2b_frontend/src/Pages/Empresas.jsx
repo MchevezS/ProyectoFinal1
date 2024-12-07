@@ -5,7 +5,7 @@ import RegistroEmpleados from '../Components/RegistroEmpleados';
 import '../Style/Empresas.css';
 import BarraLateral from '../Components/BarraLateral';
 import { useState } from 'react';
-
+import Header from '../Components/Header';
 function Empresas() {
   // Estados para controlar si los formularios están completados
   const [formEmpresasComplete, setFormEmpresasComplete] = useState(false);
@@ -21,9 +21,12 @@ function Empresas() {
 
   return (
     <>
-      <BarraLateral />
       <div>
         <BarraLateral />
+
+        <div>
+          <Header />
+          </div>
         <section>
           <div className="table-wrapper">
             <div className="development-table-container">

@@ -5,7 +5,8 @@ import { get } from "../Services/Crud";
 import CardEncuesta from "../Components/CardEncuesta";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-
+import BarraLateral from "../Components/BarraLateral";
+import Header from "../Components/Header";
 
 const ResponderEncuestas =()=>{
     const [encuestas, setEncuestas]= useState([])
@@ -22,8 +23,18 @@ const ResponderEncuestas =()=>{
 
     return(
         <>
+             <div className="sidebar" style={{ width: '50px' }}>
+        <BarraLateral/>
+      </div>
+      <div className="d-flex">
+      <div className="content flex-grow-1 ">
+        <Header />
+        </div>
+        </div>
+        <div className="d-flex flex-row">
  {encuestas.map((encuesta)=>{
     return(
+    <div className="mx-auto">
     <CardEncuesta key={encuesta.id}
     titulo={encuesta.titulo_encuesta}
     descripcion={encuesta.descripcion_encuesta}
@@ -31,13 +42,16 @@ const ResponderEncuestas =()=>{
     responder={()=> { 
 
      localStorage.setItem("id_encuesta", encuesta.id)
-        navigate("/verEncuesta")
+        navigate("/responderEncuesta")
     
     }}
-    />)
+    />
+    </div>
+)
 
 
  })}
+ </div>
 
         </>
     )

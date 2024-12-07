@@ -1,47 +1,73 @@
 import React, { useState } from 'react';
 import '../Style/BarraLateral.css';
 import {useCookies} from 'react-cookie'
+import { MdDashboard } from "react-icons/md";
+import { RiSurveyFill } from "react-icons/ri";
+import { IoMdBusiness } from "react-icons/io";
+import { ImProfile } from "react-icons/im";
+import { CiMenuBurger } from "react-icons/ci";
+
 function BarraLateral() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [cookies] = useCookies(['rolUsuario'])
   return (
     visible ? (
       <div className="d-flex flex-column vh-100 barra-lateral">
-        <h3 onClick={()=>setVisible(false)}  className="mb-4 text-primary">B2B</h3>
+        <h3 onClick={()=>setVisible(false)}  className="mb-4 text-primary text-center">B2B</h3>
         <ul className="nav flex-column">
           {cookies.rolUsuario === 'propietario' &&
-          <li className="nav-item mb-3">
+          <li className="nav-item mb-5">
               <a href="/dashboard" className="nav-link d-flex align-items-center">
-                <i className="bi bi-house me-3"></i>
+                <MdDashboard className="me-3" size={25} />
                 Dashboard
               </a>
           </li>
           } 
           {
-          cookies.rolUsuario === 'propietario'  &&
-          <li className="nav-item mb-3">
+          cookies.rolUsuario === 'propietario' &&
+          <li className="nav-item mb-5">
               <a href="/CrearEncuestas" className="nav-link d-flex align-items-center">
-                <i className="bi bi-house me-3"></i>
+                <RiSurveyFill className="me-3" size={25} />
                 Encuestas
               </a>
           </li>
           }
-          <li className="nav-item mb-3">
+             {
+          cookies.rolUsuario === 'recursos_humanos' &&
+          <li className="nav-item mb-5">
+              <a href="/CrearEncuestas" className="nav-link d-flex align-items-center">
+                <RiSurveyFill className="me-3" size={25} />
+                Encuestas
+              </a>
+          </li>
+          }
+          {
+          cookies.rolUsuario === 'propietario' || cookies.rolUsuario === 'recursos_humanos' || cookies.rolUsuario === 'trabajador' &&
+          <li className="nav-item mb-5">
+              <a href="/verEncuestas" className="nav-link d-flex align-items-center">
+                <RiSurveyFill className="me-3" size={25} />
+                Ver Encuestas
+              </a>
+          </li>
+          }
+          {cookies.rolUsuario === 'propietario' &&
+          <li className="nav-item mb-5">
             <a href="/empresas" className="nav-link d-flex align-items-center">
-              <i className="bi bi-table me-3"></i>
+              <IoMdBusiness className="me-3" size={25} />
               Empresa
             </a>
           </li>
-          <li className="nav-item">
-            <a href="#" className="nav-link d-flex align-items-center">
-              <i className="bi bi-person me-3"></i>
+          }
+          <li className="nav-item  mb-5">
+            <a href="/perfil" className="nav-link d-flex align-items-center">
+              <ImProfile className="me-3" size={25} />
               Perfil
             </a>
           </li>
         </ul>
       </div>
     ) : (
-      <button onClick={()=>setVisible(true)}>///</button> /* poner un icono si o si */
+      <CiMenuBurger style={{color:"#ffff"}} size={50} onClick={()=>{setVisible(!visible)}}/> /* poner un icono si o si */
     )
   );
 }

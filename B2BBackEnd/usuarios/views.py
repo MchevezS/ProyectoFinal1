@@ -10,7 +10,8 @@ from rest_framework.generics import ListCreateAPIView #get y post
 import re #expresiones regulares
 import random
 import string
-
+from empresas.models import AreaTrabajoUsuarios
+ 
 from mailersend import emails #importacion de la api mailersend
 
 # api token de mailersend 
@@ -54,14 +55,26 @@ class LoginView(APIView):
         
         #quita el cifrado de la contraseña para saber si es correcta
         datos_autenticacion = authenticate(request,username=nombre_usuario,password=clave_usuario)
+
+        try:
+         area_trabajo = AreaTrabajoUsuarios.objects.get(usuario_id=datos_autenticacion.id)
+        except:
+         area_trabajo = None
         
+
         if datos_autenticacion is not None:
             refresh = RefreshToken.for_user(datos_autenticacion)
             rol= Usuarios.objects.get(user_id=datos_autenticacion.id)
-            return Response({"success":'bienvenido',"id":datos_autenticacion.id,"rol":rol.rol,"nombre": datos_autenticacion.username, "correo": datos_autenticacion.email,"token_acceso": str(refresh.access_token),"token_refresco":str(refresh),},status=status.HTTP_200_OK)
-        
-        else:
-            return Response({"error":'credenciales invalidas',},status=status.HTTP_400_BAD_REQUEST)    
+            if area_trabajo is None:
+                return Response({"success":'bienvenido','area':'Propietario',"id":datos_autenticacion.id,"rol":rol.rol,
+                             "nombre": datos_autenticacion.username, "correo": datos_autenticacion.email,
+                             "token_acceso": str(refresh.access_token),"token_refresco":str(refresh),},status=status.HTTP_200_OK)
+            elif area_trabajo is not None:
+                return Response({"success":'bienvenido','area':area_trabajo.area_trabajo.nombre_area,"id":datos_autenticacion.id,"rol":rol.rol,
+                             "nombre": datos_autenticacion.username, "correo": datos_autenticacion.email,
+                             "token_acceso": str(refresh.access_token),"token_refresco":str(refresh),},status=status.HTTP_200_OK)
+            else:
+                return Response({'error':'Credenciales incorrectas'},status=status.HTTP_400_BAD_REQUEST)
         
 
 # Hacemos una vista que nos permite listar todos los usuarios.

@@ -8,7 +8,7 @@ import {useCookies} from 'react-cookie'
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
-  const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario","rolUsuario"])
+  const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario","rolUsuario",'areaUsuario']);
   const navigate = useNavigate();
 
   // Estados de los formularios
@@ -59,6 +59,7 @@ function RegistroLogin() {
           setCookie("usuarioID",response.id);
           setCookie("nombreUsuario",response.nombre);
           setCookie("rolUsuario" , response.rol);
+          setCookie("areaUsuario", response.area);
 
 console.log(cookie.rolUsuario);
 
@@ -69,9 +70,14 @@ console.log(cookie.rolUsuario);
           if (cookie.rolUsuario==="propietario" || response.rol === 'propietario') {
             navigate("/dashboard");
           }
-
+          
           if (cookie.rolUsuario==="trabajador" || response.rol === 'trabajador') {
-            navigate("/verEncuesta")
+            localStorage.clear()
+            navigate("/verEncuestas")
+          }
+          if (cookie.rolUsuario==="recursos_humanos" || response.rol === 'recursos_humanos') {
+            localStorage.clear()
+            navigate("/CrearEncuestas")
           }
           // guardamos el id del usuario para obtenerlo en empresas
         }, 1000);

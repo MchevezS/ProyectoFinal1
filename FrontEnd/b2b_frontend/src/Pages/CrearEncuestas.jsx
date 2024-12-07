@@ -8,6 +8,8 @@ import CardPregunta from '../Components/CardPregunta';
 import { useLocation } from 'react-router-dom';
 import '../Style/CrearEncuestas.css'
 import { getFilter } from '../Services/Crud';
+import BarraLateral from '../Components/BarraLateral';
+import Header from '../Components/Header';
 
 function CrearEncuestas() {
     //Estados para manejar el cambio de informacion en los inputs
@@ -64,7 +66,12 @@ async function enviarEncuesta() {
 
   return (
     <div>
-    <Navbar />
+     <div className="sidebar" style={{ width: '50px' }}>
+            <BarraLateral/>
+        </div>
+        <div className="content flex-grow-1 ">
+          <Header />
+        </div>
     <div className="container">
       <div
         className="d-flex justify-content-center align-items-center"

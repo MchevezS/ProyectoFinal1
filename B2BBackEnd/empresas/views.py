@@ -117,17 +117,20 @@ class TraerAreasTrabajoEmpresaView(APIView):
 
         return Response(areas_trabajo, status=status.HTTP_200_OK)
 
-
+# Esta función obtiene el id y el nombre de la empresa que tenga relación con el usuario que inicia sesión (sea empleado o propietario)
 class ObtenerIDEmpresaView(APIView):
     def get(self,request):
-        id_empleado = request.query_params.get('empresa_id') # aqui voy a mandar la cookie del inicio sesion
-        id_propietario = request.query_params.get('propietario_id')
+        id_empleado = request.query_params.get('empresa_id') # Obtiene el id del empleado para relacionarlo con la empresa
+        id_propietario = request.query_params.get('propietario_id') # Obtiene el id del propietario para relacionarlo con la empresa
+        
+        # Si se obtuvo un id_empleado o id_propietario hace la busqueda en la BD para obtener el id de la empresa
         if id_empleado:
             empleado = Empleados.objects.filter(trabajador=id_empleado).first()
             return Response({'id_empresa':empleado.empresa.id},status=status.HTTP_200_OK)
         elif id_propietario:
             propietario = Empresa.objects.filter(propietario=id_propietario).first()
             return Response({'id_empresa':propietario.id,'nombre_empresa':propietario.nombre_empresa},status=status.HTTP_200_OK)
+        # Si no se obtuvo ninguno envía un error
         else:
             return Response({'error':'No se encontró el id de la empresa'},status=status.HTTP_404_NOT_FOUND)
 
