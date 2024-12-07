@@ -127,7 +127,7 @@ class ObtenerIDEmpresaView(APIView):
             return Response({'id_empresa':empleado.empresa.id},status=status.HTTP_200_OK)
         elif id_propietario:
             propietario = Empresa.objects.filter(propietario=id_propietario).first()
-            return Response({'id_empresa':propietario.id},status=status.HTTP_200_OK)
+            return Response({'id_empresa':propietario.id,'nombre_empresa':propietario.nombre_empresa},status=status.HTTP_200_OK)
         else:
             return Response({'error':'No se encontró el id de la empresa'},status=status.HTTP_404_NOT_FOUND)
 

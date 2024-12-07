@@ -9,7 +9,7 @@ import { getFilter } from "../Services/Crud"
 
 const Dashboard = ()=>{
   const [idEmpresa,setIdEmpresa]=useState([])
-  const [cookies,setCookies]=useCookies(["empresaId",'usuarioID'])
+  const [cookies,setCookies]=useCookies(["empresaId",'usuarioID','nombreEmpresa'])
 
   useEffect(()=>{
     console.log('Entrea al useeffect de dashboard') 
@@ -18,6 +18,7 @@ const Dashboard = ()=>{
       console.log(empresa)
       setIdEmpresa(empresa.id_empresa) 
       setCookies('empresaId',empresa.id_empresa)
+      setCookies('nombreEmpresa',empresa.nombre_empresa)
       console.log(empresa.id_empresa);  
       console.log(idEmpresa);
       cookies.empresaId = empresa.id_empresa

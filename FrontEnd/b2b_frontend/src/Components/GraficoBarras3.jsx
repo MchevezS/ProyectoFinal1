@@ -32,7 +32,7 @@ const GraficoBarras3 = () => {
         const empleadoTi = peticion.filter((empleado)=>empleado.nombre_area === 'TI')
         setTi(empleadoTi.length)
 
-    }
+    } 
     traerEmpleadosPorArea()
   },[])
 
