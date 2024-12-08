@@ -8,7 +8,7 @@ const RutaPrivada = ({ children, rol }) => {
   
     const tieneAcceso = Array.isArray(rol) ? rol.includes(usuarioRol) : usuarioRol === rol;
   
-    return tieneAcceso ? children : <h1>VA JALANDO</h1>;
+    return tieneAcceso ? children : <h1> ERROR 403 </h1>;
   };
   
   export default RutaPrivada;
