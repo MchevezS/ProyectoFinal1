@@ -6,16 +6,30 @@ import { RiSurveyFill } from "react-icons/ri";
 import { IoMdBusiness } from "react-icons/io";
 import { ImProfile } from "react-icons/im";
 import { CiMenuBurger } from "react-icons/ci";
-
+import { TbLogout2 } from "react-icons/tb";
+import { useNavigate } from 'react-router-dom';
 function BarraLateral() {
   const [visible, setVisible] = useState(true);
   const [cookies] = useCookies(['rolUsuario'])
+  const navigate = useNavigate()
+
+
+  // Función para cerrar sesión
+  const cerrarSesion = () => {
+    const cookies = document.cookie.split(";"); // Trae todas las cookies que estén guardadas en la página
+    
+    cookies.forEach(cookie => {
+      const cookieName = cookie.split("=")[0].trim();
+      document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=localhost;`; 
+    }); // Va recorriendo cookie por cookie para ponerles una fecha en el pasado y que se borren totalmente
+    navigate('/registroLogin') // Redirige a la página de registro
+
+  }
   return (
     visible ? (
       <div className="d-flex flex-column vh-100 barra-lateral">
         <h3 onClick={()=>setVisible(false)}  className="mb-4 text-primary text-center">B2B</h3>
         {/* Lista para propietario */}
-
         {
           cookies.rolUsuario === 'propietario' &&
           <ul className="nav flex-column">
@@ -43,6 +57,12 @@ function BarraLateral() {
               Perfil
             </a>
           </li>
+          <li className="nav-item mb-5">
+            <a onClick={cerrarSesion} className="nav-link d-flex align-items-center">
+              <TbLogout2  className="me-3" size={25} />
+              Cerrar sesión
+            </a>
+          </li>
           </ul>
         }
 
@@ -68,6 +88,12 @@ function BarraLateral() {
                 Ver Encuestas
               </a>
           </li>
+          <li className="nav-item mb-5">
+            <a onClick={cerrarSesion} className="nav-link d-flex align-items-center">
+              <TbLogout2  className="me-3" size={25} />
+              Cerrar sesión
+            </a>
+          </li>
           </ul>
         }
 
@@ -87,6 +113,12 @@ function BarraLateral() {
                 Ver Encuestas
               </a>
           </li>
+          <li className="nav-item mb-5">
+            <a onClick={cerrarSesion} className="nav-link d-flex align-items-center">
+              <TbLogout2  className="me-3" size={25} />
+              Cerrar sesión
+            </a>
+          </li>
           </ul>
         }
         
@@ -104,6 +136,12 @@ function BarraLateral() {
             <a href="/perfil" className="nav-link d-flex align-items-center">
               <ImProfile className="me-3" size={25} />
               Perfil
+            </a>
+          </li>
+          <li className="nav-item mb-5">
+            <a onClick={cerrarSesion} className="nav-link d-flex align-items-center">
+              <TbLogout2  className="me-3" size={25} />
+              Cerrar sesión
             </a>
           </li>
         </ul>
