@@ -169,3 +169,18 @@ class ActivarDescactivarUsuarioView(APIView):
             usuario.is_active=True
             usuario.save()
             return Response({'message': 'Usuario activado'}, status=status.HTTP_200_OK)
+
+class CambiarClaveView(APIView):
+    def patch(self,request):
+        nombre_usuario = request.data.get('username')
+        clave_usuario = request.data.get('password')
+
+        usuario = authenticate(request,username=nombre_usuario,password=clave_usuario)
+
+        if usuario is not None:
+            clave_nueva = request.data.get('clave_nueva')
+            usuario.set_password(clave_nueva)
+            usuario.save()
+            return Response({'status':'200'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'status': '400'}, status=status.HTTP_400_BAD_REQUEST)

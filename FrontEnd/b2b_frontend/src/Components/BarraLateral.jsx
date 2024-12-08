@@ -50,7 +50,7 @@ function BarraLateral() {
               </a>
           </li>
           }
-          {cookies.rolUsuario === 'propietario' &&
+          {cookies.rolUsuario === 'propietario' || cookies.rolUsuario === 'usuario' &&
           <li className="nav-item mb-5">
             <a href="/empresas" className="nav-link d-flex align-items-center">
               <IoMdBusiness className="me-3" size={25} />

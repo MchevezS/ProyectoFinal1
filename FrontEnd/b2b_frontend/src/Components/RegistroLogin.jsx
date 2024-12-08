@@ -61,7 +61,7 @@ function RegistroLogin() {
           setCookie("rolUsuario" , response.rol);
           setCookie("areaUsuario", response.area);
 
-console.log(cookie.rolUsuario);
+          console.log(cookie.rolUsuario);
 
           if (cookie.rolUsuario==="usuario" || response.rol === 'usuario') {
             navigate("/empresas");

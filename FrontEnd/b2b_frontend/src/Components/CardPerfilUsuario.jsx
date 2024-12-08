@@ -2,10 +2,34 @@ import '../Style/CardPerfilUsuario.css';
 import { useState } from 'react';
 import CambioCredencialesUsuario from "../Components/CambioCredencialesUsuario";
 import { useCookies } from "react-cookie";
-
+import { mostrarAlerta } from "./MostrarAlerta";
+import { patch } from "../Services/Crud";
 const CardPerfilUsuario= ({})=>{
-    const [mostrarCambio,setMostrarCambio]=useState(false);
+  const [mostrarCambio,setMostrarCambio]=useState(false);
   const [cookie] = useCookies(["nombreUsuario",'areaUsuario'])
+  const [claveActual,setClaveActual] = useState('')
+  const [nuevaClave,setNuevaClave] = useState('')
+  const [confirmarClave,setConfirmarClave] = useState('')    
+
+  const cambiarClave = async ()=>{
+    if (nuevaClave !== confirmarClave){
+      mostrarAlerta('warning','Las contraseñas no coinciden')
+    }
+    else{
+      const credenciales = {
+        username: cookie.nombreUsuario,
+        password: claveActual,
+        clave_nueva: nuevaClave
+      }
+      const peticion = await patch('cambio-clave','',credenciales)
+      if (peticion.status == 200){
+        mostrarAlerta('success','Contraseña cambiada correctamente')
+      }
+      else if(peticion.status == 400){
+        mostrarAlerta('error','Contraseña actual incorrecta')
+      }
+    }
+  }
 
     return (
         <div className="card mx-auto mt-4" style={{ width: "25rem",height:"auto" ,borderRadius: "15px", overflow: "hidden" }}>
@@ -45,7 +69,18 @@ const CardPerfilUsuario= ({})=>{
           <div className="d-flex justify-content-center">
             <button className="btn btn-primary" onClick={()=>setMostrarCambio(!mostrarCambio)}>Cambiar contraseña</button>
           </div>
-          {mostrarCambio && <CambioCredencialesUsuario/>}
+          {mostrarCambio && 
+          <>
+          <div className='d-flex flex-column gap-3'>
+            <label className='mt-3'>Cambio de credenciales</label>
+            <input placeholder={"Contraseña actual"} onChange={(e)=>setClaveActual(e.target.value)}/>
+            <input placeholder={"Nueva contraseña"} onChange={(e)=>setNuevaClave(e.target.value)}/>
+            <input placeholder={"Confirmar nueva contraseña"} onChange={(e)=>setConfirmarClave(e.target.value)}/>
+            <button className='btn btn-primary' onClick={cambiarClave}>Confirmar Cambio</button>
+          </div>
+       </>
+      }
+          
          
         </div>
       );
