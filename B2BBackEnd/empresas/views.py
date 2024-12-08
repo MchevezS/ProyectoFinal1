@@ -32,30 +32,25 @@ class AsignarEmpleadosEmpresasView(generics.ListCreateAPIView):
     queryset = Empleados.objects.all() 
     serializer_class = EmpleadosSerializer
     
-
 # Vista para asignar un usuario a un área de trabajo dentro de una empresa
 class AsignarUsuarioAreaTrabajoView(ListCreateAPIView):
     queryset = AreaTrabajoUsuarios.objects.all()
     serializer_class = AreaTrabajoUsuariosSerializer
-
 
 class CambiarEstadoEmpresaView(APIView):
     def patch(self, request, empresa_id):
         try:
             # Obtener la empresa por su ID
             empresa = Empresa.objects.get(id=empresa_id)
-
             # Cambiar el estado de la empresa (activa/desactiva)
             empresa.activo = not empresa.activo  # Cambia el valor de 'activo'
             empresa.save()
-
             # Responder con un mensaje de éxito
             return Response({
                 'message': f"Empresa {'activada' if empresa.activo else 'desactivada'} correctamente",
                 'empresa': empresa.nombre_empresa,
                 'estado_actual': 'activa' if empresa.activo else 'desactivada'
             }, status=status.HTTP_200_OK)
-        
         except Empresa.DoesNotExist:
             return Response({'error': 'Empresa no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -66,28 +61,20 @@ class CambiarRolUsuarioView(APIView):
     def patch(self,request):
         usuario_id = request.data.get('usuario_id') #Se obtiene la referencia del usuario por medio del id
         rol_usuario = request.data.get('rol') # Se obtiene el rol al que será modificado
-
         usuario=Usuarios.objects.get(user_id=usuario_id) # Tomaamos el ussuario de la BD para modificarlo
-
         usuario.rol = rol_usuario # Se le cambia el rol
-        
         usuario.save() # Se guardan los cambios
-
         # Se responde con un mensaje de éxito
         return Response({
             'message': f"Rol de usuario cambiado correctamente",
             'rol': usuario.rol
         }, status=status.HTTP_200_OK)
-
+        
 # Vista para traer todos los empleados de una empresa 
 class TraerEmpleadosEmpresaView(APIView):
     def get(self,request):
-        
         id_empresa = request.query_params.get('empresa_id')
-
         lista_empleados_filtrados = Empleados.objects.filter(empresa= id_empresa).select_related('trabajador') # este lista empleados, solo tiene los empleados de la empresa que le paso en el id
-
-
         empleados = []
         for empleado in lista_empleados_filtrados:
             empleados.append({
@@ -97,24 +84,19 @@ class TraerEmpleadosEmpresaView(APIView):
                 'is_active': empleado.trabajador.user.is_active,
                 'date_joined': empleado.trabajador.user.date_joined,
             })
-        
         return Response(empleados, status=status.HTTP_200_OK)
 
 
 class TraerAreasTrabajoEmpresaView(APIView):
     def get(self,request):
-
         id_empresa = request.query_params.get('empresa_id')
-
         lista_areas_trabajo = AreaTrabajo.objects.filter(empresa=id_empresa).select_related('empresa')
-
         areas_trabajo = []
         for area in lista_areas_trabajo:
             areas_trabajo.append({
                 'id': area.id,
                 'nombre_area': area.nombre_area
             })
-
         return Response(areas_trabajo, status=status.HTTP_200_OK)
 
 # Esta función obtiene el id y el nombre de la empresa que tenga relación con el usuario que inicia sesión (sea empleado o propietario)
@@ -122,7 +104,6 @@ class ObtenerIDEmpresaView(APIView):
     def get(self,request):
         id_empleado = request.query_params.get('empresa_id') # Obtiene el id del empleado para relacionarlo con la empresa
         id_propietario = request.query_params.get('propietario_id') # Obtiene el id del propietario para relacionarlo con la empresa
-        
         # Si se obtuvo un id_empleado o id_propietario hace la busqueda en la BD para obtener el id de la empresa
         if id_empleado:
             empleado = Empleados.objects.filter(trabajador=id_empleado).first()
@@ -137,11 +118,8 @@ class ObtenerIDEmpresaView(APIView):
         
 class TraerAreasTrabajoUsuarioEmpresaView(APIView):
     def get(self,request):
-
         id_empresa = request.query_params.get('empresa_id')
-
         lista_areas_trabajo = AreaTrabajoUsuarios.objects.filter(empresa=id_empresa).select_related('empresa')
-
         areas_trabajo = []
         for area in lista_areas_trabajo:
             areas_trabajo.append({
@@ -149,6 +127,5 @@ class TraerAreasTrabajoUsuarioEmpresaView(APIView):
                 'nombre_area': area.area_trabajo.nombre_area,
                 'usuario': area.usuario.user.username
             })
-
         return Response(areas_trabajo, status=status.HTTP_200_OK)
     

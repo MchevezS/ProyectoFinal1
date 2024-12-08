@@ -2,12 +2,13 @@
 const URL = 'http://127.0.0.1:8000/api/'
 
 // Metodo post: Guarda los datos.
-async function post(dataRegister, endpoint) {
+async function post(dataRegister, endpoint,token) {
     try {
         const response = await fetch(`${URL}${endpoint}`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(dataRegister)
         });
@@ -21,7 +22,24 @@ async function post(dataRegister, endpoint) {
 }
 export{post}
 
-
+const loginPost = async (dataRegister, endpoint) => {
+    try {
+        const response = await fetch(`${URL}${endpoint}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataRegister)
+        });
+        const data = await response.json()
+        console.log(data);
+        return data
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
+export { loginPost }
 
 
 //Metodo Get: Obtiene informacio
@@ -60,7 +78,8 @@ async function update( endpoint, id) {
         const response = await fetch(`${URL}${endpoint}/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify() 
         });
@@ -79,12 +98,13 @@ async function update( endpoint, id) {
 export{update}
 
 // Método PATCH: Actualiza los datos de la empresa
-async function patch(endpoint, id="", data) {
+async function patch(endpoint, id="", data,token) {
     try {
       const response = await fetch(`${URL}${endpoint}${id}/`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(data), // Asegúrate de pasar los datos correctamente
       });
@@ -104,12 +124,13 @@ async function patch(endpoint, id="", data) {
 export { patch }
 
 // Metodo Delete: Elimina datos.
-async function eliminar(endpoint, id) {
+async function eliminar(endpoint, id,token) {
     try {
         const response = await fetch(`${URL}${endpoint}/${id}/`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
         });
 

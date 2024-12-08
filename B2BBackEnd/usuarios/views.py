@@ -10,6 +10,7 @@ from rest_framework.generics import ListCreateAPIView #get y post
 import re #expresiones regulares
 import random
 import string
+from rest_framework.permissions import AllowAny
 from empresas.models import AreaTrabajoUsuarios
  
 from mailersend import emails #importacion de la api mailersend
@@ -20,6 +21,7 @@ correo = emails.NewEmail("mlsn.fe3c04fac13c0e6f5f7e85e0e65dd186c8f61706d8c5bcf0c
 
 # Create your views here.
 class RegistroView(APIView):
+    permission_classes = [AllowAny]
     def post(self,request):
         nombre_usuario = request.data.get("username")
         clave_usuario = request.data.get("password")
@@ -49,6 +51,7 @@ class RegistroView(APIView):
         
         
 class LoginView(APIView):
+    permission_classes = [AllowAny]
     def post(self,request):
         nombre_usuario = request.data.get("username")
         clave_usuario = request.data.get("password")
@@ -66,7 +69,7 @@ class LoginView(APIView):
             refresh = RefreshToken.for_user(datos_autenticacion)
             rol= Usuarios.objects.get(user_id=datos_autenticacion.id)
             if area_trabajo is None:
-                return Response({"success":'bienvenido','area':'Propietario',"id":datos_autenticacion.id,"rol":rol.rol,
+                return Response({"success":'bienvenido','area':'No tiene area asignada',"id":datos_autenticacion.id,"rol":rol.rol,
                              "nombre": datos_autenticacion.username, "correo": datos_autenticacion.email,
                              "token_acceso": str(refresh.access_token),"token_refresco":str(refresh),},status=status.HTTP_200_OK)
             elif area_trabajo is not None:

@@ -1,15 +1,32 @@
 import '../Style/CardPerfilUsuario.css';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import CambioCredencialesUsuario from "../Components/CambioCredencialesUsuario";
 import { useCookies } from "react-cookie";
 import { mostrarAlerta } from "./MostrarAlerta";
-import { patch } from "../Services/Crud";
+import { getFilter, patch } from "../Services/Crud";
+
+
+
 const CardPerfilUsuario= ({})=>{
   const [mostrarCambio,setMostrarCambio]=useState(false);
-  const [cookie] = useCookies(["nombreUsuario",'areaUsuario'])
+  const [cookie] = useCookies(["nombreUsuario",'areaUsuario','empresaId'])
   const [claveActual,setClaveActual] = useState('')
   const [nuevaClave,setNuevaClave] = useState('')
-  const [confirmarClave,setConfirmarClave] = useState('')    
+  const [confirmarClave,setConfirmarClave] = useState('')   
+  const [fechaContratacion,setFechaContratacion]=useState('')
+  const [ encuestasRespondidas,setEncuestasRespondidas]=useState('')
+
+
+
+useEffect(()=>{
+  
+    async function TraerDatos() {
+      const peticion = await getFilter("traer-empleados/", cookie.empresaId, "empresa_id")
+      console.log(peticion);
+      setFechaContratacion(peticion.date_joined)
+    }
+TraerDatos()
+},[])
 
   const cambiarClave = async ()=>{
     if (nuevaClave !== confirmarClave){
@@ -30,7 +47,6 @@ const CardPerfilUsuario= ({})=>{
       }
     }
   }
-
     return (
         <div className="card mx-auto mt-4" style={{ width: "25rem",height:"auto" ,borderRadius: "15px", overflow: "hidden" }}>
           {/* Imagen de fondo */}
@@ -57,7 +73,7 @@ const CardPerfilUsuario= ({})=>{
                 <small className="text-muted">Encuestas Respondidas</small>
               </div>
               <div>
-                <h6 className="mb-0">2024-06-03</h6>
+                <h6 className="mb-0">{fechaContratacion}</h6>
                 <small className="text-muted">Fecha de Contratación</small>
               </div>
               <div>
@@ -80,7 +96,6 @@ const CardPerfilUsuario= ({})=>{
           </div>
        </>
       }
-          
          
         </div>
       );

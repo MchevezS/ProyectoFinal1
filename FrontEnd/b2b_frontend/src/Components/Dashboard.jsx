@@ -8,8 +8,8 @@ import { useCookies } from "react-cookie"
 import { getFilter } from "../Services/Crud"
 
 const Dashboard = ()=>{
-  const [cookies,setCookies]=useCookies(["empresaId",'usuarioID','nombreEmpresa'])
-
+  const [cookies,setCookies]=useCookies(["empresaId",'usuarioID','nombreEmpresa','token'])
+  const token = cookies.token
   useEffect(()=>{
     const obtenerEmpresa = async()=>{
       const empresa = await getFilter("empresa-id/",cookies.usuarioID,'propietario_id')
