@@ -4,13 +4,21 @@ from django.db import models
 
 # Modelo padre
 class Encuestas(models.Model):
-    titulo_encuesta = models.CharField(max_length=200)
+    ENCUESTAS_CATEGORIAS = [
+        ("Salud Mental","Salud Mental"),
+        ("Ambiente Laboral","Ambiente Laboral"),
+        ("Equilibrio Vida-Trabajo","Equilibrio Vida-Trabajo"),
+        ("Beneficios y Compensaciones","Beneficios y Compensaciones"),
+        ("Comunicación Interna","Comunicación Interna"),
+        ("Oportunidades de Crecimiento","Oportunidades de Crecimiento")
+    ]
+    categoria_encuesta = models.CharField(choices=ENCUESTAS_CATEGORIAS, max_length=50)
     descripcion_encuesta = models.TextField()
     fecha_creacion = models.DateField(auto_now=True)
-    
+    empresa = models.ForeignKey("empresas.Empresa", on_delete=models.CASCADE,related_name="encuestas_empresa")
     
     def __str__(self):
-        return self.titulo_encuesta 
+        return self.categoria_encuesta 
     
     
   # Modelo pregunta contiene la referencia del la encuesta
@@ -34,4 +42,5 @@ class Respuesta(models.Model):
     respuesta_texto = models.CharField(choices=RESPUESTA_ELECCIONES, max_length = 11) #La respuesta que se dio
     fecha_respuesta = models.DateField(auto_now=True) #la fecha en la que se repondio
     retroalimentacion = models.TextField(blank=True,null=True) #Retroalimentacion de la respuesta
+    empresa = models.ForeignKey("empresas.Empresa", on_delete=models.CASCADE,related_name="respuestas_empresa")
     

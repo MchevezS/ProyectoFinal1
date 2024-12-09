@@ -5,7 +5,8 @@ import { useCookies } from 'react-cookie';
 import { mostrarAlerta } from './MostrarAlerta';
 
 const FormAreaTrabajo = () => {
-  const [cookies] = useCookies(["empresaId", "nombreEmpresa"]);
+  const [cookies] = useCookies(["empresaId", "nombreEmpresa",'token']);
+  const token = cookies.token
   const [nombreArea, setNombreArea] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
@@ -36,7 +37,7 @@ const FormAreaTrabajo = () => {
       };
 
       try {
-        const response = await post(datosFormulario, 'AreaTrabajo/');
+        const response = await post(datosFormulario, 'AreaTrabajo/', token);
         if (response.id) {
           mostrarAlerta("success", 'Área de trabajo registrada con éxito');
         } else {

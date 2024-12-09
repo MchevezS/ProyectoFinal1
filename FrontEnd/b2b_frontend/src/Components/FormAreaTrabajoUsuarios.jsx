@@ -5,8 +5,9 @@ import { useCookies } from 'react-cookie';
 import { mostrarAlerta } from './MostrarAlerta';
 
 const FormAreaTrabajoUsuarios = () => {
-  const [cookies] = useCookies(['empresaId','nombreEmpresa']);
+  const [cookies] = useCookies(['empresaId','nombreEmpresa','token']);
   const [areasTrabajo, setAreasTrabajo] = useState([]);
+  const token = cookies.token
   const [listaEmpleados, setListaEmpleados] = useState([]);
   const [areaSeleccionada, setAreaSeleccionada] = useState('');
   const [empleado, setEmpleado] = useState('');
@@ -28,7 +29,7 @@ const FormAreaTrabajoUsuarios = () => {
     
     const traerEmpleados = async () => {
       try {
-        const empleadosEmpresa = await getFilter('traer-empleados', cookies.empresaId || 0);
+        const empleadosEmpresa = await getFilter('traer-empleados', cookies.empresaId || 0,'empresa_id');
         setListaEmpleados(empleadosEmpresa);
       } catch (error) {
         console.error(error);
@@ -38,7 +39,7 @@ const FormAreaTrabajoUsuarios = () => {
     };
     const traerAreas = async () =>{
       try{
-        const areasEmpresa = await getFilter('areas-trabajo', cookies.empresaId || 0);
+        const areasEmpresa = await getFilter('areas-trabajo', cookies.empresaId || 0, 'empresa_id');
         setAreasTrabajo(areasEmpresa);
       }catch(error){
         console.error(error);
@@ -75,7 +76,7 @@ const FormAreaTrabajoUsuarios = () => {
       };
 
       try {
-        const response = await post(datosFormulario, 'asignar_usuario/');
+        const response = await post(datosFormulario, 'asignar_usuario/',token);
         if (response.id) {
           mostrarAlerta('success', 'Usuario asignado correctamente');
         } else {

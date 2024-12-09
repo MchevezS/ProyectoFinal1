@@ -6,7 +6,8 @@ import { mostrarAlerta } from './MostrarAlerta';
 import { patch } from '../Services/Crud';
 
 const FormEmpresas = () => {
-  const [cookies,setCookies] = useCookies(["usuarioID", "nombreUsuario", "empresaId","nombreEmpresa",'rolUsuario']);
+  const [cookies,setCookies] = useCookies(["usuarioID", "nombreUsuario", "empresaId","nombreEmpresa",'rolUsuario','token']);
+  const token = cookies.token;
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [cedulaJuridica, setCedulaJuridica] = useState('');
   const [correo, setCorreo] = useState('');
@@ -67,7 +68,7 @@ const FormEmpresas = () => {
       console.log("Datos enviados al servidor:", datosFormulario);
 
       try {
-        const response = await post(datosFormulario, 'empresas/');
+        const response = await post(datosFormulario, 'empresas/',token);
         setCookies("empresaId",response.id)
         
         console.log('Respuesta del servidor:', response);
@@ -81,7 +82,7 @@ const FormEmpresas = () => {
           const peticion = await patch('cambiar-rol','',{
             usuario_id: cookies.usuarioID,
             rol: 'propietario'
-          })
+          },token)
           setCookies("rolUsuario", "propietario")
           console.log('Respuesta del servidor:', peticion);
         } else {

@@ -20,13 +20,8 @@ const VerEncuesta = ()=>{
     },[])
 
     return(
-
-
-
         <>
-<NavbarEncuestas/>
-
-<h1>{encuesta.titulo_encuesta}</h1>
+<h1>{encuesta.categoria_encuesta}</h1>
 
 <p>descripcion:</p>
 <p>{encuesta.descripcion_encuesta}</p>

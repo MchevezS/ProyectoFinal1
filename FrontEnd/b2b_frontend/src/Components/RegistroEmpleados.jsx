@@ -8,8 +8,8 @@ import { useCookies } from 'react-cookie';
 function RegistroEmpleados() {
 
   //HOOK (creacion de cookies) recibe el nombre de la cookie que va a tener 
-  const [cookies,setCookies]=useCookies(["empresaId"])
-
+  const [cookies,setCookies]=useCookies(["empresaId",'token'])
+  const token = cookies.token
   const [nombreEmpleado, setNombreEmpleado] = useState('');
   const [cedulaEmpleado, setCedulaEmpleado] = useState('');
   const [correoEmpleado, setCorreoEmpleado] = useState('');
@@ -65,7 +65,7 @@ function RegistroEmpleados() {
     
 
     try {
-      const response = await post(dataEmpleados, 'crear-empleado/');
+      const response = await post(dataEmpleados, 'crear-empleado/',token);
       console.log(response);
       if (response && response.success) {
         mostrarAlerta("success", "Registrado exitosamente");
@@ -74,7 +74,7 @@ const asignar = {
   empresa:cookies.empresaId,
   trabajador:response.id
 }
-        const responseEmpleados = await post(asignar,"asignar-empleados/")
+        const responseEmpleados = await post(asignar,"asignar-empleados/",token);
         console.log(responseEmpleados);
         
       };
@@ -154,19 +154,6 @@ const asignar = {
               </select>
             </td>
           </tr>
-          {/* /<tr>
-            <td><label htmlFor="claveEmpleado">Contraseña</label></td>
-            <td>
-              <input
-                type="password"
-                id="claveEmpleado"
-                className="claveEmpleado"
-                placeholder="•••••"
-                value={claveEmpleado}
-                onChange={(e) => setClaveEmpleado(e.target.value)}
-              />
-            </td>
-          </tr> */}
         </tbody>
       </table>
           <button type="button" className="btnRegistarEmpleado" onClick={espaciosVacios}>Registrar Empleado</button>

@@ -25,24 +25,27 @@ function DashboardCards() {
     }
     const traerCantRetroalimentacion = async () => {
       const cantidad = await get('respuestas')
-      const retroalimentacion = cantidad.filter(cantRetroalimentacion=> cantRetroalimentacion.retroalimentacion !== "")
+      const retroalimentacion = cantidad.filter(cantRetroalimentacion=> cantRetroalimentacion.retroalimentacion !== "" && cantRetroalimentacion.empresa === cookies.empresaId)
       setCantidadRetroalimentacion(retroalimentacion.length)
     }
     const traerEmpleadosActivos = async () => {
-      const cantidad = await getFilter('traer-empleados/',cookies.empresaId)
+      console.log('trear empleados');
+      const cantidad = await getFilter('traer-empleados/',cookies.empresaId || 0,'empresa_id')
+      console.log(cantidad);
       setEmpleadosActivos(cantidad.length)
     }
     const traerAreasTrabajo = async () => {
-      const cantidad = await getFilter('areas-trabajo/',cookies.empresaId)
+      const cantidad = await getFilter('areas-trabajo/',cookies.empresaId || 0,'empresa_id')
       setAreasTrabajo(cantidad.length)
     }
+
 
     traerCantEncuestas()
     traerCantEncuestasRespondidas()
     traerCantRetroalimentacion()
     traerEmpleadosActivos()
     traerAreasTrabajo()
-  },[])
+  },[cookies.empresaId])
 
   const cards = [
     { title: 'Encuestas realizadas', value: cantidadEncuestas, icon: 'bi bi-bar-chart' },

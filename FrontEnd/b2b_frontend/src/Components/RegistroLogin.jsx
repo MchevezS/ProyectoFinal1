@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { mostrarAlerta } from './MostrarAlerta';
-import { post } from '../Services/Crud';
+import { loginPost, post } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
 import '../Style/RegistroLogin.css'; // Importar el archivo de estilos CSS
 import Navbar from './Navbar';
@@ -8,8 +8,10 @@ import {useCookies} from 'react-cookie'
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
-  const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario","rolUsuario"])
+  const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario","rolUsuario",'areaUsuario','token','empresaId']);
   const navigate = useNavigate();
+
+
 
   // Estados de los formularios
   const [nombreUsuarioL, setNombreUsuarioL] = useState('');
@@ -50,25 +52,34 @@ function RegistroLogin() {
 
     //METODO POST para iniciar sesion
     try {
-      const response = await post( datosLogin,"login-usuario/");
+      const response = await loginPost( datosLogin,"login-usuario/")
       if (response.success) {
-        mostrarAlerta("success", "Te has logueado de manera exitosa");
+        mostrarAlerta("success", "Te has logueado de manera exitosa")
         setTimeout(() => {
-          setNombreUsuarioL('');
-          setPasswordL('');
-          setCookie("usuarioID",response.id);
-          setCookie("nombreUsuario",response.nombre);
-          setCookie("rolUsuario" , response.rol);
+          setNombreUsuarioL('')
+          setPasswordL('')
+          setCookie("usuarioID",response.id)
+          setCookie("nombreUsuario",response.nombre)
+          setCookie("rolUsuario" , response.rol)
+          setCookie("areaUsuario", response.area)
+          setCookie("empresaId", response.id_empresa)
+          setCookie("token",response.token_acceso)  // GUARDAR TOKEN EN COOKIE
 
-console.log(cookie.rolUsuario);
-
-          if (cookie.rolUsuario==="usuario") {
+          if (cookie.rolUsuario==="usuario" || response.rol === 'usuario') {
             navigate("/empresas");
           }
 
-
-          if (cookie.rolUsuario==="trabajador"){
-            navigate("/")
+          if (cookie.rolUsuario==="propietario" || response.rol === 'propietario') {
+            navigate("/dashboard");
+          }
+          
+          if (cookie.rolUsuario==="trabajador" || response.rol === 'trabajador') {
+            localStorage.clear()
+            navigate("/verEncuestas")
+          }
+          if (cookie.rolUsuario==="recursos_humanos" || response.rol === 'recursos_humanos') {
+            localStorage.clear()
+            navigate("/CrearEncuestas")
           }
           // guardamos el id del usuario para obtenerlo en empresas
         }, 1000);
@@ -101,20 +112,22 @@ console.log(cookie.rolUsuario);
   };
 
   const registroUsuario = async () => {
+    
     const dataRegister = { 
       username: nombreUsuario.trim(), 
       cedula: cedulaIndentidad.trim(), 
       email: emailRegistro.trim(), 
       password: claveRegistro.trim() 
     };
-
     setNombreUsuario(dataRegister.username)
     setCedulaIndentidad(dataRegister.cedula)
     setEmailRegistro(dataRegister.email)
     setClaveRegistro(dataRegister.password)
+
     //METODO POST para subir un usuario
+
     try {
-      const response = await post(dataRegister, "crear-usuario/"); //conexion a backend
+      const response = await loginPost(dataRegister, "crear-usuario/"); //conexion a backend
       if (response && response.success) {
         mostrarAlerta("success", "Usuario registrado exitosamente");
         setActiveTab('login');

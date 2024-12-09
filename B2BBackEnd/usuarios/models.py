@@ -12,7 +12,7 @@ class Usuarios(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     cedula_usuario = models.CharField(max_length=18)
     rol = models.CharField(choices=ROL_OPCIONES,default="usuario",max_length=30) # Se asigna el rol por defecto usuario.
-    
+     
     
     def __str__(self):
         return self.user.username
