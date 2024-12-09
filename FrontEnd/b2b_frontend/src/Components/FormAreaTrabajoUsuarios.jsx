@@ -5,8 +5,9 @@ import { useCookies } from 'react-cookie';
 import { mostrarAlerta } from './MostrarAlerta';
 
 const FormAreaTrabajoUsuarios = () => {
-  const [cookies] = useCookies(['empresaId','nombreEmpresa']);
+  const [cookies] = useCookies(['empresaId','nombreEmpresa','token']);
   const [areasTrabajo, setAreasTrabajo] = useState([]);
+  const token = cookies.token
   const [listaEmpleados, setListaEmpleados] = useState([]);
   const [areaSeleccionada, setAreaSeleccionada] = useState('');
   const [empleado, setEmpleado] = useState('');
@@ -75,7 +76,7 @@ const FormAreaTrabajoUsuarios = () => {
       };
 
       try {
-        const response = await post(datosFormulario, 'asignar_usuario/');
+        const response = await post(datosFormulario, 'asignar_usuario/',token);
         if (response.id) {
           mostrarAlerta('success', 'Usuario asignado correctamente');
         } else {

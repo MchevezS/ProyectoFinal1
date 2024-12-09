@@ -7,7 +7,8 @@ import { useCookies } from "react-cookie"
 
 const TablaEmpleados = () => {
   const [empleados,setEmpleados] = useState([])
-  const [cookies]=useCookies(["empresaId"])
+  const [cookies]=useCookies(["empresaId",'token'])
+  const token = cookies.token
   const [carga,setCarga] = useState(false) // Estado de recarga, para que se actualice la tabla de empleados
   
   useEffect(()=>{
@@ -19,7 +20,7 @@ const TablaEmpleados = () => {
   },[carga]) // Se ejecuta el useEffect cada vez que cambia el estado
 
     const cambiarEstado = async(nombre_usuario)=>{
-      const peticion = await patch('estado-usuario','',nombre_usuario)
+      const peticion = await patch('estado-usuario','',nombre_usuario,token)
       console.log(peticion)
       setCarga(!carga) // Cambiamos el estado cada vez que tocamos el botoncito
     }

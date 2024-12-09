@@ -92,11 +92,14 @@ class TraerAreasTrabajoEmpresaView(APIView):
         id_empresa = request.query_params.get('empresa_id')
         lista_areas_trabajo = AreaTrabajo.objects.filter(empresa=id_empresa).select_related('empresa')
         areas_trabajo = []
+        quitar_duplicados = []
         for area in lista_areas_trabajo:
-            areas_trabajo.append({
-                'id': area.id,
-                'nombre_area': area.nombre_area
-            })
+            if area.nombre_area not in quitar_duplicados:
+                areas_trabajo.append({
+                    'id': area.id,
+                    'nombre_area': area.nombre_area
+                })
+                quitar_duplicados.append(area.nombre_area)
         return Response(areas_trabajo, status=status.HTTP_200_OK)
 
 # Esta función obtiene el id y el nombre de la empresa que tenga relación con el usuario que inicia sesión (sea empleado o propietario)
@@ -128,4 +131,4 @@ class TraerAreasTrabajoUsuarioEmpresaView(APIView):
                 'usuario': area.usuario.user.username
             })
         return Response(areas_trabajo, status=status.HTTP_200_OK)
-    
+

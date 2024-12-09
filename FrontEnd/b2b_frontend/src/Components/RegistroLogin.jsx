@@ -8,7 +8,7 @@ import {useCookies} from 'react-cookie'
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
-  const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario","rolUsuario",'areaUsuario','token']);
+  const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario","rolUsuario",'areaUsuario','token','empresaId']);
   const navigate = useNavigate();
 
 
@@ -62,6 +62,7 @@ function RegistroLogin() {
           setCookie("nombreUsuario",response.nombre)
           setCookie("rolUsuario" , response.rol)
           setCookie("areaUsuario", response.area)
+          setCookie("empresaId", response.id_empresa)
           setCookie("token",response.token_acceso)  // GUARDAR TOKEN EN COOKIE
 
           if (cookie.rolUsuario==="usuario" || response.rol === 'usuario') {

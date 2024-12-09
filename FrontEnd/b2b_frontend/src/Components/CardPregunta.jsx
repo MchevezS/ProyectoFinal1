@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import Navbar from './Navbar';
+import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import post from '../fetch';
+import { post } from '../Services/Crud';
 import { mostrarAlerta } from './MostrarAlerta';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import '../Style/CardPregunta.css';
 
 
-const CardPregunta = ({opcionSeleccionada}) => {
-  const urlpagina = useLocation()
-  console.log(urlpagina.pathname);
+const CardPregunta = () => {
+const urlpagina = useLocation()
 const navigate = useNavigate()
 const [retroalimentacion,setRetroalimentacion] = useState("")
- const [cookie,setcookie]= useCookies(["usuarioID",'empresaId'])
- const [respuestaSeleccionada, setRespuestaSeleccionada] = useState ("")
- const cambiOpcion = (e)=> {
+const [cookie,setcookie]= useCookies(["usuarioID",'empresaId','token'])
+const [respuestaSeleccionada, setRespuestaSeleccionada] = useState ("")
+const token = cookie.token
+const cambiOpcion = (e)=> {
  const valor = e.target.value 
  setRespuestaSeleccionada(valor)
-console.log(respuestaSeleccionada);
+  console.log(respuestaSeleccionada);
  }
+
  const envioRespuesta = async (e)=>{
   const guardarYenviar = {
     encuesta_referencia: localStorage.getItem("id_encuesta"),
@@ -29,12 +29,10 @@ console.log(respuestaSeleccionada);
     retroalimentacion: retroalimentacion,
     empresa: cookie.empresaId
   }
-  const peticion = await post("respuestas/", guardarYenviar)
+  const peticion = await post(guardarYenviar,"respuestas/",token)
   console.log(peticion);
-
   mostrarAlerta("success", "Se envio la encuesta con exito")
-  navigate("/ResponderEncuestas")
-
+  navigate("/VerEncuestas")
  }
  
  
@@ -127,7 +125,7 @@ console.log(respuestaSeleccionada);
             </div>
           </form>
         </div>
-        {location.pathname === "/verEncuesta" && 
+        {location.pathname === "/responderEncuestas" && 
         <div className="card-footer text-end">
           <button  onClick={envioRespuesta}>ENVIAR RESPUESTA</button>
       </div>

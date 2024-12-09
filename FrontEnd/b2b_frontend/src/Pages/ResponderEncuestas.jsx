@@ -32,17 +32,18 @@ const ResponderEncuestas =()=>{
         </div>
         </div>
         <div className="d-flex flex-row">
- {encuestas.map((encuesta)=>{
+ {encuestas.map((encuesta,index)=>{
     return(
-    <div className="mx-auto">
+    <div key={index} className="mx-auto">
     <CardEncuesta key={encuesta.id}
-    titulo={encuesta.titulo_encuesta}
+    titulo={encuesta.categoria_encuesta}
     descripcion={encuesta.descripcion_encuesta}
     fechaSubida={encuesta.fecha_creacion}
     responder={()=> { 
 
      localStorage.setItem("id_encuesta", encuesta.id)
-        navigate("/responderEncuesta")
+     localStorage.setItem('categoria_encuesta', encuesta.categoria_encuesta)
+        navigate("/responderEncuestas")
     
     }}
     />

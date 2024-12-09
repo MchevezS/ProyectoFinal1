@@ -6,8 +6,8 @@ const CambioCredencialesUsuario = ({})=>{
     const [claveActual,setClaveActual] = useState('')
     const [nuevaClave,setNuevaClave] = useState('')
     const [confirmarClave,setConfirmarClave] = useState('')    
-    const [cookies] = useCookies(['nombreUsuario'])
-    
+    const [cookies] = useCookies(['nombreUsuario','token'])
+    const token = cookies.token
     const cambiarClave = async ()=>{
       if (nuevaClave !== confirmarClave){
         mostrarAlerta('warning','Las contraseñas no coinciden')
@@ -18,7 +18,7 @@ const CambioCredencialesUsuario = ({})=>{
           password: claveActual,
           clave_nueva: nuevaClave
         }
-        const peticion = await patch('cambio-clave','',credenciales)
+        const peticion = await patch('cambio-clave','',credenciales,token)
         if (peticion.status === 200){
           mostrarAlerta('success','Contraseña cambiada correctamente')
         }

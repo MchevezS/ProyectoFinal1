@@ -9,13 +9,13 @@ import { getFilter, patch } from "../Services/Crud";
 
 const CardPerfilUsuario= ({})=>{
   const [mostrarCambio,setMostrarCambio]=useState(false);
-  const [cookie] = useCookies(["nombreUsuario",'areaUsuario','empresaId'])
+  const [cookie] = useCookies(["nombreUsuario",'areaUsuario','empresaId','token'])
   const [claveActual,setClaveActual] = useState('')
   const [nuevaClave,setNuevaClave] = useState('')
   const [confirmarClave,setConfirmarClave] = useState('')   
   const [fechaContratacion,setFechaContratacion]=useState('')
   const [ encuestasRespondidas,setEncuestasRespondidas]=useState('')
-
+  const token = cookie.token
 
 
 useEffect(()=>{
@@ -38,7 +38,7 @@ TraerDatos()
         password: claveActual,
         clave_nueva: nuevaClave
       }
-      const peticion = await patch('cambio-clave','',credenciales)
+      const peticion = await patch('cambio-clave','',credenciales,token)
       if (peticion.status == 200){
         mostrarAlerta('success','Contraseña cambiada correctamente')
       }

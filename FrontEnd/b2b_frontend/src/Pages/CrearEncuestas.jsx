@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState,useEffect } from 'react';
-import post from '../fetch';
+import { post } from '../Services/Crud';
 import {useCookies} from 'react-cookie';
 import Navbar from '../Components/Navbar';
 import { mostrarAlerta } from '../Components/MostrarAlerta';
@@ -17,11 +17,9 @@ function CrearEncuestas() {
     const [descripcionEncuesta,setdescripcionEncuesta]=useState("")
     const [preguntaEncuesta,setpreguntaEncuesta]=useState("")
     const [idEmpresa,setIdEmpresa]=useState([])
-    const [cookie] = useCookies(["empresaId"])
-    
     //HOOK (creacion de cookies) recibe el nombre de la cookie que va a tener 
-    const [cookies,setCookies]=useCookies(["Encuesta","empresaId",'usuarioID'])
-
+    const [cookies,setCookies]=useCookies(["Encuesta","empresaId",'usuarioID','rolUsuario','token'])
+    const token = cookies.token
     useEffect(()=>{
       const obtenerEmpresa = async()=>{
         const empresa = await getFilter("empresa-id/",cookies.usuarioID,'propietario_id')
@@ -30,7 +28,19 @@ function CrearEncuestas() {
         setCookies("empresaId",empresa.id_empresa)
         console.log(idEmpresa);
       }
+      const obtenerEmpresaUsuario = async()=>{
+        const empresa = await getFilter("empresa-id/",cookies.usuarioID,'empresa_id')
+        console.log(empresa.id_empresa)
+        setIdEmpresa(empresa.id_empresa)
+        setCookies("empresaId",empresa.id_empresa)
+        console.log(idEmpresa);
+      }
+      if(cookies.rolUsuario === 'propietario'){
       obtenerEmpresa()
+      }else{
+        obtenerEmpresaUsuario()
+      }
+
     },[idEmpresa])
 
     //Funcion que se ejecuta al tocar el boton de enviar, tiene el cuerpo de la encuesta y se envia al endpiont creado en el backend.
@@ -39,17 +49,17 @@ async function enviarEncuesta() {
     const datosEncuesta = {
         categoria_encuesta: categoriaEncuesta,
         descripcion_encuesta:descripcionEncuesta,
-        empresa: cookie.empresaId,
+        empresa: cookies.empresaId,
         //METODO POST 
     }
-    const enviarPeticion = await post("encuestas/",datosEncuesta)
+    const enviarPeticion = await post(datosEncuesta,"encuestas/",token)
     console.log(enviarPeticion);
     const datosPreguntas = {
       encuesta_referencia : enviarPeticion.id,
       pregunta_texto : preguntaEncuesta,
     }
 
-     const enviarPregunta = await post("preguntas/", datosPreguntas)
+     const enviarPregunta = await post(datosPreguntas,"preguntas/",token)
 
     if (enviarPeticion){
       mostrarAlerta("success","se agregó la encuesta")
@@ -82,7 +92,7 @@ async function enviarEncuesta() {
             <h1 className="encuesta">Crear encuesta</h1>
             {/* Evento para guardar el valor del titulo encuesta */}
             <select onChange={(e)=>setCategoriaEncuesta(e.target.value)}>
-              <option value="" disabled>Categoria</option>
+              <option selected value="" disabled>Categoria</option>
               <option value="Salud Mental">Salud Mental</option>
               <option value="Ambiente Laboral">Ambiente Laboral</option>
               <option value="Equilibrio Vida-Trabajo">Equilibrio Vida-Trabajo</option>

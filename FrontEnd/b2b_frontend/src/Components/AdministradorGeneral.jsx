@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { get, patch } from '../Services/Crud';  // Asegúrate de que 'patch' esté configurado
 import { useNavigate } from 'react-router-dom';
 import '../Style/AdministradorGeneral.css';
-
+import { useCookies } from "react-cookie";
 const AdministradorGeneral = () => {
   const [empresas, setEmpresas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [seeker, setSeeker] = useState(''); // Estado del buscador(seeker)
   const navigate = useNavigate();
-
+  const [cookies] = useCookies(['token'])
+  const token = cookies.token
   // Obtener todas las empresas
   const obtenerEmpresas = async () => {
     try {
@@ -27,7 +28,7 @@ const AdministradorGeneral = () => {
     const confirmacion = window.confirm(`¿Estás seguro de que deseas ${estadoActual ? "desactivar" : "activar"} esta empresa?`);
     if (confirmacion) {
       try {
-        const response = await patch(`empresa/estado`,id); // llamamos al metodo PATCH para que haga los cambios en la url (empresa/estado)
+        const response = await patch(`empresa/estado`,id,token); // llamamos al metodo PATCH para que haga los cambios en la url (empresa/estado)
         if (response) { 
           // Muestra una alerta si quiere desactivar/activar la empresa con exito
           alert(`Empresa ${estadoActual ? "desactivada" : "activada"} con éxito`);  

@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'; // Para obtener el ID de la empresa y redirigir
 import { get, patch } from '../Services/Crud';
 import '../Style/EditarEmpresa.css';
+import { useCookies } from "react-cookie";
 
 const EditarEmpresa = () => {
+  const [cookie]=useCookies(["token"]);
+  const token = cookie.token;
   const [empresa, setEmpresa] = useState({
     nombre_empresa: '',
     cedula_juridica: '',
@@ -74,7 +77,7 @@ const EditarEmpresa = () => {
 
       try {
         // Realizamos la llamada PATCH para actualizar la empresa
-        const response = await patch('empresas', id, datosFormulario); // Llamamos a el metodo PATCH
+        const response = await patch('empresas', id, datosFormulario,token); // Llamamos a el metodo PATCH
         if (response) {
           navigate('/administradorGeneral'); // Redirige al administrador a la lista de empresas
           alert('Empresa actualizada con éxito');

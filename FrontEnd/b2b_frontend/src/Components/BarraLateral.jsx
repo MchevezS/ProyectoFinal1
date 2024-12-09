@@ -10,7 +10,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 function BarraLateral() {
   const [visible, setVisible] = useState(true);
-  const [cookies] = useCookies(['rolUsuario'])
+  const [cookies] = useCookies(['rolUsuario','token'])
   const navigate = useNavigate()
 
 

@@ -11,8 +11,7 @@ import re #expresiones regulares
 import random
 import string
 from rest_framework.permissions import AllowAny
-from empresas.models import AreaTrabajoUsuarios
- 
+from empresas.models import AreaTrabajoUsuarios,Empleados
 from mailersend import emails #importacion de la api mailersend
 
 # api token de mailersend 
@@ -61,6 +60,7 @@ class LoginView(APIView):
 
         try:
          area_trabajo = AreaTrabajoUsuarios.objects.get(usuario_id=datos_autenticacion.id)
+         id_empresa = Empleados.objects.get(trabajador_id=datos_autenticacion.id)
         except:
          area_trabajo = None
         
@@ -70,12 +70,12 @@ class LoginView(APIView):
             rol= Usuarios.objects.get(user_id=datos_autenticacion.id)
             if area_trabajo is None:
                 return Response({"success":'bienvenido','area':'No tiene area asignada',"id":datos_autenticacion.id,"rol":rol.rol,
-                             "nombre": datos_autenticacion.username, "correo": datos_autenticacion.email,
-                             "token_acceso": str(refresh.access_token),"token_refresco":str(refresh),},status=status.HTTP_200_OK)
+                             "nombre": datos_autenticacion.username, 
+                             "token_acceso": str(refresh.access_token),},status=status.HTTP_200_OK)
             elif area_trabajo is not None:
                 return Response({"success":'bienvenido','area':area_trabajo.area_trabajo.nombre_area,"id":datos_autenticacion.id,"rol":rol.rol,
-                             "nombre": datos_autenticacion.username, "correo": datos_autenticacion.email,
-                             "token_acceso": str(refresh.access_token),"token_refresco":str(refresh),},status=status.HTTP_200_OK)
+                             "nombre": datos_autenticacion.username,'id_empresa':id_empresa.empresa_id,
+                             "token_acceso": str(refresh.access_token),},status=status.HTTP_200_OK)
             else:
                 return Response({'error':'Credenciales incorrectas'},status=status.HTTP_400_BAD_REQUEST)
         
@@ -137,8 +137,70 @@ def enviar_correo(nombre_usuario,correo_usuario,clave_usuario):
     # Formato del correo
     correo.set_mail_from(mail_from,mail_body)
     correo.set_mail_to(recipient,mail_body)
-    correo.set_subject("credenciales para la empresa", mail_body)
-    correo.set_html_content(f"<h1>Hola {nombre_usuario} esta es tu contraseña {clave_usuario}</h1>", mail_body)
+    correo.set_subject(f"Hola {nombre_usuario} bienvenido(a), estas son tus crendenciales", mail_body)
+    correo.set_html_content(f"""
+<html>
+    <head>
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                background-color: #f4f7fc;
+                color: #333;
+                margin: 0;
+                padding: 0;
+            }}
+            .container {{
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }}
+            h1 {{
+                color: #4CAF50;
+                text-align: center;
+            }}
+            p {{
+                font-size: 16px;
+                line-height: 1.5;
+                text-align: center;
+            }}
+            .credentials {{
+                background-color: #f1f1f1;
+                padding: 15px;
+                border-radius: 4px;
+                font-weight: bold;
+                color: #2c3e50;
+                text-align: center;
+            }}
+            .footer {{
+                text-align: center;
+                font-size: 12px;
+                color: #777;
+                margin-top: 20px;
+            }}
+            .footer a {{
+                color: #4CAF50;
+                text-decoration: none;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Hola {nombre_usuario},</h1>
+            <p>Te damos la bienvenida a nuestra plataforma. Aquí están tus credenciales de acceso:</p>
+            <div class="credentials">
+                <p><strong>Nombre de usuario:</strong> {nombre_usuario}</p>
+                <p><strong>Contraseña:</strong> {clave_usuario}</p>
+            </div>
+            <p>Por favor, no compartas esta información con terceros.</p>
+        </div>
+    </body>
+</html>
+""", mail_body)
+
     correo.set_plaintext_content("B2B",mail_body)
     
     # Estructura de la respuesta de la api
