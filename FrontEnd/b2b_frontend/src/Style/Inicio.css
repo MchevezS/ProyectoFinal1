@@ -1,38 +1,129 @@
+/* Estilos generales de características */
 .caracteristicas {
-    padding: 50px 20px;
-    background-color: #f4f4f4;
-    text-align: center;
-  }
-  
+  padding: 50px 20px;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+.caracteristicas h2 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #fff; /* Cambié el color a blanco para que coincida con los otros textos */
+}
+
+.benefits, .how-it-works {
+  margin-bottom: 40px;
+}
+
+.benefits li, .how-it-works li {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  list-style-type: none;
+}
+
+.benefits li::before {
+  content: "✔️";
+  margin-right: 10px;
+}
+
+/* Responsivo para Características */
+@media (max-width: 768px) {
   .caracteristicas h2 {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
+    font-size: 2rem;
   }
-  
-  .benefits, .how-it-works {
-    margin-bottom: 40px;
-  }
-  
+
   .benefits li, .how-it-works li {
-    font-size: 1rem;
-    margin-bottom: 15px;
-    list-style-type: none;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
   }
-  
-  .benefits li::before {
-    content: "✔️";
-    margin-right: 10px;
+}
+
+/* Estilos para el carousel */
+.carousel {
+  max-width: 90%; /* Aumenta el ancho máximo del carrusel */
+  margin: 0 auto; /* Centra el carrusel */
+  padding: 0 15px; /* Agrega espacio a los lados */
+}
+
+.carousel-item img {
+  height: 400px; /* Ajusta la altura de las imágenes */
+  object-fit: cover; /* Asegura que las imágenes cubran bien el área */
+}
+
+/* Estilo de la leyenda del carousel */
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo más oscuro para mayor contraste */
+  padding: 25px;
+  border-radius: 10px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Agrega sombra al texto para hacerlo más legible */
+}
+
+.carousel-caption h2,
+.carousel-caption h3 {
+  color: #fff; /* Blanco para el texto */
+  font-size: 2rem; /* Aumenta el tamaño de la fuente */
+  font-weight: bold; /* Hace que los títulos sean más prominentes */
+  margin-bottom: 15px;
+}
+
+.carousel-caption p {
+  color: #f0f0f0; /* Texto más suave para el contenido adicional */
+  font-size: 1.1rem; /* Aumenta el tamaño del texto */
+  line-height: 1.5; /* Mejora la legibilidad */
+}
+
+.carousel-caption ul,
+.carousel-caption ol {
+  color: #ddd; /* Texto más suave */
+  text-align: left;
+  font-size: 1rem;
+}
+
+/* Responsividad del carrusel */
+@media (max-width: 768px) {
+  .carousel {
+    max-width: 95%; /* Ajusta el ancho en pantallas pequeñas */
   }
-  
-  /* Responsivo para Características */
-  @media (max-width: 768px) {
-    .caracteristicas h2 {
-      font-size: 2rem;
-    }
-  
-    .benefits li, .how-it-works li {
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-    }
+
+  .carousel-item img {
+    height: 300px; /* Ajusta la altura de las imágenes en pantallas pequeñas */
   }
-  
+
+  .carousel-caption h2,
+  .carousel-caption h3 {
+    font-size: 1.5rem; /* Reduce el tamaño de los títulos en pantallas pequeñas */
+  }
+}
+
+
+
+/* Estilos de la lista de características principales */
+.caracteristicasPrincipales {
+  list-style-type: none; /* Elimina el estilo de lista predeterminado */
+  padding: 0;
+  margin: 0;
+}
+
+.caracteristicasPrincipales li {
+  font-size: 1.1rem; /* Tamaño de fuente similar al del carrusel */
+  margin-bottom: 5px;
+  color: #ddd; /* Un color suave similar al que se usa en las leyendas del carrusel */
+  line-height: 1.6; /* Mejora la legibilidad */
+}
+
+.caracteristicasPrincipales li::before {
+  content: "✔️"; /* Ícono para cada punto */
+  margin-right: 10px;
+  color: #4CAF50; /* Color verde para los íconos de la lista */
+}
+
+.caracteristicasPrincipales li {
+  font-weight: normal; /* Establecer el peso de la fuente */
+}
+
+/* Responsivo para Características */
+@media (max-width: 768px) {
+  .caracteristicasPrincipales li {
+    font-size: 1rem; /* Ajuste en el tamaño de la fuente en pantallas pequeñas */
+  }
+}

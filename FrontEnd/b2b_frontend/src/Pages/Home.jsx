@@ -1,6 +1,7 @@
 import Navbar from "../Components/Navbar"
 import Inicio from "../Components/Inicio";
 import Resenas from "../Components/Resenas";
+import HeroHome from "../Components/HeroHome";
 
 
 function Home() {
@@ -8,6 +9,7 @@ function Home() {
     <div>
       <Navbar/>
       <Inicio/>
+      <HeroHome/>
       <Resenas/>
     </div>
   )

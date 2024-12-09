@@ -1,0 +1,71 @@
+/* Estilos para el Hero */
+.hero {
+    position: relative;
+    height: 30vh; /* Mantener la altura al 30% de la ventana */
+    width: 90%; /* Aumentar el ancho a 90% de la pantalla */
+    max-width: 1200px; /* Limitar el ancho máximo a 1200px */
+    margin: 0 auto; /* Centrar el hero en la pantalla */
+    background-image: url('ruta-de-tu-imagen.jpg'); /* Imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Título principal */
+  .hero-content h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Subtítulo */
+  .hero-content p {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    max-width: 450px;
+    line-height: 1.4;
+    font-weight: 300;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Botón primario */
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    font-size: 0.9rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .hero-content h1 {
+      font-size: 1.6rem;
+    }
+  
+    .hero-content p {
+      font-size: 0.8rem;
+    }
+  
+    .btn-primary {
+      padding: 6px 12px;
+    }
+  }
+  
