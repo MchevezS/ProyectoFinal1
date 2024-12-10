@@ -1,5 +1,6 @@
 import { useCookies } from "react-cookie"
 import AccesoDenegado from "../Components/AccesoDenegado"
+
 const tipoUsuario = ()=>{
     const [cookie] = useCookies(['rolUsuario'])
     return cookie.rolUsuario

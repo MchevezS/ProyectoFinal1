@@ -16,7 +16,7 @@ function RegistroEmpleados() {
   const [rolEmpleado, setRolEmpleado] = useState ('');
   //const [claveEmpleado, setClaveEmpleado] = useState('');       (La clave se genera directamente desde el backend)
 
-  const [formVisible, setFormVisible] = useState(true); // Estado para controlar la visibilidad del formulario
+  const [formVisible, setFormVisible] = useState(false); // Estado para controlar la visibilidad del formulario
 
   const formatoNombre = () => {
     const regex = /^[a-zA-Z]+$/;
@@ -94,7 +94,7 @@ const asignar = {
         <h2>Registrar Empleado</h2>
         {/* Flecha para mostrar/ocultar el formulario */}
         <span className="toggle-arrow" onClick={toggleFormVisibility}>
-          {formVisible ? '↓' : '↑'}
+          {formVisible ? '↑' : '↓'}
         </span>
       </div>
 

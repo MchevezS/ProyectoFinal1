@@ -13,7 +13,7 @@ const FormAreaTrabajoUsuarios = () => {
   const [empleado, setEmpleado] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
-  const [formVisible, setFormVisible] = useState(true);
+  const [formVisible, setFormVisible] = useState(false);
 
   // Cargar áreas de trabajo, empresas y empleados
   useEffect(() => {
@@ -101,7 +101,7 @@ const FormAreaTrabajoUsuarios = () => {
       <div className="form-title1">
         <h2>Asignar Usuario a Área de Trabajo</h2>
         <span className="toggle-arrow" onClick={toggleFormVisibility}>
-          {formVisible ? '↓' : '↑'}
+          {formVisible ? '↑' : '↓'}
         </span>
       </div>
 

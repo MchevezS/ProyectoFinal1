@@ -9,7 +9,6 @@ import { CiMenuBurger } from "react-icons/ci";
 import { TbLogout2 } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 function BarraLateral() {
-  const [visible, setVisible] = useState(true);
   const [cookies] = useCookies(['rolUsuario','token'])
   const navigate = useNavigate()
 
@@ -26,7 +25,6 @@ function BarraLateral() {
 
   }
   return (
-    visible ? (
       <div className="d-flex flex-column vh-100 barra-lateral">
         <h3 onClick={()=>setVisible(false)}  className="mb-4 text-primary text-center">B2B</h3>
         {/* Lista para propietario */}
@@ -147,9 +145,6 @@ function BarraLateral() {
         </ul>
         }
       </div>
-    ) : (
-      <CiMenuBurger style={{color:"#ffff"}} size={50} onClick={()=>{setVisible(!visible)}}/> /* poner un icono si o si */
-    )
   );
 }
 

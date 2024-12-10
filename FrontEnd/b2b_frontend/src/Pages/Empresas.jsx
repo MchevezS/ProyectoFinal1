@@ -25,41 +25,35 @@ function Empresas() {
         <BarraLateral />
 
         <div>
-          <Header />
-          </div>
-        <section>
-          <div className="table-wrapper">
-            <div className="development-table-container">
-              <FormEmpresas
-                onComplete={handleFormEmpresasComplete}
-                disabled={formEmpresasComplete}
-              />
-            </div>
-            <div className="development-table-container">
-              <RegistroEmpleados
-                onComplete={handleRegistroEmpleadosComplete}
-                disabled={!formEmpresasComplete}
-              />
-            </div>
+        <Header />
+
           </div>
 
-          <div className="table-wrapper">
-            <div className="development-table-container">
-              <FormAreaTrabajo
-                onComplete={handleFormAreaTrabajoComplete}
-                disabled={!formEmpresasComplete}
-              />
-            </div>
-            <div className="development-table-container">
-              <FormAreaTrabajoUsuarios
-                onComplete={handleFormAreaTrabajoUsuariosComplete}
-                disabled={
-                  !formEmpresasComplete || !formAreaTrabajoComplete
-                }
-              />
-            </div>
-          </div>
-        </section>
+  <div className="form-item">
+    <FormEmpresas
+      onComplete={handleFormEmpresasComplete}
+      disabled={formEmpresasComplete}
+    />
+  </div>
+  <div className="form-item">
+    <RegistroEmpleados
+      onComplete={handleRegistroEmpleadosComplete}
+      disabled={!formEmpresasComplete}
+    />
+  </div>
+  <div className="form-item">
+    <FormAreaTrabajo
+      onComplete={handleFormAreaTrabajoComplete}
+      disabled={!formEmpresasComplete}
+    />
+  </div>
+  <div className="form-item">
+    <FormAreaTrabajoUsuarios
+      onComplete={handleFormAreaTrabajoUsuariosComplete}
+      disabled={!formEmpresasComplete || !formAreaTrabajoComplete}
+    />
+  </div>
+
       </div>
     </>
   );

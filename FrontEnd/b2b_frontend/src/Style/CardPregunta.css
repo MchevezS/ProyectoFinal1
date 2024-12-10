@@ -1,0 +1,41 @@
+.form-check {
+    display: flex !important;
+    align-items: center; /* Alinear el contenido verticalmente */
+    gap: 10px; /* Espaciado entre el input y el texto */
+    margin-bottom: 10px; /* Espaciado entre cada opción */
+  }
+  .fiel {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+  .form-check-input {
+    margin-right: 10px; /* Separación entre el input y el label */
+  }
+  
+  textarea {
+    width: 100%; /* Asegurar que el textarea ocupe todo el ancho disponible */
+    resize: none; /* Evitar que el usuario cambie el tamaño */
+  }
+  
+  .card-footer button {
+    background-color: #007bff !important;  /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor de mano */
+    transition: background-color 0.3s; /* Animación al pasar el mouse */
+  }
+  
+  .card-footer button:hover {
+    background-color: #0056b3; /* Color al pasar el mouse */
+  }
+  
