@@ -20,25 +20,22 @@ const ResponderEncuestas =()=>{
 
     const [cookie,setcookie]= useCookies(["id_encuesta"])
     return(
-        <>
- {encuestas.map((encuesta)=>{
-    return(
-    <CardEncuesta key={encuesta.id}
-    titulo={encuesta.titulo_encuesta}
-    descripcion={encuesta.descripcion_encuesta}
-    fechaSubida={encuesta.fecha_creacion}
-    responder={()=> { 
-
-     localStorage.setItem("id_encuesta", encuesta.id)
-        navigate("/verEncuesta")
-    
-    }}
-    />)
-
-
- })}
-
-        </>
+        <div className="encuestas-container">
+        {encuestas.map((encuesta) => {
+          return (
+            <CardEncuesta
+              key={encuesta.id}
+              titulo={encuesta.titulo_encuesta}
+              descripcion={encuesta.descripcion_encuesta}
+              fechaSubida={encuesta.fecha_creacion}
+              responder={() => {
+                localStorage.setItem("id_encuesta", encuesta.id);
+                navigate("/verEncuesta");
+              }}
+            />
+          );
+        })}
+      </div>
     )
 }
 export default ResponderEncuestas

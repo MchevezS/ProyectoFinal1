@@ -1,67 +1,56 @@
-.d-flex {
-    display: flex;
+
+
+.form-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 400px;
+    max-width: 100%;
 }
 
-.gap-5 {
-    gap: 2rem;
+h1.encuesta {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
 }
 
-.w-50 {
-    width: 50%; 
+.texto {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
 }
 
 .fiel {
     width: 100%;
+    max-width: 1000px;
     padding: 12px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 14px;
-    transition: all 0.3s ease;
     background-color: #f9f9f9;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .fiel:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
     outline: none;
-    border-color: #007BFF;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5), inset 0 0 5px rgba(0, 123, 255, 0.3);
-    background-color: #e6f7ff;
-}
-
-.card {
-    width: 600px;
-}
-
-.encuesta {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-    font-family: 'Arial', sans-serif;
-    margin-top: 20px;
-}
-
-.form-container {
-    margin: 0 auto;
-    padding: 40px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    width: 500px;
 }
 
 .submit-button {
-    background-color: #007BFF;
-    color: white;
-    padding: 14px 20px;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #ffffff;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 100%;
-    margin-top: 20px;
 }
 
 .submit-button:hover {
@@ -70,5 +59,17 @@
 
 .submit-button:focus {
     outline: none;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+    .form-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .fiel {
+        padding: 10px;
+    }
 }

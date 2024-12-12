@@ -10,6 +10,7 @@ import EditarEmpresa from '../Components/EditarEmpresa';
 import Contactenos from '../Components/Contactenos';
 import Dashboard from '../Components/Dashboard';
 import FormularioEmailJS from '../Components/FormularioEmailJS';
+import MisionVision from '../Components/MisionVision';
 
 
 const Routing = () => {
@@ -27,6 +28,7 @@ const Routing = () => {
           <Route path='/contactenos' element={<Contactenos/>}/>
           <Route path='/dasboard' element={<Dashboard/>}/>
           <Route path='/formularioEmailJS' element={<FormularioEmailJS/>}/>
+          <Route path='/misionVision' element={<MisionVision/>}/>
        </Routes>
       </Router>
      );

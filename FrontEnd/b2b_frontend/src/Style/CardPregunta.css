@@ -1,0 +1,99 @@
+/* Contenedor general para la tarjeta */
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Estilo de la tarjeta que contiene los formularios */
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para los checks de las preguntas */
+.form-check {
+    margin-bottom: 10px;
+}
+
+/* Estilo de las etiquetas de las preguntas */
+.form-check-label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.boton {
+    width: 100%;
+    background-color: #28a745;
+    color: white;
+}
+
+/* Efecto hover del botón */
+.boton:hover {
+    background-color: #218838;
+}
+
+/* Estilo para el contenedor de retroalimentación */
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical; /* Permite que el textarea se expanda verticalmente */
+    margin-top: 10px;
+}
+
+/* Estilo del pie de la tarjeta (donde está el botón) */
+.card-footer {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #f8f9fa; /* Fondo gris claro para el pie */
+    border-top: 1px solid #ddd; /* Borde superior para separar el pie del contenido */
+    padding: 10px;
+    text-align: center; /* Centrado de contenido */
+}
+
+/* Asegura que los inputs de radio se vean bien */
+.form-check-input {
+    margin-right: 10px; /* Espaciado entre el input y la etiqueta */
+}
+
+/* Estilo de la etiqueta del radio para mayor legibilidad */
+.form-check-label {
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer; /* Cursor pointer para mejorar la interacción */
+}
+
+/* Si quieres que todo el formulario se vea más ordenado y limpio */
+form {
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+
+/* Título de la encuesta */
+h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Descripción debajo del título */
+p {
+    font-size: 1.1rem;
+    color: #555;
+    text-align: center;
+}
+
+/* Estilo general de los textos */
+strong {
+    font-weight: bold;
+}

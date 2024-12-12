@@ -4,7 +4,6 @@ import post from '../fetch';
 import {useCookies} from 'react-cookie';
 import Navbar from '../Components/Navbar';
 import { mostrarAlerta } from '../Components/MostrarAlerta';
-import CardPregunta from '../Components/CardPregunta';
 import { useLocation } from 'react-router-dom';
 import '../Style/CrearEncuestas.css'
 
@@ -22,6 +21,12 @@ function CrearEncuestas() {
     //Funcion que se ejecuta al tocar el boton de enviar, tiene el cuerpo de la encuesta y se envia al endpiont creado en el backend.
 
 async function enviarEncuesta() {
+    // Validación de campos vacíos
+    if (!tituloEncuesta || !descripcionEncuesta || !preguntaEncuesta) {
+      mostrarAlerta("error", "Por favor, complete todos los campos.");
+      return; // Detener el envío si algún campo está vacío
+    }
+
     const datosEncuesta = {
         titulo_encuesta : tituloEncuesta,
         descripcion_encuesta:descripcionEncuesta
@@ -43,7 +48,7 @@ async function enviarEncuesta() {
       setpreguntaEncuesta("")
     }
     else{
-      mostrarAlerta("error", "error")
+      mostrarAlerta("error", "Error al agregar la pregunta.")
     }
     //creacion de la cookie y detalles (nombre de la cookie, valor,{path donde va a ser accesible} y expiracion)
     setCookies("Encuesta", datosEncuesta,{path:"/",maxAge:600}) //esta en segundos
@@ -58,10 +63,11 @@ async function enviarEncuesta() {
         className="d-flex justify-content-center align-items-center"
         style={{ height: '100vh' }}
       >
-        <div className="d-flex gap-5" style={{ width: '1000vh' }}>
-          <div className="d-flex flex-column gap-3 mx-auto w-50 border border-primary form-container">
+        <div className="d-flex" style={{ width: '2500px' }}>
+          <div className="d-flex flex-column mx-auto w-100 border border-primary form-container">
             <h1 className="encuesta">Crear encuesta</h1>
             {/* Evento para guardar el valor del titulo encuesta */}
+            <label className='texto'>Titulo de la encuesta:</label>
             <input
               className="fiel"
               type="text"
@@ -70,6 +76,7 @@ async function enviarEncuesta() {
               value={tituloEncuesta}
             />
             {/* Evento para guardar la descripcion de la encuesta */}
+            <label className='texto'>Descripcion de la encuesta</label>
             <input
               className="fiel"
               type="text"
@@ -78,6 +85,7 @@ async function enviarEncuesta() {
               value={descripcionEncuesta}
             />
             {/* Envía la encuesta */}
+            <label className='texto'>Preguntas de la encuesta</label>
             <input
               className="fiel"
               type="text"
@@ -89,9 +97,6 @@ async function enviarEncuesta() {
             <button onClick={enviarEncuesta} className="submit-button">
               ENVIAR
             </button>
-          </div>
-          <div className="card">
-            <CardPregunta />
           </div>
         </div>
       </div>
