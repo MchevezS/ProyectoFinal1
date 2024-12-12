@@ -1,0 +1,153 @@
+/* Estilo principal del Hero */
+.hero {
+  position: relative;
+  height: 70vh; /* Reducción de la altura del hero */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fbfbfb;
+  text-align: center;
+  overflow: hidden;
+}
+
+.heroFondo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen cubra todo el fondo */
+  z-index: -2; /* Envía la imagen al fondo */
+}
+
+/* Overlay oscuro */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Color negro con opacidad del 40% */
+  z-index: -1; /* Asegura que el overlay quede debajo del contenido */
+}
+
+.hero-content {
+  z-index: 1; /* Trae el contenido al frente */
+  max-width: 700px; /* Limita el ancho máximo del contenido */
+  padding: 20px;
+  animation: fadeInUp 1.5s ease-in-out;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem; /* Reducido de 3rem a 2.5rem */
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Da un ligero efecto de sombra al texto */
+}
+
+.hero-content p {
+  font-size: 1.3rem; /* Reducido de 1.5rem a 1.3rem */
+  margin-bottom: 1.5rem; /* Reducido el margen */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px; /* Reducido el espacio entre botones */
+  justify-content: center;
+  margin-bottom: 15px; /* Reducido el margen inferior */
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px; /* Reducido el padding */
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 8px 16px; /* Reducido el padding */
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 15px; /* Reducido el espacio entre las estadísticas */
+  justify-content: center;
+  margin-top: 15px; /* Reducido el margen superior */
+}
+
+.hero-stats div {
+  text-align: center;
+  color: #000000;
+  background-color: rgba(242, 235, 235, 0.5); /* Fondo oscuro semitransparente */
+  padding: 8px 16px; /* Reducido el padding */
+  border-radius: 8px;
+}
+
+.hero-stats h3 {
+  font-size: 1.8rem; /* Reducido el tamaño del texto */
+  margin-bottom: 0.5rem;
+}
+
+.hero-stats p {
+  font-size: 1rem;
+  color: #000;
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 1.8rem; /* Reducido el tamaño en móviles */
+  }
+
+  .hero-content p {
+    font-size: 1.1rem; /* Reducido el tamaño en móviles */
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%; /* Los botones ocupan todo el ancho en móvil */
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.descripcion1{
+  color: #b1a9a9;
+}

@@ -1,22 +1,46 @@
 import React from 'react';
-import { useState } from 'react';
-import post from '../fetch';
+import { useState,useEffect } from 'react';
+import { post } from '../Services/Crud';
 import {useCookies} from 'react-cookie';
 import Navbar from '../Components/Navbar';
 import { mostrarAlerta } from '../Components/MostrarAlerta';
 import { useLocation } from 'react-router-dom';
 import '../Style/CrearEncuestas.css'
-
+import { getFilter } from '../Services/Crud';
+import BarraLateral from '../Components/BarraLateral';
+import Header from '../Components/Header';
 
 function CrearEncuestas() {
     //Estados para manejar el cambio de informacion en los inputs
-    const [tituloEncuesta,setTituloEncuesta]=useState("")
+    const [categoriaEncuesta,setCategoriaEncuesta]=useState("")
     const [descripcionEncuesta,setdescripcionEncuesta]=useState("")
     const [preguntaEncuesta,setpreguntaEncuesta]=useState("")
-  
-    
+    const [idEmpresa,setIdEmpresa]=useState([])
     //HOOK (creacion de cookies) recibe el nombre de la cookie que va a tener 
-    const [cookies,setCookies]=useCookies(["Encuesta"])
+    const [cookies,setCookies]=useCookies(["Encuesta","empresaId",'usuarioID','rolUsuario','token'])
+    const token = cookies.token
+    useEffect(()=>{
+      const obtenerEmpresa = async()=>{
+        const empresa = await getFilter("empresa-id/",cookies.usuarioID,'propietario_id')
+        console.log(empresa.id_empresa)
+        setIdEmpresa(empresa.id_empresa)
+        setCookies("empresaId",empresa.id_empresa)
+        console.log(idEmpresa);
+      }
+      const obtenerEmpresaUsuario = async()=>{
+        const empresa = await getFilter("empresa-id/",cookies.usuarioID,'empresa_id')
+        console.log(empresa.id_empresa)
+        setIdEmpresa(empresa.id_empresa)
+        setCookies("empresaId",empresa.id_empresa)
+        console.log(idEmpresa);
+      }
+      if(cookies.rolUsuario === 'propietario'){
+      obtenerEmpresa()
+      }else{
+        obtenerEmpresaUsuario()
+      }
+
+    },[idEmpresa])
 
     //Funcion que se ejecuta al tocar el boton de enviar, tiene el cuerpo de la encuesta y se envia al endpiont creado en el backend.
 
@@ -28,22 +52,22 @@ async function enviarEncuesta() {
     }
 
     const datosEncuesta = {
-        titulo_encuesta : tituloEncuesta,
-        descripcion_encuesta:descripcionEncuesta
-
+        categoria_encuesta: categoriaEncuesta,
+        descripcion_encuesta:descripcionEncuesta,
+        empresa: cookies.empresaId,
         //METODO POST 
     }
-    const enviarPeticion = await post("encuestas/",datosEncuesta)
+    const enviarPeticion = await post(datosEncuesta,"encuestas/",token)
+    console.log(enviarPeticion);
     const datosPreguntas = {
       encuesta_referencia : enviarPeticion.id,
-      pregunta_texto : preguntaEncuesta
+      pregunta_texto : preguntaEncuesta,
     }
 
-     const enviarPregunta = await post("preguntas/", datosPreguntas)
+     const enviarPregunta = await post(datosPreguntas,"preguntas/",token)
 
     if (enviarPeticion){
       mostrarAlerta("success","se agregó la encuesta")
-      setTituloEncuesta("")
       setdescripcionEncuesta("")
       setpreguntaEncuesta("")
     }
@@ -57,7 +81,12 @@ async function enviarEncuesta() {
 
   return (
     <div>
-    <Navbar />
+     <div className="sidebar" style={{ width: '50px' }}>
+            <BarraLateral/>
+        </div>
+        <div className="content flex-grow-1 ">
+          <Header />
+        </div>
     <div className="container">
       <div
         className="d-flex justify-content-center align-items-center"
@@ -94,10 +123,13 @@ async function enviarEncuesta() {
               value={preguntaEncuesta}
             />
 
+            <CardPregunta />
+            
             <button onClick={enviarEncuesta} className="submit-button">
-              ENVIAR
+              Enviar
             </button>
           </div>
+          
         </div>
       </div>
     </div>

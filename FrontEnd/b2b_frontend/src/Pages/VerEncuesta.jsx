@@ -20,11 +20,14 @@ const VerEncuesta = () => {
         traerEncuestas()
     }, [])
 
-    return (
-        <>
-            <NavbarEncuestas />
+    return(
 
-            <h1>{encuesta.titulo_encuesta}</h1>
+
+
+        <>
+<NavbarEncuestas/>
+
+<h1>{encuesta.titulo_encuesta}</h1>
 
             <p>descripcion:</p>
             <p>{encuesta.descripcion_encuesta}</p>

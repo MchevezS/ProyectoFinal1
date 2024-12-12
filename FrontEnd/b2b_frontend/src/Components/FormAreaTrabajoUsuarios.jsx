@@ -1,55 +1,67 @@
-import '../Style/FormAreaTrabajoUsuarios.css'
+import '../Style/FormAreaTrabajoUsuarios.css';
 import { useState, useEffect } from 'react';
-import { post, get } from '../Services/Crud';
-import '../Style/FormAreaTrabajoUsuarios.css'
+import { post, get, getFilter } from '../Services/Crud';
+import { useCookies } from 'react-cookie';
+import { mostrarAlerta } from './MostrarAlerta';
+
 const FormAreaTrabajoUsuarios = () => {
-  // Estados para los datos del formulario
-//   const [usuarios, setUsuarios] = useState([]);
+  const [cookies] = useCookies(['empresaId','nombreEmpresa','token']);
   const [areasTrabajo, setAreasTrabajo] = useState([]);
-  const [empresas, setEmpresas] = useState([]);
-//   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState('');
+  const token = cookies.token
+  const [listaEmpleados, setListaEmpleados] = useState([]);
   const [areaSeleccionada, setAreaSeleccionada] = useState('');
-  const [empresaSeleccionada, setEmpresaSeleccionada] = useState('');
+  const [empleado, setEmpleado] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
-  
-  // Cargar usuarios, áreas de trabajo y empresas
+  const [formVisible, setFormVisible] = useState(false);
+
+  // Cargar áreas de trabajo, empresas y empleados
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const usuariosData = await get('usuarios');
         const areasData = await get('AreaTrabajo');
-        const empresasData = await get('empresas');
-        
-        // setUsuarios(usuariosData);
         setAreasTrabajo(areasData);
-        setEmpresas(empresasData);
       } catch (error) {
         console.error(error);
         setMensajeError('Error al cargar los datos');
       }
     };
+    
+    const traerEmpleados = async () => {
+      try {
+        const empleadosEmpresa = await getFilter('traer-empleados', cookies.empresaId,'empresa_id');
+        setListaEmpleados(empleadosEmpresa);
+      } catch (error) {
+        console.error(error);
+        setMensajeError('Error al cargar los empleados');
+      }
+      
+    };
+    const traerAreas = async () =>{
+      try{
+        const areasEmpresa = await getFilter('areas-trabajo', cookies.empresaId, 'empresa_id');
+        setAreasTrabajo(areasEmpresa);
+      }catch(error){
+        console.error(error);
+        setMensajeError('Error al cargar las áreas de trabajo');
+      }
+    }
+    
     fetchData();
-  }, []);
-  
+    traerEmpleados();
+    traerAreas();
+  }, [cookies.empresaId, listaEmpleados]);
+
   // Validación del formulario
   const validarFormulario = () => {
     let esValido = true;
     let erroresTemp = [];
 
-
-    if (!areaSeleccionada) {
-      erroresTemp.push('El área de trabajo es obligatoria');
-      esValido = false;
-    }
-
-    if (!empresaSeleccionada) {
-      erroresTemp.push('La empresa es obligatoria');
-      esValido = false;
-    }
+    if (!areaSeleccionada) erroresTemp.push('El área de trabajo es obligatoria');
+    if (!empleado) erroresTemp.push('Debe seleccionar un empleado');
 
     setErrores(erroresTemp);
-    return esValido;
+    return erroresTemp.length === 0;
   };
 
   // Manejo del envío del formulario
@@ -58,70 +70,106 @@ const FormAreaTrabajoUsuarios = () => {
 
     if (validarFormulario()) {
       const datosFormulario = {
-        // usuario_id: usuarioSeleccionado,
-        area_trabajo_id: areaSeleccionada,
-        empresa_id: empresaSeleccionada
+        usuario: empleado,
+        area_trabajo: areaSeleccionada,
+        empresa: cookies.empresaId,
       };
 
       try {
-        const response = await post(datosFormulario, 'asignar_usuario_area');
-        if (response && response.success) {
-        alert('Usuario asignado correctamente');
+        const response = await post(datosFormulario, 'asignar_usuario/',token);
+        if (response.id) {
+          mostrarAlerta('success', 'Usuario asignado correctamente');
         } else {
-            alert('Hubo un problema al asignar un usuario')
+          mostrarAlerta('error', 'Hubo un problema al asignar el usuario');
         }
       } catch (error) {
         console.error(error);
-        alert('Error al asignar el usuario');
+        mostrarAlerta('error', 'Error al asignar el usuario');
       }
     } else {
       setMensajeError('Por favor, completa todos los campos.');
     }
   };
 
+  // Alternar visibilidad del formulario
+  const toggleFormVisibility = () => {
+    setFormVisible(!formVisible);
+  };
+
   return (
-    <form onSubmit={manejarEnvio}>  
-   
-      <div className='form-group4'>
-        <label className='labelAreaU'>Área de Trabajo:</label>
-        <select className='areaSelect' value={areaSeleccionada} onChange={(e) => setAreaSeleccionada(e.target.value)}>
-          <option className='optionArea' value="">Seleccione un área de trabajo</option>
-          {areasTrabajo.map((area) => (
-            <option key={area.id} value={area.id}>
-              {area.nombre_area} {/* Suponiendo que el modelo de AreaTrabajo tiene 'nombre_area' */}
-            </option>
-          ))}
-        </select>
+    <div className="development-table-container">
+      <div className="form-title1">
+        <h2>Asignar Usuario a Área de Trabajo</h2>
+        <span className="toggle-arrow" onClick={toggleFormVisibility}>
+          {formVisible ? '↑' : '↓'}
+        </span>
       </div>
 
-      <div className='form-group4'>
-        <label className='labelEmpresaU'>Empresa:</label>
-        <select className='selectE' value={empresaSeleccionada} onChange={(e) => setEmpresaSeleccionada(e.target.value)}>
-          <option className='selectEmpresa' value="">Seleccione una empresas</option>
-          {empresas.map((empresa) => (
-            <option key={empresa.id} value={empresa.id}>
-              {empresa.nombre_empresa} {/* Suponiendo que el modelo de Empresa tiene 'nombre_empresa' */}
-            </option>
-          ))}
-        </select>
-      </div>
+      {formVisible && (
+        <form onSubmit={manejarEnvio}>
+          <table className="table">
+            <tbody>
+              <tr>
+                <td><label className="labelAreaU">Área de Trabajo:</label></td>
+                <td>
+                  <select
+                    className="areaSelect"
+                    value={areaSeleccionada}
+                    onChange={(e)=>setAreaSeleccionada(e.target.value)}
+                  >
+                    <option value="" disabled>Seleccione un área de trabajo</option>
+                    {areasTrabajo.map((area) => (
+                      <option key={area.id} value={area.id}>
+                        {area.nombre_area}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><label className="labelEmpleado">Seleccione el empleado:</label></td>
+                <td>
+                  <select
+                    className="empleadoSelect"
+                    value={empleado}
+                    onChange={(e)=>setEmpleado(e.target.value)}
+                  >
+                    <option value="" disabled>Lista de empleados</option>
+                    {listaEmpleados.map((emp) => (
+                      <option key={emp.id} value={emp.id}>
+                        {emp.username}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+              <tr>
+              <td><label className="labelEmpleado">Empresa</label></td>
+                <td>
+                    <input value={cookies.nombreEmpresa} disabled/>
+                </td>
+              </tr>
+            </tbody>
+          </table> 
 
-      <button className='btnAsignar' type="submit">Asignar</button>
+          <button className="btnAsignar" type="submit">Asignar</button>
 
-      {/* Mostrar mensaje de error si existe */}
-      {mensajeError && <div style={{ color: 'red' }}>{mensajeError}</div>}
-      
-      {/* Mostrar lista de errores */}
-      {errores.length > 0 && (
-        <div style={{ color: 'red' }}>
-          <ul>
-            {errores.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
-        </div>
+          {/* Mostrar mensaje de error si existe */}
+          {mensajeError && <div className="error-text">{mensajeError}</div>}
+
+          {/* Mostrar lista de errores */}
+          {errores.length > 0 && (
+            <div className="error-text">
+              <ul>
+                {errores.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </form>
       )}
-    </form>
+    </div>
   );
 };
 

@@ -41,11 +41,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
 }
-
+# Configuración de los tiempos de expiración de los tokens JWT
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=3), #cambiar tiempo
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), 
@@ -63,7 +63,7 @@ MIDDLEWARE = [
 ]
 
 
-CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_ALL_ORIGINS = True 
 CORS_ALLOW_CREDENTIALS = True
 
 
@@ -95,8 +95,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'B2B',  # El nombre de tu base de datos en MySQL
-        'USER': 'moha',  # Tu usuario de MySQL
-        'PASSWORD': '119690203',  # La contraseña de tu usuario MySQL
+        'USER': 'root',  # Tu usuario de MySQL
+        'PASSWORD': 'vialka16',  # La contraseña de tu usuario MySQL
         'HOST': '127.0.0.1',  # Si estás ejecutando MySQL localmente
         'PORT': '3306',  # El puerto por defecto de MySQL
     }
