@@ -47,18 +47,18 @@ const GraficoBarras3 = () => {
       bar: {
         borderRadius: 4,
         columnWidth: '45%',
-        distributed: true,
+        distributed: false,
       },
     },
     dataLabels: {
       enabled: false,
     },
     xaxis: {
-      categories: ['Recursos humanos', 'Atención al cliente', 'Finanzas', 'Marketing', 'TI'],
+      categories: ['Recursos humanos', 'Atención al Cliente', 'Finanzas', 'Marketing', 'TI'],
       labels: {
         style: {
           colors: '#9a9a9a',
-          fontSize: '12px',
+          fontSize: '10px',
         },
       },
     },

@@ -9,7 +9,7 @@ import { CiMenuBurger } from "react-icons/ci";
 import { TbLogout2 } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
 function BarraLateral() {
-  const [cookies] = useCookies(['rolUsuario','token'])
+  const [cookies] = useCookies(['rolUsuario','token','nombreEmpresa'])
   const navigate = useNavigate()
 
 
@@ -26,7 +26,7 @@ function BarraLateral() {
   }
   return (
       <div className="d-flex flex-column vh-100 barra-lateral">
-        <h3 onClick={()=>setVisible(false)}  className="mb-4 text-primary text-center">B2B</h3>
+        <h3 onClick={()=>setVisible(false)}  className="mb-4 text-white text-center">B2B</h3>
         {/* Lista para propietario */}
         {
           cookies.rolUsuario === 'propietario' &&
