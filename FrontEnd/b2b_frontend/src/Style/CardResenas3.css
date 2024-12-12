@@ -1,0 +1,66 @@
+/* Contenedor principal de la tarjeta */
+.simple-resena-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px; /* Alineado con .testimonial-card */
+    padding: 25px; /* Alineado con .testimonial-card */
+    max-width: 320px; /* Alineado con .testimonial-card */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 25px auto; /* Alineado con .testimonial-card */
+}
+
+/* Efecto hover */
+.simple-resena-card:hover {
+    transform: translateY(-10px); /* Alineado con .testimonial-card */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Alineado con .testimonial-card */
+}
+
+/* Imagen circular del perfil */
+.simple-resena-card-img {
+    width: 80px; /* Alineado con .testimonial-card */
+    height: 80px; /* Alineado con .testimonial-card */
+    border-radius: 50%;
+    margin-bottom: 20px; /* Alineado con .testimonial-card */
+    border: 3px solid #6c5ce7; /* Alineado con .testimonial-card */
+}
+
+/* Nombre del autor */
+.simple-resena-card-name {
+    font-size: 1.3rem; /* Alineado con .testimonial-card */
+    margin-bottom: 6px;
+    color: #2d3748;
+    font-weight: bold;
+}
+
+/* Rol del autor */
+.simple-resena-card-role {
+    font-size: 0.95rem; /* Alineado con .testimonial-card */
+    color: #4a5568;
+    margin-bottom: 12px; /* Alineado con .testimonial-card */
+}
+
+/* Texto del testimonio */
+.simple-resena-card-text {
+    font-size: 1rem; /* Alineado con .testimonial-card */
+    color: #4a5568;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+  .simple-resena-card {
+    width: 90%;
+    max-width: 280px; /* Alineado con .testimonial-card */
+  }
+
+  .simple-resena-card-img {
+    width: 70px; /* Alineado con .testimonial-card */
+    height: 70px; /* Alineado con .testimonial-card */
+  }
+
+  .simple-resena-card-text {
+    font-size: 0.95rem;
+  }
+}

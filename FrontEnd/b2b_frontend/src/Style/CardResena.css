@@ -1,49 +1,66 @@
-
-
-.testimonial3-card {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: auto;
+/* Contenedor principal de la tarjeta */
+.testimonial-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 25px;
+  max-width: 320px;
   text-align: center;
-  transition: transform 0.3s ease;
-
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 25px auto;
 }
 
-.testimonial3-card:hover {
+/* Efecto hover */
+.testimonial-card:hover {
   transform: translateY(-10px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.testimonial3-card img {
-  width: 50px;
+/* Imagen circular del perfil */
+.testimonial-card-img {
+  width: 80px;
   height: 80px;
   border-radius: 50%;
   margin-bottom: 20px;
+  border: 3px solid #6c5ce7;
 }
 
-.testimonial3-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+/* Nombre del autor */
+.testimonial-card-name {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+  color: #2d3748;
+  font-weight: bold;
 }
 
-.testimonial3-card p {
+/* Rol del autor */
+.testimonial-card-role {
+  font-size: 0.95rem;
+  color: #4a5568;
+  margin-bottom: 12px;
+}
+
+/* Texto del testimonio */
+.testimonial-card-text {
   font-size: 1rem;
-  color: #666;
+  color: #4a5568;
+  line-height: 1.6;
+  font-style: italic;
 }
 
-/* Responsivo para Testimonios */
+/* Estilo responsivo */
 @media (max-width: 768px) {
-  .testimonial3-card, .testimonial2-card, .testimonial3-card {
-    width: 100%; /* Ocupan todo el ancho en pantallas pequeñas */
-    margin: 10px 0;
+  .testimonial-card {
+    width: 90%;
+    max-width: 280px;
   }
 
-  .testimonial3-card h3 {
-    font-size: 1.1rem;
+  .testimonial-card-img {
+    width: 70px;
+    height: 70px;
   }
 
-  .testimonial3-card p {
-    font-size: 0.9rem;
+  .testimonial-card-text {
+    font-size: 0.95rem;
   }
 }
