@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { mostrarAlerta } from './MostrarAlerta';
 import { loginPost, post } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
-import '../Style/RegistroLogin.css'; // Importar el archivo de estilos CSS
+import '../Style/RegistroLogin.css'; 
 import Navbar from './Navbar';
 import {useCookies} from 'react-cookie'
 function RegistroLogin() {
@@ -211,6 +211,7 @@ function RegistroLogin() {
               <label htmlFor="registerNombre">Nombre Completo</label>
               <input
                 type="text"
+                placeholder='Nombre Completo'
                 className="form-control"
                 id="registerNombre"
                 value={nombreUsuario}
@@ -221,6 +222,7 @@ function RegistroLogin() {
               <label htmlFor="registerCedula">Cédula de Identidad</label>
               <input
                 type="text"
+                placeholder='Cédula de Identidad'
                 className="form-control"
                 id="registerCedula"
                 value={cedulaIndentidad}
@@ -231,6 +233,7 @@ function RegistroLogin() {
               <label htmlFor="registerEmail">Correo Electrónico</label>
               <input
                 type="email"
+                placeholder='Correo Electrónico'
                 className="form-control"
                 id="registerEmail"
                 value={emailRegistro}
@@ -241,6 +244,7 @@ function RegistroLogin() {
               <label htmlFor="registerPassword">Contraseña</label>
               <input
                 type="password"
+                placeholder='Contraseña'
                 className="form-control"
                 id="registerPassword"
                 value={claveRegistro}
