@@ -1,8 +1,19 @@
-.table-wrapper {
-    display: flex; /* Alinear tablas horizontalmente */
-    gap: 10px; /* Espacio entre tablas */
-  }
-  
-  .development-table-container {
-    flex: 1; /* Ajustar el ancho de cada tabla para que ocupen el espacio equitativamente */
-  }
+.form-container {
+  display: flex;
+  flex-direction: column; /* Alinear formularios verticalmente */
+  align-items: center; /* Centrar formularios horizontalmente */
+  gap: 20px; /* Espaciado entre formularios */
+  padding: 20px;
+  margin: 0 auto; /* Centrar el contenedor en la pantalla */
+  max-width: 100%; /* Usar todo el ancho disponible */
+}
+
+.form-item {
+  margin-left: 250px;
+  width: 80%; /* Formularios ocupan el 80% del ancho de la pantalla */
+  max-width: 1200px; /* Limitar el ancho máximo */
+  padding: 0; /* Eliminar padding interno */
+  background: none; /* Eliminar fondo blanco */
+  border: none; /* Eliminar bordes */
+  box-shadow: none; /* Eliminar sombra */
+}

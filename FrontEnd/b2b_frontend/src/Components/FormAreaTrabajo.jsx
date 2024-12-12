@@ -10,7 +10,7 @@ const FormAreaTrabajo = () => {
   const [nombreArea, setNombreArea] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
-  const [formVisible, setFormVisible] = useState(true);
+  const [formVisible, setFormVisible] = useState(false);
 
   // Validación del formulario
   const validarFormulario = () => {
@@ -62,7 +62,7 @@ const FormAreaTrabajo = () => {
       <div className="form-title1">
         <h2>Registrar Área de Trabajo</h2>
         <span className="toggle-arrow" onClick={toggleFormVisibility}>
-          {formVisible ? '↓' : '↑'}
+          {formVisible ? '↑' : '↓'}
         </span>
       </div>
 

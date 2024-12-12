@@ -11,7 +11,7 @@ import re #expresiones regulares
 import random
 import string
 from rest_framework.permissions import AllowAny
-from empresas.models import AreaTrabajoUsuarios,Empleados
+from empresas.models import AreaTrabajoUsuarios,Empleados,Empresa
 from mailersend import emails #importacion de la api mailersend
 
 # api token de mailersend 
@@ -63,18 +63,26 @@ class LoginView(APIView):
          id_empresa = Empleados.objects.get(trabajador_id=datos_autenticacion.id)
         except:
          area_trabajo = None
-        
+
+        try:
+            id_empresa_p = Empresa.objects.get(propietario=datos_autenticacion.id)
+        except:
+            id_empresa_p = None
 
         if datos_autenticacion is not None:
             refresh = RefreshToken.for_user(datos_autenticacion)
             rol= Usuarios.objects.get(user_id=datos_autenticacion.id)
-            if area_trabajo is None:
+            if area_trabajo is None and id_empresa_p is not None:
                 return Response({"success":'bienvenido','area':'No tiene area asignada',"id":datos_autenticacion.id,"rol":rol.rol,
-                             "nombre": datos_autenticacion.username, 
+                             "nombre": datos_autenticacion.username,'id_empresa':id_empresa_p.id, 
                              "token_acceso": str(refresh.access_token),},status=status.HTTP_200_OK)
             elif area_trabajo is not None:
                 return Response({"success":'bienvenido','area':area_trabajo.area_trabajo.nombre_area,"id":datos_autenticacion.id,"rol":rol.rol,
-                             "nombre": datos_autenticacion.username,'id_empresa':id_empresa.empresa_id,
+                             "nombre": datos_autenticacion.username,'id_empresa':id_empresa.empresa.id,
+                             "token_acceso": str(refresh.access_token),},status=status.HTTP_200_OK)
+            elif id_empresa_p is None:
+                return Response({"success":'bienvenido','area':'No tiene area asignada',"id":datos_autenticacion.id,"rol":rol.rol,
+                             "nombre": datos_autenticacion.username,'id_empresa':0, 
                              "token_acceso": str(refresh.access_token),},status=status.HTTP_200_OK)
             else:
                 return Response({'error':'Credenciales incorrectas'},status=status.HTTP_400_BAD_REQUEST)

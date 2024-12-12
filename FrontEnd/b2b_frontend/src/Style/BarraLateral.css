@@ -1,6 +1,7 @@
 /* BarraLateral.css */
 .barra-lateral {
-  background-color: #f8f9fa;
+  background-color: #071224;
+  color:#fff;
   width: 250px; /* Ajustar ancho para evitar conflictos */
   height: 100vh; /* Ocupa toda la altura de la ventana */
   padding: 20px; /* Espaciado interno adecuado */

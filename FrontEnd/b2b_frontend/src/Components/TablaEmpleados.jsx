@@ -25,9 +25,9 @@ const TablaEmpleados = () => {
       setCarga(!carga) // Cambiamos el estado cada vez que tocamos el botoncito
     }
   return (
-        <div className="p-4 bg-white rounded shadow-sm" style={{height:'100vh'}} >
+        <div className="p-4 bg-white rounded shadow-sm" style={{height:'72.6vh'}} >
         <h5>Estado de los empleados</h5>
-        <Table bordered hover className="align-middle w-100">
+        <Table bordered hover className="align-middle" style={{width:"20vw"}}>
         <thead>
           <tr>
             <th>Nombre</th>

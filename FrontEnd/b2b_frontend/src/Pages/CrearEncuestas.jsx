@@ -117,13 +117,13 @@ async function enviarEncuesta() {
               value={preguntaEncuesta}
             />
 
+            <CardPregunta />
+            
             <button onClick={enviarEncuesta} className="submit-button">
               Enviar
             </button>
           </div>
-          <div className="card">
-            <CardPregunta />
-          </div>
+          
         </div>
       </div>
     </div>

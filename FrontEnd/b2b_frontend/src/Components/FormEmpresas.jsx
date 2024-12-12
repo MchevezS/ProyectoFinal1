@@ -18,7 +18,7 @@ const FormEmpresas = () => {
   });
 
   // Estado para controlar la visibilidad del formulario
-  const [mostrarFormulario, setMostrarFormulario] = useState(true);
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
   // Validación del formulario
   const validarFormulario = () => {
@@ -102,13 +102,14 @@ const FormEmpresas = () => {
   return (
     <>
       <div className="development-table-container">
-        <h2 className="form-title1">Registrar Empresa</h2>
+        <div className="form-title1">
+        <h2>Registrar Empresa</h2>
         
         {/* Flecha para alternar la visibilidad */}
-        <button className="toggle-btn" onClick={toggleFormulario}>
-          {mostrarFormulario ? '↓' : '↑'} {/* Cambia la dirección de la flecha */}
-        </button>
-
+        <span className="toggle-arrow" onClick={toggleFormulario}>
+          {mostrarFormulario ? '↑' : '↓'} {/* Cambia la dirección de la flecha */}
+          </span> 
+        </div>        
         {/* Mostrar el formulario solo si el estado es verdadero */}
         {mostrarFormulario && (
           <form onSubmit={manejarEnvio}>
