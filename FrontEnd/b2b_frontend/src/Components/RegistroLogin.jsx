@@ -9,8 +9,20 @@ function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
   const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario","rolUsuario",'areaUsuario','token','empresaId']);
+  const token = cookie.token
   const navigate = useNavigate();
 
+  // const obtenerEmpresa = async()=>{
+  // try{   
+  //   const empresa = await getFilter("empresa-id/",cookie.usuarioID,'propietario_id')
+  //   console.log(empresa)
+  //   setCookie('empresaId',empresa.id_empresa)
+  //   setCookie('nombreEmpresa',empresa.nombre_empresa)
+  //   cookie.empresaId = empresa.id_empresa
+  // }catch(error){
+  //   console.error(error)
+  // }
+  // }
 
 
   // Estados de los formularios
@@ -64,7 +76,7 @@ function RegistroLogin() {
           setCookie("areaUsuario", response.area)
           setCookie("empresaId", response.id_empresa)
           setCookie("token",response.token_acceso)  // GUARDAR TOKEN EN COOKIE
-
+          // obtenerEmpresa()
           if (cookie.rolUsuario==="usuario" || response.rol === 'usuario') {
             navigate("/empresas");
           }

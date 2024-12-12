@@ -45,7 +45,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ),
 }
-
+# Configuración de los tiempos de expiración de los tokens JWT
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=3), #cambiar tiempo
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), 

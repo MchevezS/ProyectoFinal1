@@ -8,17 +8,17 @@ import { useCookies } from "react-cookie"
 import { getFilter } from "../Services/Crud"
 
 const Dashboard = ()=>{
-  const [cookies,setCookies]=useCookies(["empresaId",'usuarioID','nombreEmpresa','token'])
-  const token = cookies.token
-  useEffect(()=>{
-    const obtenerEmpresa = async()=>{
-      const empresa = await getFilter("empresa-id/",cookies.usuarioID,'propietario_id')
-      setCookies('empresaId',empresa.id_empresa)
-      setCookies('nombreEmpresa',empresa.nombre_empresa)
-      cookies.empresaId = empresa.id_empresa
-    }
-    obtenerEmpresa()
-  },[])
+  // const [cookies,setCookies]=useCookies(["empresaId",'usuarioID','nombreEmpresa','token'])
+  // const token = cookies.token
+  // useEffect(()=>{
+  //   const obtenerEmpresa = async()=>{
+  //     const empresa = await getFilter("empresa-id/",cookies.usuarioID,'propietario_id')
+  //     setCookies('empresaId',empresa.id_empresa)
+  //     setCookies('nombreEmpresa',empresa.nombre_empresa)
+  //     cookies.empresaId = empresa.id_empresa
+  //   }
+  //   obtenerEmpresa()
+  // },[])
 
     return(
         <>

@@ -119,7 +119,12 @@ const cambiOpcion = (e)=> {
         className="fiel"
         id="form4Example3"
       />
-    </div>
+         {location.pathname === "/responderEncuestas" && 
+        <div className="card-footer text-end">
+          <button  onClick={envioRespuesta}>ENVIAR RESPUESTA</button>
+      </div>
+        }
+      </div>
   </form>
   
            
