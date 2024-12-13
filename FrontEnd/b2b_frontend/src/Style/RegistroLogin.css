@@ -10,10 +10,12 @@
     justify-content: center; /* Centrado horizontal */
     align-items: center; /* Centrado vertical */
     z-index: 1000; /* Asegura que esté encima de otros elementos */
+
 }
 
 /* Contenido del modal */
 .modal-content {
+
     background-color: #ce4848;
     padding: 30px;
     border-radius: 10px;
@@ -26,6 +28,7 @@
     justify-content: flex-start; /* Empujar el contenido hacia arriba */
     height: auto; /* Ajusta la altura según el contenido */
     animation: slide-in 0.4s ease-out; /* Animación de entrada */
+
 }
 
 /* Títulos dentro del modal */
