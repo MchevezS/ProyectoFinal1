@@ -34,7 +34,6 @@ function RegistroEmpleados() {
   const validarCedulaEmpleado = (cedulaEmpleado) => {
     cedulaEmpleado = cedulaEmpleado.replace(/[^0-9]/g, "");
     if (cedulaEmpleado.length === 9 && !isNaN(cedulaEmpleado)) {
-      mostrarAlerta("success", "Cédula ingresada correctamente");
       return true;
     } else {
       mostrarAlerta("error", "La cédula no es válida");

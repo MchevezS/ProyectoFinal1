@@ -159,12 +159,12 @@ function RegistroLogin() {
       
     <Navbar/>
 
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2 className="card-title"> Bienvenidos</h2>
-        <p className="card-subtitle">Inicia sesión o regístrate para disfrutar de nuestro servicio</p>
-        <ul className="nav nav-tabs">
-          <li className="nav-item">
+    <div className="modal-overlay1">
+      <div className="modal-conten1t">
+        <h2 className="card-title1"> Bienvenidos</h2>
+        <p className="card-subtitle1">Inicia sesión o regístrate para disfrutar de nuestro servicio</p>
+        <ul className="nav nav-tabs1">
+          <li className="nav-item1">
             <button
               className={`nav-link ${activeTab === 'login' ? 'active' : ''}`}
               onClick={() => setActiveTab('login')}
@@ -172,7 +172,7 @@ function RegistroLogin() {
               Iniciar Sesión
             </button>
           </li>
-          <li className="nav-item">
+          <li className="nav-item1">
             <button
               className={`nav-link ${activeTab === 'register' ? 'active' : ''}`}
               onClick={() => setActiveTab('register')}
@@ -183,11 +183,11 @@ function RegistroLogin() {
         </ul>
         {activeTab === 'login' && (
           <form onSubmit={inicioSesion}>
-            <div className="form-group">
-              <label htmlFor="loginEmail">Nombre de Usuario</label>
+            <div className="form-group1">
+              <label htmlFor="loginEmail1">Nombre de Usuario</label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control1"
                 id="loginEmail"
                 placeholder="Nombre de Usuario"
                 value={nombreUsuarioL}
@@ -198,17 +198,17 @@ function RegistroLogin() {
               <label htmlFor="loginPassword">Contraseña</label>
               <input
                 type="password"
-                className="form-control"
+                className="form-control1"
                 id="loginPassword"
                 placeholder="Contraseña"
                 value={passwordL}
                 onChange={(e) => setPasswordL(e.target.value)}
               />
             </div>
-            <button type="submit" className="btn btn-primary" disabled={isLoading}>
+            <button type="submit" className="btn btn-primary1" disabled={isLoading}>
               {isLoading ? (
                 <>
-                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  <span className="spinner-border spinner-border-sm me-21" role="status" aria-hidden="true"></span>
                   Cargando...
                 </>
               ) : (
@@ -219,54 +219,54 @@ function RegistroLogin() {
         )}
         {activeTab === 'register' && (
           <form onSubmit={(e) => { e.preventDefault(); validarFormRegister(); }}>
-            <div className="form-group">
+            <div className="form-group1">
               <label htmlFor="registerNombre">Nombre Completo</label>
               <input
                 type="text"
                 placeholder='Nombre Completo'
-                className="form-control"
+                className="form-control1"
                 id="registerNombre"
                 value={nombreUsuario}
                 onChange={(e) => setNombreUsuario(e.target.value)}
               />
             </div>
-            <div className="form-group">
+            <div className="form-group1">
               <label htmlFor="registerCedula">Cédula de Identidad</label>
               <input
                 type="text"
                 placeholder='Cédula de Identidad'
-                className="form-control"
+                className="form-control1"
                 id="registerCedula"
                 value={cedulaIndentidad}
                 onChange={(e) => setCedulaIndentidad(e.target.value)}
               />
             </div>
             <div className="form-group">
-              <label htmlFor="registerEmail">Correo Electrónico</label>
+              <label htmlFor="registerEmail1">Correo Electrónico</label>
               <input
                 type="email"
                 placeholder='Correo Electrónico'
-                className="form-control"
+                className="form-control1"
                 id="registerEmail"
                 value={emailRegistro}
                 onChange={(e) => setEmailRegistro(e.target.value)}
               />
             </div>
-            <div className="form-group">
+            <div className="form-group1">
               <label htmlFor="registerPassword">Contraseña</label>
               <input
                 type="password"
                 placeholder='Contraseña'
-                className="form-control"
+                className="form-control1"
                 id="registerPassword"
                 value={claveRegistro}
                 onChange={(e) => setClaveRegistro(e.target.value)}
               />
             </div>
-            <button type="submit" className="btn btn-success" disabled={isLoading}>
+            <button type="submit" className="btn btn-success1" disabled={isLoading}>
               {isLoading ? (
                 <>
-                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  <span className="spinner-border spinner-border-sm me-21" role="status" aria-hidden="true"></span>
                   Cargando...
                 </>
               ) : (
