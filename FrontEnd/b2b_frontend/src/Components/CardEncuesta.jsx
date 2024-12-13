@@ -1,15 +1,13 @@
 
 const CardEncuesta = ({ titulo, descripcion, fechaSubida, responder}) => {
   return (
-    <div className='d-flex gap-3'>
-      <div className="card w-100">
-        <h2 className="card-title">{titulo}</h2>
-        <p className="card-description">{descripcion}</p>
-        <p className="card-date">Subido el: {fechaSubida}</p>
-        <button onClick={responder}> Responder encuesta </button>
-      </div>
-    <div/>
+    <div className="card1">
+      <h2 className="card-titles">{titulo}</h2>
+      <p className="card-descriptions">{descripcion}</p>
+      <p className="card-dates">Subido el: {fechaSubida}</p>
+      <button className="card-button" onClick={responder}> Responder Encuesta </button>
+
     </div>
   );
 };
-export default CardEncuesta
+export default CardEncuesta;

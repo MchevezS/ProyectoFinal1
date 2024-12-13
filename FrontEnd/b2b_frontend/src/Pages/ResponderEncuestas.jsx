@@ -23,36 +23,22 @@ const ResponderEncuestas =()=>{
 
     return(
         <>
-             <div className="sidebar" style={{ width: '50px' }}>
-        <BarraLateral/>
-      </div>
-      <div className="d-flex">
-      <div className="content flex-grow-1 ">
-        <Header />
-        </div>
-        </div>
-        <div className="d-flex flex-row">
- {encuestas.map((encuesta,index)=>{
+ {encuestas.map((encuesta)=>{
     return(
-    <div key={index} className="mx-auto">
     <CardEncuesta key={encuesta.id}
-    titulo={encuesta.categoria_encuesta}
+    titulo={encuesta.titulo_encuesta}
     descripcion={encuesta.descripcion_encuesta}
     fechaSubida={encuesta.fecha_creacion}
     responder={()=> { 
 
      localStorage.setItem("id_encuesta", encuesta.id)
-     localStorage.setItem('categoria_encuesta', encuesta.categoria_encuesta)
-        navigate("/responderEncuestas")
+        navigate("/verEncuesta")
     
     }}
-    />
-    </div>
-)
+    />)
 
 
  })}
- </div>
 
         </>
     )

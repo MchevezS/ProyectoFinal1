@@ -10,8 +10,9 @@ import EditarEmpresa from '../Components/EditarEmpresa';
 import Contactenos from '../Components/Contactenos';
 import Dashboard from '../Components/Dashboard';
 import FormularioEmailJS from '../Components/FormularioEmailJS';
-import Perfil from '../Pages/Perfil';
-import RutaPrivada from './RutaPrivada';
+import RutaPrivada from '../Routes/RutaPrivada';
+import Perfil from '../Pages/Perfil'
+
 const Routing = () => {
     return (
       <Router>
@@ -30,9 +31,8 @@ const Routing = () => {
 
           <Route path='/registroLogin' element={<Login/>}/>
           <Route path='/contactenos' element={<Contactenos/>}/>
-          <Route path='/formulario' element={<FormularioEmailJS/>}/>
-          <Route path="/editar-empresa/:id" element={<EditarEmpresa/>}/>
-          <Route path="/administradorGeneral" element={<AdministradorGeneral/>}/>
+          <Route path='/dasboard' element={<Dashboard/>}/>
+          <Route path='/formularioEmailJS' element={<FormularioEmailJS/>}/>
        </Routes>
       </Router>
      );
