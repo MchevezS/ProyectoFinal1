@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from '../Pages/Home';
 import CrearEncuestas from '../Pages/CrearEncuestas';
@@ -10,24 +11,22 @@ import EditarEmpresa from '../Components/EditarEmpresa';
 import Contactenos from '../Components/Contactenos';
 import Dashboard from '../Components/Dashboard';
 import FormularioEmailJS from '../Components/FormularioEmailJS';
-import RutaPrivada from '../Routes/RutaPrivada'
-import Footer from '../Components/Footer';
-import SobreNosotros from '../Components/SobreNosotros';
-import Perfil from '../Pages/Perfil'
-
+import RutaPrivada from './RutaPrivada';
+import Perfil from '../Pages/Perfil';
+import MisionVision from '../Components/MisionVision';
 
 const Routing = () => {
     return (
       <Router>
        <Routes>
          {/* Rutas privadas */}
-          {/* <Route path='/' element={<Home/>}/>
+           <Route path='/' element={<Home/>}/>
           <Route path='/dashboard' element={<RutaPrivada rol={["propietario"]} children={<Dashboard/>} />}/>
           <Route path='/empresas' element={<RutaPrivada rol={["usuario", "propietario"]} children={<Empresas/>}/>}/>
-          <Route path='/responderEncuestas' element={<RutaPrivada rol={["trabajador", "recursos_humanos"]} children={<VerEncuesta/>}/>}/>
+          <Route path='/responderEncuestas' element={<RutaPrivada rol={["trabajador", "recursos_humanos","propietario"]} children={<VerEncuesta/>}/>}/>
           <Route path='/CrearEncuestas' element={<RutaPrivada rol={["recursos_humanos", "propietario"]} children={<CrearEncuestas/>}/>}/>
-          <Route path='/verEncuestas' element={<RutaPrivada rol={["trabajador", "recursos_humanos"]} children={<ResponderEncuestas/>}/>}/>
-          <Route path='/perfil' element={<RutaPrivada rol={["recursos_humanos","propietario", "trabajador","usuario"]} children={<Perfil/>}/>}/> */}
+          <Route path='/verEncuestas' element={<RutaPrivada rol={["trabajador", "recursos_humanos","propietario"]} children={<ResponderEncuestas/>}/>}/>
+          <Route path='/perfil' element={<RutaPrivada rol={["recursos_humanos","propietario", "trabajador","usuario"]} children={<Perfil/>}/>}/>
 
 
 
@@ -36,9 +35,6 @@ const Routing = () => {
           <Route path='/contactenos' element={<Contactenos/>}/>
           <Route path='/dasboard' element={<Dashboard/>}/>
           <Route path='/formularioEmailJS' element={<FormularioEmailJS/>}/>
-          <Route path='/footer' element={<Footer/>}/>
-          <Route path='/sobreNosotros' element={<SobreNosotros/>}/>
-          <Route path='/verEncuestas' element={<VerEncuesta/>}/>
        </Routes>
       </Router>
      );
