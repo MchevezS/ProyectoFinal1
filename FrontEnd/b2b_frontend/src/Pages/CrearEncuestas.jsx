@@ -4,11 +4,13 @@ import { post } from '../Services/Crud';
 import {useCookies} from 'react-cookie';
 import Navbar from '../Components/Navbar';
 import { mostrarAlerta } from '../Components/MostrarAlerta';
+import CardPregunta from '../Components/CardPregunta';
 import { useLocation } from 'react-router-dom';
 import '../Style/CrearEncuestas.css'
 import { getFilter } from '../Services/Crud';
 import BarraLateral from '../Components/BarraLateral';
 import Header from '../Components/Header';
+import Preguntas from '../Components/Preguntas';
 
 function CrearEncuestas() {
     //Estados para manejar el cambio de informacion en los inputs
@@ -16,8 +18,10 @@ function CrearEncuestas() {
     const [descripcionEncuesta,setdescripcionEncuesta]=useState("")
     const [preguntaEncuesta,setpreguntaEncuesta]=useState("")
     const [idEmpresa,setIdEmpresa]=useState([])
+    const [listaPreguntas,setListaPreguntas]=useState([])
+    const localPreguntas = JSON.parse(localStorage.getItem("preguntas"))
     //HOOK (creacion de cookies) recibe el nombre de la cookie que va a tener 
-    const [cookies,setCookies]=useCookies(["Encuesta","empresaId",'usuarioID','rolUsuario','token'])
+    const [cookies,setCookies]=useCookies(["Encuesta","empresaId",'usuarioID','rolUsuario','token','encuestaId'])
     const token = cookies.token
     useEffect(()=>{
       const obtenerEmpresa = async()=>{
@@ -43,41 +47,66 @@ function CrearEncuestas() {
     },[idEmpresa])
 
     //Funcion que se ejecuta al tocar el boton de enviar, tiene el cuerpo de la encuesta y se envia al endpiont creado en el backend.
-
+  
 async function enviarEncuesta() {
-    // Validación de campos vacíos
-    if (!tituloEncuesta || !descripcionEncuesta || !preguntaEncuesta) {
-      mostrarAlerta("error", "Por favor, complete todos los campos.");
-      return; // Detener el envío si algún campo está vacío
-    }
-
     const datosEncuesta = {
         categoria_encuesta: categoriaEncuesta,
         descripcion_encuesta:descripcionEncuesta,
         empresa: cookies.empresaId,
         //METODO POST 
     }
+    if(categoriaEncuesta === "" || descripcionEncuesta === ""){
+      mostrarAlerta("error","Faltan campos por llenar")
+      return
+    }
     const enviarPeticion = await post(datosEncuesta,"encuestas/",token)
-    console.log(enviarPeticion);
+    setCookies("encuestaId",enviarPeticion.id)
+
+    if(preguntaEncuesta === ""){
+      mostrarAlerta("error","Faltan campos por llenar")
+      return
+    }
     const datosPreguntas = {
       encuesta_referencia : enviarPeticion.id,
       pregunta_texto : preguntaEncuesta,
     }
-
      const enviarPregunta = await post(datosPreguntas,"preguntas/",token)
+      console.log(enviarPregunta)
 
     if (enviarPeticion){
-      mostrarAlerta("success","se agregó la encuesta")
+      mostrarAlerta("success","Se agregó la encuesta")
       setdescripcionEncuesta("")
       setpreguntaEncuesta("")
     }
     else{
-      mostrarAlerta("error", "Error al agregar la pregunta.")
+      mostrarAlerta("error", "error")
     }
     //creacion de la cookie y detalles (nombre de la cookie, valor,{path donde va a ser accesible} y expiracion)
     setCookies("Encuesta", datosEncuesta,{path:"/",maxAge:600}) //esta en segundos
 }
-    
+    const agregarPregunta = async() => {
+
+      const datosPreguntas = {
+        encuesta_referencia : cookies.encuestaId,
+        pregunta_texto : preguntaEncuesta,
+      }
+      if(preguntaEncuesta === ""){
+        mostrarAlerta("error","Faltan campos por llenar")
+        return
+      }
+       const enviarPregunta = await post(datosPreguntas,"preguntas/",token)
+        console.log(enviarPregunta)
+        if (enviarPregunta){
+          mostrarAlerta("success","se agregó la pregunta")
+          setpreguntaEncuesta("")
+        }
+        else{
+          mostrarAlerta("error", "error")
+        }
+      }
+    const reiniciarEncuesta = ()=>{
+      setCookies("encuestaId",null)
+    } 
 
   return (
     <div>
@@ -89,23 +118,25 @@ async function enviarEncuesta() {
         </div>
     <div className="container">
       <div
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: '100vh' }}
+        style={{ height: '100vh',position:"relative",top:"10px",left:"11vw"}}
       >
-        <div className="d-flex" style={{ width: '2500px' }}>
-          <div className="d-flex flex-column mx-auto w-100 border border-primary form-container">
+        <div className="d-flex gap-5" style={{ width: '150vh',height:"87vh"}}>
+          <div className="d-flex flex-column gap-3 mx-auto form-container" style={{border:"3px solid #cccc"}}>
             <h1 className="encuesta">Crear encuesta</h1>
             {/* Evento para guardar el valor del titulo encuesta */}
-            <label className='texto'>Titulo de la encuesta:</label>
-            <input
-              className="fiel"
-              type="text"
-              placeholder="Titulo de la encuesta"
-              onChange={(e) => setTituloEncuesta(e.target.value)}
-              value={tituloEncuesta}
-            />
+            {cookies.encuestaId === null &&
+            <select onChange={(e)=>setCategoriaEncuesta(e.target.value)}>
+              <option selected value="" disabled>Categoria</option>
+              <option value="Salud Mental">Salud Mental</option>
+              <option value="Ambiente Laboral">Ambiente Laboral</option>
+              <option value="Equilibrio Vida-Trabajo">Equilibrio Vida-Trabajo</option>
+              <option value="Beneficios y Compensaciones">Beneficios y Compensaciones</option>
+              <option value="Comunicación Interna">Comunicación Interna</option>
+              <option value="Oportunidades de Crecimiento">Oportunidades de Crecimiento</option> 
+            </select>
+          }
             {/* Evento para guardar la descripcion de la encuesta */}
-            <label className='texto'>Descripcion de la encuesta</label>
+            {cookies.encuestaId === null &&
             <input
               className="fiel"
               type="text"
@@ -113,21 +144,32 @@ async function enviarEncuesta() {
               onChange={(e) => setdescripcionEncuesta(e.target.value)}
               value={descripcionEncuesta}
             />
+          }
             {/* Envía la encuesta */}
-            <label className='texto'>Preguntas de la encuesta</label>
-            <input
-              className="fiel"
-              type="text"
-              placeholder="Pregunta"
-              onChange={(e) => setpreguntaEncuesta(e.target.value)}
-              value={preguntaEncuesta}
-            />
-
-            <CardPregunta />
-            
-            <button onClick={enviarEncuesta} className="submit-button">
-              Enviar
-            </button>
+            <div className='input-group'>
+              <input
+                className="fiel form-control"
+                type="text"
+                placeholder="Pregunta"
+                onChange={(e) => setpreguntaEncuesta(e.target.value)}
+                value={preguntaEncuesta}
+              />
+              {cookies.encuestaId &&
+              <div className='input-group-append'>
+               
+                <span onClick={agregarPregunta}  className='btn btn-primary' style={{color:"#041223",marginTop:"10px",height:"5.8vh",borderRadius:"0px",backgroundColor:"#d0d5ff",border:"none"}}>+</span>
+              </div>
+                }
+            </div>
+            {cookies.encuestaId ?
+             <button onClick={reiniciarEncuesta} style={{backgroundColor:"#d0d5ff",border:"none",color:"#041223"}} className="submit-button">
+             Reiniciar Encuesta
+           </button>  
+          :
+          <button onClick={enviarEncuesta} style={{backgroundColor:"#d0d5ff",border:"none",color:"#041223"}} className="submit-button">
+          Enviar
+          </button>
+     }
           </div>
           
         </div>
