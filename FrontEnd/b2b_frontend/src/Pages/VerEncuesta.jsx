@@ -1,5 +1,4 @@
 import CardPregunta from "../Components/CardPregunta"
-import NavbarEncuestas from "../Components/NavbarEncuestas"
 import { useState, useEffect } from "react"
 import { get } from "../Services/Crud"
 import '../Style/VerEncuesta.css'

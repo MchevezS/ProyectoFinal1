@@ -98,30 +98,35 @@ async function update( endpoint, id) {
 export{update}
 
 // Método PATCH: Actualiza los datos de la empresa
-async function patch(endpoint, id="", data,token) {
+async function patch(endpoint, id = "", data, token) {
+    if (!token) {
+      throw new Error("Token de autenticación no proporcionado.");
+    }
+  
     try {
       const response = await fetch(`${URL}${endpoint}${id}/`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,  // Asegúrate de pasar el token en el encabezado
         },
-        body: JSON.stringify(data), // Asegúrate de pasar los datos correctamente
+        body: JSON.stringify(data),  // Los datos que deseas enviar
       });
   
       if (!response.ok) {
-        const errorDetails = await response.text();  // Captura el cuerpo de la respuesta
+        const errorDetails = await response.text();  // Captura detalles de la respuesta
         throw new Error(`Error al actualizar la empresa: ${errorDetails}`);
       }
   
-      return await response.json(); // Retorna la respuesta exitosa del servidor
+      return await response.json();  // Retorna la respuesta exitosa del servidor
     } catch (error) {
       console.error('Error al actualizar la empresa:', error);
-      throw error;
+      throw error;  // Propaga el error para que pueda ser manejado por el llamador
     }
   }
-
-export { patch }
+  
+  export { patch }
+  
 
 // Metodo Delete: Elimina datos.
 async function eliminar(endpoint, id,token) {

@@ -3,13 +3,17 @@ import { get, patch } from '../Services/Crud';  // Asegúrate de que 'patch' est
 import { useNavigate } from 'react-router-dom';
 import '../Style/AdministradorGeneral.css';
 import { useCookies } from "react-cookie";
+import Swal from 'sweetalert2';
+import { mostrarAlerta } from './MostrarAlerta';
+
 const AdministradorGeneral = () => {
   const [empresas, setEmpresas] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [seeker, setSeeker] = useState(''); // Estado del buscador(seeker)
+  const [seeker, setSeeker] = useState(''); // Estado del buscador empresas(seeker)
   const navigate = useNavigate();
   const [cookies] = useCookies(['token'])
   const token = cookies.token
+
   // Obtener todas las empresas
   const obtenerEmpresas = async () => {
     try {
@@ -24,18 +28,27 @@ const AdministradorGeneral = () => {
 
   // Cambiar el estado (activar/desactivar) de una empresa
   const cambiarEstadoEmpresa = async (id, estadoActual) => {
-    // window.confirm( abre una ventana y muestra un mensaje de texto )
-    const confirmacion = window.confirm(`¿Estás seguro de que deseas ${estadoActual ? "desactivar" : "activar"} esta empresa?`);
-    if (confirmacion) {
+  // Mostrar la alerta personalizada
+  const result = await Swal.fire({
+    title: `¿Estás seguro de que deseas ${estadoActual ? "desactivar" : "activar"} esta empresa?`,
+    showCancelButton: true,
+    confirmButtonText: 'Sí',
+    cancelButtonText: 'No',
+    icon: 'warning',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+  });
+    if (result.isConfirmed) {
       try {
-        const response = await patch(`empresa/estado`,id,token); // llamamos al metodo PATCH para que haga los cambios en la url (empresa/estado)
+        const data = { estado: !estadoActual }; // nuevo estado
+        const response = await patch(`empresa/estado/`, id, data, token); // llamamos al metodo PATCH para que haga los cambios en la url (empresa/estado)
         if (response) { 
-          // Muestra una alerta si quiere desactivar/activar la empresa con exito
-          alert(`Empresa ${estadoActual ? "desactivada" : "activada"} con éxito`);  
-        } else {
-          // Muestra una alerta si no se puede cambiar el estado de la empresa
-          alert("No se pudo cambiar el estado de la empresa");
-        }
+        // Muestra una alerta de éxito
+        await mostrarAlerta('success', `Empresa ${estadoActual ? "desactivada" : "activada"} con éxito`);
+      } else {
+        // Muestra una alerta de error
+        await mostrarAlerta('error', 'No se pudo cambiar el estado de la empresa');
+      }
         obtenerEmpresas(); // Vuelve a cargar la lista después de cambiar el estado
       } catch (error) {
         console.log(error);
