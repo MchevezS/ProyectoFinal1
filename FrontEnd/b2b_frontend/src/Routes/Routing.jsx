@@ -13,7 +13,7 @@ import FormularioEmailJS from '../Components/FormularioEmailJS';
 import RutaPrivada from './RutaPrivada';
 import Perfil from '../Pages/Perfil';
 import MisionVision from '../Components/MisionVision';
-
+import HomeNuevo from '../Pages/HomeNuevo';
 const Routing = () => {
     return (
       <Router>
@@ -26,10 +26,10 @@ const Routing = () => {
           <Route path='/CrearEncuestas' element={<RutaPrivada rol={["recursos_humanos", "propietario"]} children={<CrearEncuestas/>}/>}/>
           <Route path='/verEncuestas' element={<RutaPrivada rol={["trabajador", "recursos_humanos","propietario"]} children={<ResponderEncuestas/>}/>}/>
           <Route path='/perfil' element={<RutaPrivada rol={["recursos_humanos","propietario", "trabajador","usuario"]} children={<Perfil/>}/>}/>
+          
 
 
-
-
+          <Route path="/home" element={<HomeNuevo/> }/>
           <Route path='/registroLogin' element={<Login/>}/>
           <Route path='/contactenos' element={<Contactenos/>}/>
           <Route path='/dasboard' element={<Dashboard/>}/>
