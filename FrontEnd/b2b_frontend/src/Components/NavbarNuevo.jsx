@@ -14,7 +14,7 @@ const NavbarNuevo = ({})=>{
                     <ul className="d-flex justify-content-center mx-auto encabezado-nav-ul">
                         <li onClick={()=>{navigate("/")}}><a href="#Home">Inicio</a></li>
                         <li onClick={()=>{navigate("/")}}><a href="#Reseñas">Reseñas</a></li>
-                        <li><a>Sobre nosotros</a></li>
+                        <li><a>Contáctenos</a></li>
                     </ul>
                 </div>
                 <div className="cont-nav-login">
