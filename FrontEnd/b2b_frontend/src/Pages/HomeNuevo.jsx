@@ -4,6 +4,7 @@ import Pasos from '../Components/Pasos';
 import Caracteristicas from '../Components/Caracteristicas';
 import CarouselDatos from '../Components/CarouselDatos';
 import CarouselComentarios from '../Components/CarouselComentarios';
+import Footer from '../Components/Footer';
 const HomeNuevo = () => {
     return(
         <>
@@ -19,6 +20,9 @@ const HomeNuevo = () => {
                     <CarouselComentarios/>
                 </div>
             </main>
+            <footer>
+                <Footer/>
+            </footer>
         </>
     )
 }

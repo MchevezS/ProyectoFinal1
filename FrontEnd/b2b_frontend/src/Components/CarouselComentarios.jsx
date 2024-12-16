@@ -40,7 +40,6 @@ const CarouselComentarios = () => {
               height: "200px",
             }}
           >
-
           </div>
         </div>
 
