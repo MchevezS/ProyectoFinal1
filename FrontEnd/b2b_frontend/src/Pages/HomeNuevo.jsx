@@ -11,7 +11,7 @@ const HomeNuevo = () => {
             <header>
                 <NavbarNuevo />
             </header>
-            <main>
+            <main id='inicio'>
                 <HeroNuevo />
                 <Pasos/>
                 <Caracteristicas/>

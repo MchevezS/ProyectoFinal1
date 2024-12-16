@@ -10,7 +10,30 @@
     justify-content: center; /* Centrado horizontal */
     align-items: center; /* Centrado vertical */
     z-index: 1000; /* Asegura que esté encima de otros elementos */
+    margin-top: 5.3vh;
 
+}
+.btn-login{
+    background-color: #5e3ec2 !important;
+    color: white !important;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 10px;
+}
+.btn-login-f{
+    background-color: transparent !important;
+    color: #000 !important;
+    border: 1px solid #5e3ec2 !important;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 10px;
 }
 
 /* Contenido del modal */
@@ -113,8 +136,9 @@ button.btn-primary1 {
 }
 
 button.btn-primary1:hover {
-    background-color: #0056b3;
     transform: scale(1.02);
+    color: white !important;
+
 }
 
 button.btn-success1 {
@@ -124,8 +148,8 @@ button.btn-success1 {
 }
 
 button.btn-success1:hover {
-    background-color: #218838;
     transform: scale(1.02);
+    color: white !important;
 }
 
 /* Spinner de carga dentro del botón */

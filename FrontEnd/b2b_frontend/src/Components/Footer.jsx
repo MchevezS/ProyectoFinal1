@@ -124,13 +124,9 @@ const Footer = ({}) => {
                     40804000
                     </p>
                   </div>
-                  {/* Grid column */}
                 </div>
-                {/* Grid row */}
               </div>
             </section>
-            {/* Section: Links  */}
-            {/* Copyright */}
             <div
               className="text-center p-4"
               style={{ backgroundColor: "#000",color: "white" }}

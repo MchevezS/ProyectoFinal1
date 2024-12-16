@@ -3,7 +3,7 @@ import { mostrarAlerta } from './MostrarAlerta';
 import { loginPost } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
 import '../Style/RegistroLogin.css'; 
-import Navbar from './Navbar';
+import NavbarNuevo from './NavbarNuevo';
 import { useCookies } from 'react-cookie';
 import LoadingSpinner from "../Components/LoadingSpinner.jsx"
 
@@ -148,7 +148,7 @@ function RegistroLogin() {
 
   return (
     <>
-      <Navbar />
+      <NavbarNuevo/>
       <div className="modal-overlay1 ">
         <div className="modal-conten1t" style={{border: "2px solid #cccc", padding: "2em", borderRadius: "15px"}}>
           <h2 className="card-title1"> Bienvenidos</h2>
@@ -156,7 +156,7 @@ function RegistroLogin() {
           <ul className="nav nav-tabs1">
             <li className="nav-item1">
               <button
-                className={`nav-link ${activeTab === 'login' ? 'active' : ''}`}
+                className={`nav-link ${activeTab === 'login' ? 'btn-login' : 'btn-login-f'}`}
                 onClick={() => setActiveTab('login')}
               >
                 Iniciar Sesión
@@ -164,8 +164,10 @@ function RegistroLogin() {
             </li>
             <li className="nav-item1">
               <button
-                className={`nav-link ${activeTab === 'register' ? 'active' : ''}`}
+                className={`nav-link ${activeTab === 'register' ? 'btn-login' : 'btn-login-f'}`}
                 onClick={() => setActiveTab('register')}
+                style={{backgroundColor: "#5c3ac0", color: "white"}}
+
               >
                 Registrarse
               </button>
@@ -195,12 +197,13 @@ function RegistroLogin() {
                   onChange={(e) => setPasswordL(e.target.value)}
                 />
               </div>
-              <button type="submit" className="btn btn-primary1" disabled={isLoading}>
+              <button type="submit" className="btn btn-primary1" disabled={isLoading} style={{backgroundColor: "#dd1a57"}}>
                 {isLoading ? (
                   <LoadingSpinner /> // Aquí insertamos el componente de LoadingSpinner
                 ) : (
                   'Iniciar Sesión'
                 )}
+
               </button>
             </form>
           )}
@@ -250,7 +253,7 @@ function RegistroLogin() {
                   onChange={(e) => setClaveRegistro(e.target.value)}
                 />
               </div>
-              <button type="submit" className="btn btn-success1" disabled={isLoading}>
+              <button type="submit" className="btn btn-success1" disabled={isLoading} style={{backgroundColor: "#dd1a57"}}>
                 {isLoading ? (
                   <LoadingSpinner /> // Aquí insertamos el componente de LoadingSpinner
                 ) : (
