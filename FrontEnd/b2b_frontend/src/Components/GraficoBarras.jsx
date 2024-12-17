@@ -45,7 +45,7 @@ function GraficoBarras() {
       categories: ['Muy bien', 'Bien', 'Regular', 'Mala', 'Muy mala'], // Notas en el eje X
     },
     yaxis: {
-      labels: { style: { colors: '#9ea9c0' } },
+      labels: { style: { colors: '#fff' } },
     },
     grid: {
       borderColor: '#e7e7e7',
@@ -58,7 +58,11 @@ function GraficoBarras() {
     { name: 'Deseada', data: [5, 10, 15, 20, 25] },
   ];
 
-  return <Chart options={options} series={series} type="bar" height={250} />;
+  return (
+    <div style={{backgroundColor: '#1f1f1f'}}>
+   <Chart options={options} series={series} type="bar" height={250} width={750} />;
+  </div>
+  );
 }
 
 export default GraficoBarras;

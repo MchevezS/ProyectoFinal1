@@ -54,7 +54,26 @@ body {
     color: #555;
     line-height: 1.6;
   }
+
+  .nombre1{
+    color: black;
+    font-family: cursive;
+  }
   
+  .nombre2{
+    color: black;
+    font-family: cursive;
+    margin-left: 300px;
+    margin-top: -40px;
+  }
+
+  .nombre3{
+    color: black;
+    font-family: cursive;
+    margin-left: 600px;
+    margin-top: -40px;
+  }
+
   /* Estilos responsivos */
   @media (max-width: 768px) {
     .mision-vision-page {

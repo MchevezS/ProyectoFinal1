@@ -1,0 +1,20 @@
+.caracteristicas{
+    margin-top: 3rem;
+    background-color: #ffffff;
+    .caracteristicas-titulo{
+        h5{
+            font-size: 3.6rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 1rem;
+            font-family: serif;
+        }
+        p{
+            width: 70%;
+            margin-left: 15%;
+        }
+    }
+}
+.caracteristicas-contenido{
+    margin: 3rem 0;
+}

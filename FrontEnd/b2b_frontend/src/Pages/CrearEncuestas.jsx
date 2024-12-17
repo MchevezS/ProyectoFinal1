@@ -18,7 +18,6 @@ function CrearEncuestas() {
     const [descripcionEncuesta,setdescripcionEncuesta]=useState("")
     const [preguntaEncuesta,setpreguntaEncuesta]=useState("")
     const [idEmpresa,setIdEmpresa]=useState([])
-    const [listaPreguntas,setListaPreguntas]=useState([])
     const localPreguntas = JSON.parse(localStorage.getItem("preguntas"))
     //HOOK (creacion de cookies) recibe el nombre de la cookie que va a tener 
     const [cookies,setCookies]=useCookies(["Encuesta","empresaId",'usuarioID','rolUsuario','token','encuestaId'])

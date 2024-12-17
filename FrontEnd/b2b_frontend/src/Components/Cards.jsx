@@ -11,3 +11,4 @@ const Cards = ({titulo,cantidad,icono,estilo})=>{
     )
 }
 export default Cards
+

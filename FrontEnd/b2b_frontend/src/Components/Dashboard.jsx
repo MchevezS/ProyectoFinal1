@@ -28,7 +28,7 @@ const Dashboard = ()=>{
       <div className="d-flex">
       <div className="content flex-grow-1 ">
         <Header />
-        <div className="container mt-3" style={{backgroundColor:"#071224",position:"relative",zIndex:"-1",top:"-3vh",height:"30vh"}}>
+        <div className="container mt-3" style={{position:"relative",zIndex:"-1",top:"-3vh",height:"30vh"}}>
           <DashboardCards />
         </div>
         <div className="container mt-4">

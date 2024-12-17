@@ -74,11 +74,11 @@ const EditarEmpresa = () => {
       nombre_empresa: empresa.nombre_empresa,
       cedula_juridica: empresa.cedula_juridica,
       correo: empresa.correo,
-    };
+    }
 
       try {
         // Realizamos la llamada PATCH para actualizar la empresa
-        const response = await patch('empresas', id, datosFormulario,token); // Llamamos a el metodo PATCH
+        const response = await patch('empresas/', id, datosFormulario, token); // Llamamos a el metodo PATCH
         if (response) {
           navigate('/administradorGeneral'); // Redirige al administrador a la lista de empresas
           mostrarAlerta("success",'Empresa actualizada con éxito');

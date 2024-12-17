@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react"
-import { get } from "../Services/Crud"
 import CardPregunta from "../Components/CardPregunta"
-import Navbar from "../Components/Navbar"
-import NavbarEncuestas from "../Components/NavbarEncuestas"
+import { useState, useEffect } from "react"
+import { get } from "../Services/Crud"
+import '../Style/VerEncuesta.css'
 
 const VerEncuesta = ()=>{
     const [encuesta, setEncuesta] = useState([])
@@ -11,7 +10,6 @@ const VerEncuesta = ()=>{
         const traerEncuestas = async()=>{
             const peticion = await get("encuestas", localStorage.getItem("id_encuesta"))
             console.log(peticion);
-            
             setEncuesta(peticion.encuesta)
             setPreguntas(peticion.preguntas)
             console.log(peticion.preguntas.id);

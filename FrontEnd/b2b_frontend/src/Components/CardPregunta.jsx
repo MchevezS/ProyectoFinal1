@@ -1,4 +1,6 @@
-import { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
+import Navbar from './Navbar';
 import { useCookies } from 'react-cookie';
 import { post } from '../Services/Crud';
 import { mostrarAlerta } from './MostrarAlerta';
@@ -6,6 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import '../Style/CardPregunta.css';
 
+const CardPregunta = ({ opcionSeleccionada }) => {
+  const urlpagina = useLocation();
+  const navigate = useNavigate();
+  const [retroalimentacion, setRetroalimentacion] = useState("");
+  const [cookie, setcookie] = useCookies(["usuarioID"]);
+  const [respuestaSeleccionada, setRespuestaSeleccionada] = useState("");
+  const [alertaVisible, setAlertaVisible] = useState(false);
 
 const CardPregunta = () => {
 const urlpagina = useLocation()
@@ -126,12 +135,7 @@ const cambiOpcion = (e)=> {
         }
       </div>
   </form>
-  
-           
-          
-    
-
-
-  );
-};
+  )
+}
+}
 export default CardPregunta;

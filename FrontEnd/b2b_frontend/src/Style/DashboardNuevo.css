@@ -1,0 +1,40 @@
+.dashboard-container {
+    background-color: #041223; 
+    display: flex;
+    min-height: 100vh;
+}
+
+.section-dashboard{
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    top: 5vh;
+}
+
+.section-dashboard-perfil{
+    position: absolute;
+    right: 2vw;
+    bottom: 16vh;
+}
+
+.section-dashboard-grafico{
+    position: absolute;
+    left:7.9vw;
+    top: 28vh;
+}
+.section-dashboard-grafico-barras{
+    position: relative;
+    bottom: 1.5vh;
+    left: 6.7vw;
+}
+.section-dashboard-grafico-tabla{
+    position: relative;
+    bottom: 23%;
+    left: 86%;
+}
+.section-dashboard-grafico-barras-2{
+    position: relative;
+    top: -20vh;
+    left: -4vw;
+    border-radius: 8px;
+}
