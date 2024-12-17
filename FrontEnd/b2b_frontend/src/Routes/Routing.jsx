@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from '../Pages/Home';
 import CrearEncuestas from '../Pages/CrearEncuestas';
 import Empresas from '../Pages/Empresas';
 import Login from '../Pages/Login';
@@ -19,7 +18,7 @@ const Routing = () => {
       <Router>
        <Routes>
          {/* Rutas privadas */}
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<HomeNuevo/>}/>
           <Route path='/dashboard' element={<RutaPrivada rol={["propietario"]} children={<Dashboard/>} />}/>
           <Route path='/empresas' element={<RutaPrivada rol={["usuario", "propietario"]} children={<Empresas/>}/>}/>
           <Route path='/responderEncuestas' element={<RutaPrivada rol={["trabajador", "recursos_humanos","propietario"]} children={<VerEncuesta/>}/>}/>

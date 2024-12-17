@@ -113,7 +113,7 @@ const Footer = ({}) => {
                     <h6 className="text-uppercase fw-bold mb-4">Contacto</h6>
                     <p>
                     <FaLocationDot />
-                    New York, NY 10012, US
+                    Santa Ana, San José, Costa Rica
                     </p>
                     <p>
                     <MdEmail />

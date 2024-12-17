@@ -1,0 +1,13 @@
+.carousel-datos{
+    width: 200vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    left: -5rem;
+    margin-top: 25vh;
+    margin-bottom: 5vh;
+}

@@ -12,14 +12,16 @@ const HomeNuevo = () => {
                 <NavbarNuevo />
             </header>
             <main id='inicio'>
-                <HeroNuevo />
-                <Pasos/>
-                <Caracteristicas/>
-                <CarouselDatos/>
+                    <HeroNuevo />
+                    <Pasos/>
+                    <Caracteristicas/>
+                <section className="container">
+                    <CarouselDatos/>
+                </section>
+            </main>
                 <div>
                     <CarouselComentarios/>
                 </div>
-            </main>
             <footer>
                 <Footer/>
             </footer>

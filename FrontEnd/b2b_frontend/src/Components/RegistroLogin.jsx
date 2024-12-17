@@ -6,7 +6,7 @@ import '../Style/RegistroLogin.css';
 import NavbarNuevo from './NavbarNuevo';
 import { useCookies } from 'react-cookie';
 import LoadingSpinner from "../Components/LoadingSpinner.jsx"
-
+import Footer from './Footer.jsx';
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false); // Estado para manejar el loading

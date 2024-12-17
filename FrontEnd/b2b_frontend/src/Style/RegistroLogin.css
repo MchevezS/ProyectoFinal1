@@ -1,7 +1,5 @@
 /* Contenedor del modal (sin fondo gris) */
 .modal-overlay1 {
-    color: rgb(51, 118, 176);
-    position: fixed; /* Fijar el modal sobre la pantalla */
     top: 0;
     left: 0;
     width: 100%;
@@ -10,7 +8,7 @@
     justify-content: center; /* Centrado horizontal */
     align-items: center; /* Centrado vertical */
     z-index: 1000; /* Asegura que esté encima de otros elementos */
-    margin-top: 5.3vh;
+    margin-top: 20vh;
 
 }
 .btn-login{

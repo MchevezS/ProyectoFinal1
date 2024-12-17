@@ -44,7 +44,7 @@ const CarouselComentarios = () => {
         </div>
 
         <div className="col-md-6">
-          <Carousel interval={3500} indicators={true}>
+          <Carousel interval={1500} indicators={true}>
             {comentarios.map((item, index) => (
               <Carousel.Item key={index}>
                 <blockquote className="blockquote">

@@ -5,7 +5,7 @@ const Caracteristicas = () => {
         <>
             <div className="caracteristicas">
                 <div className="caracteristicas-titulo" >
-                <h5>¿Por qué elegir nuestro sistema?</h5>
+                <h5 className="text-center">¿Por qué elegir nuestro sistema?</h5>
                 <p>Nuestro sistema te ayuda a identificar áreas clave para mejorar el ambiente laboral y la productividad de tus empleados. Proporcionamos análisis detallados y sugerencias específicas basadas en datos reales.</p>
                 </div>
 
