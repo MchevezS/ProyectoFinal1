@@ -1,12 +1,16 @@
 import React from 'react'
 import RegistroLogin from '../Components/RegistroLogin'
-
+import Footer from '../Components/Footer'
 function Login() {
   return (
-    <div>
-    
+   <>
+   <div>
    <RegistroLogin/>
     </div>
+    <footer>
+      <Footer/>
+    </footer>
+  </>
   )
 }
 

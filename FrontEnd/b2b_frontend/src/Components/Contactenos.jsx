@@ -2,7 +2,8 @@ import { useState } from 'react';
 import emailjs from 'emailjs-com';
 import '../Style/Contactenos.css';
 import { mostrarAlerta } from './MostrarAlerta';
-
+import NavbarNuevo from '../Components/NavbarNuevo';
+import Footer from '../Components/Footer';
 function Contactenos() {
     // Estado para los datos del formulario
     const [formData, setFormData] = useState({
@@ -56,20 +57,10 @@ function Contactenos() {
     };
 
   return (
-    <div className="contactenos-container">
-      <div className="header">
-        <h1>¿Cómo podemos ayudarte?</h1>
-      </div>
-
+    <>
+    <NavbarNuevo/>
       <div className="table-container">
-        <table className="contactenos-table">
-          <thead>
-            <tr>
-              <th><h2>¿Como podemos ayudarte?</h2></th>
-              <th><h2>Preguntas frecuentes</h2></th>
-              <th><h2>¡Contáctenos!</h2></th>
-            </tr>
-          </thead>
+        <table className="contactenos-table" style={{marginTop:"15vh"}}>
           <tbody>
             <tr>
             <td className="service-column">
@@ -108,7 +99,7 @@ function Contactenos() {
                         onChange={handleChange} 
                       />
                     </div>
-                    <button type="submit" className="submit-button">Enviar</button>
+                    <button type="submit" className="submit-button" style={{color:"#5d3bc0",border:"1px solid #5d3bc0",backgroundColor:"transparent"}}>Enviar</button>
                   </form>
                 </div>
               </td>
@@ -185,7 +176,6 @@ function Contactenos() {
               </td>
 
               <td className="contact-column">
-                {/* Llamar */}
                 <div id="llamar">
                   <h2>Llamar</h2>
                   <p>Puedes llamarnos al siguiente número:</p>
@@ -200,15 +190,15 @@ function Contactenos() {
         </table>
       </div>
       <br />
-        <h1>¿Dónde estamos ubicados?</h1>
-              {/* Insertar el mapa aquí */}
-      <div className="map-container">
+      
+      <div className="map-container" style={{marginTop:"1vh"}}>
         <iframe
           title="Ubicación en Google Maps"
            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.040432013834!2d-84.199473!3d9.935002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0ff54cadb3cad%3A0xea26cfab491eb544!2sHub+Comunal+Santa+Ana!5e0!3m2!1ses-419!2scr!4v1698354652865!5m2!1ses-419!2scr"
         ></iframe>
       </div>
-    </div>
+      <Footer/>
+    </>
   );
 }
 

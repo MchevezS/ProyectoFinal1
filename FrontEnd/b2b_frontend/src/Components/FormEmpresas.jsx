@@ -4,9 +4,10 @@ import { useCookies } from 'react-cookie';
 import '../Style/FormEmpresas.css';
 import { mostrarAlerta } from './MostrarAlerta';
 import { patch } from '../Services/Crud';
+import LoadingSpinner from '../Components/LoadingSpinner'; 
 
 const FormEmpresas = () => {
-  const [cookies,setCookies] = useCookies(["usuarioID", "nombreUsuario", "empresaId","nombreEmpresa",'rolUsuario','token']);
+  const [cookies, setCookies] = useCookies(["usuarioID", "nombreUsuario", "empresaId", "nombreEmpresa", 'rolUsuario', 'token']);
   const token = cookies.token;
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [cedulaJuridica, setCedulaJuridica] = useState('');
@@ -19,6 +20,9 @@ const FormEmpresas = () => {
 
   // Estado para controlar la visibilidad del formulario
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
+  // Estado para el spinner de carga
+  const [isLoading, setIsLoading] = useState(false);
 
   // Validación del formulario
   const validarFormulario = () => {
@@ -54,42 +58,41 @@ const FormEmpresas = () => {
   const manejarEnvio = async (e) => {
     e.preventDefault();
 
-    
-
     if (validarFormulario()) {
       const datosFormulario = {
         nombre_empresa: nombreEmpresa,
         cedula_juridica: cedulaJuridica,
         correo: correo,
         propietario: cookies.usuarioID,
-
       };
 
       console.log("Datos enviados al servidor:", datosFormulario);
+      setIsLoading(true); // Activar el spinner de carga
 
       try {
-        const response = await post(datosFormulario, 'empresas/',token);
-        setCookies("empresaId",response.id)
-        
-        console.log('Respuesta del servidor:', response);
-        
-        const empresa = response
-        console.log(empresa.nombre_empresa);
-        setCookies("nombreEmpresa", empresa.nombre_empresa)
-        
+          const response = await post(datosFormulario, 'empresas/', token);
+          const empresa = response;
+          setCookies("empresaId", response.id);
+          setCookies("nombreEmpresa", empresa.nombre_empresa);
+          console.log(empresa.nombre_empresa);
+          console.log(response);
+          
         if (response) {
           mostrarAlerta("success", 'Empresa registrada con éxito');
-          const peticion = await patch('cambiar-rol','',{
+          const peticion = await patch('cambiar-rol', '', {
             usuario_id: cookies.usuarioID,
-            rol: 'propietario'
-          },token)
-          setCookies("rolUsuario", "propietario")
+            rol: 'propietario',
+          }, token);
+          setCookies("rolUsuario", "propietario");
           console.log('Respuesta del servidor:', peticion);
         } else {
           mostrarAlerta("error", 'Hubo un error al registrar la empresa');
         }
       } catch (error) {
         console.error('Error al enviar datos:', error);
+        mostrarAlerta("error", 'Hubo un error al procesar tu solicitud');
+      } finally {
+        setIsLoading(false); // Desactivar el spinner después de que termine la solicitud
       }
     }
   };
@@ -103,13 +106,14 @@ const FormEmpresas = () => {
     <>
       <div className="development-table-container">
         <div className="form-title1">
-        <h2>Registrar Empresa</h2>
-        
-        {/* Flecha para alternar la visibilidad */}
-        <span className="toggle-arrow" onClick={toggleFormulario}>
-          {mostrarFormulario ? '↑' : '↓'} {/* Cambia la dirección de la flecha */}
+          <h2>Registrar Empresa</h2>
+          
+          {/* Flecha para alternar la visibilidad */}
+          <span className="toggle-arrow" onClick={toggleFormulario}>
+            {mostrarFormulario ? '↑' : '↓'} {/* Cambia la dirección de la flecha */}
           </span> 
         </div>        
+
         {/* Mostrar el formulario solo si el estado es verdadero */}
         {mostrarFormulario && (
           <form onSubmit={manejarEnvio}>
@@ -171,7 +175,13 @@ const FormEmpresas = () => {
               </tbody>
             </table>
 
-            <button className="btnEnviarEmpresas" type="submit">Enviar</button>
+            <button className="btnEnviarEmpresas" type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <LoadingSpinner /> // Mostrar el spinner cuando está cargando
+              ) : (
+                'Enviar'
+              )}
+            </button>
           </form>
         )}
       </div>

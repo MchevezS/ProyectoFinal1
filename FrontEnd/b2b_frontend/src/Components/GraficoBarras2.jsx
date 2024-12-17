@@ -45,7 +45,7 @@ const GraficoBarras2 = () => {
   const options = {
     chart: {
       type: 'bar',
-      height: 350,
+      height: 150,
     },
     xaxis: {
       categories: ['Salud mental', 'Ambiente laboral', 'Equilibrio vida-trabajo', 'Beneficios y compensaciones', 'Comunicación interna', 'Oportunidades de crecimiento'],
@@ -61,8 +61,8 @@ const GraficoBarras2 = () => {
   ];
 
   return (
-    <div className="p-3 bg-white rounded shadow-sm">
-      <ReactApexChart options={options} series={series} type="bar" height={300} />
+    <div className="p-3 text-white rounded shadow-sm">
+      <ReactApexChart options={options} series={series} type="bar" height={300} width={500} />
     </div>
   );
 };

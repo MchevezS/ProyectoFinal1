@@ -1,29 +1,18 @@
 import { useState } from 'react';
 import { mostrarAlerta } from './MostrarAlerta';
-import { loginPost, post } from '../Services/Crud';
+import { loginPost } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
-import '../Style/RegistroLogin.css'; // Importar el archivo de estilos CSS
-import Navbar from './Navbar';
-import {useCookies} from 'react-cookie'
+import '../Style/RegistroLogin.css'; 
+import NavbarNuevo from './NavbarNuevo';
+import { useCookies } from 'react-cookie';
+import LoadingSpinner from "../Components/LoadingSpinner.jsx"
+import Footer from './Footer.jsx';
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
-  const [isLoading, setIsLoading] = useState(false);
-  const [cookie,setCookie] = useCookies(["usuarioID","nombreUsuario","rolUsuario",'areaUsuario','token','empresaId']);
-  const token = cookie.token
+  const [isLoading, setIsLoading] = useState(false); // Estado para manejar el loading
+  const [cookie, setCookie] = useCookies(["usuarioID", "nombreUsuario", "rolUsuario", 'areaUsuario', 'token', 'empresaId']);
+  const token = cookie.token;
   const navigate = useNavigate();
-
-  // const obtenerEmpresa = async()=>{
-  // try{   
-  //   const empresa = await getFilter("empresa-id/",cookie.usuarioID,'propietario_id')
-  //   console.log(empresa)
-  //   setCookie('empresaId',empresa.id_empresa)
-  //   setCookie('nombreEmpresa',empresa.nombre_empresa)
-  //   cookie.empresaId = empresa.id_empresa
-  // }catch(error){
-  //   console.error(error)
-  // }
-  // }
-
 
   // Estados de los formularios
   const [nombreUsuarioL, setNombreUsuarioL] = useState('');
@@ -33,7 +22,6 @@ function RegistroLogin() {
   const [emailRegistro, setEmailRegistro] = useState('');
   const [claveRegistro, setClaveRegistro] = useState('');
 
-  // Validaciones
   const espaciosVacios = () => {
     if (nombreUsuarioL.trim() === "" || passwordL.trim() === "") {
       mostrarAlerta("error", "Llenar espacios vacíos");
@@ -55,45 +43,48 @@ function RegistroLogin() {
     const datosLogin = { 
       username: nombreUsuarioL.trim(),
       password: passwordL.trim(),
-      };
-      setNombreUsuarioL(datosLogin.username)
-      setPasswordL(datosLogin.password)
-    
+    };
+
+    setNombreUsuarioL(datosLogin.username);
+    setPasswordL(datosLogin.password);
+
     if (!espaciosVacios()) return;
     if (!longitudPassword(passwordL)) return;
 
-    //METODO POST para iniciar sesion
+    setIsLoading(true); // Activar el spinner al iniciar la solicitud
+
     try {
-      const response = await loginPost( datosLogin,"login-usuario/")
+      const response = await loginPost(datosLogin, "login-usuario/");
+
       if (response.success) {
-        mostrarAlerta("success", "Te has logueado de manera exitosa")
+        // mostrarAlerta("success", "Te has logueado de manera exitosa");
         setTimeout(() => {
-          setNombreUsuarioL('')
-          setPasswordL('')
-          setCookie("usuarioID",response.id)
-          setCookie("nombreUsuario",response.nombre)
-          setCookie("rolUsuario" , response.rol)
-          setCookie("areaUsuario", response.area)
-          setCookie("empresaId", response.id_empresa)
-          setCookie("token",response.token_acceso)  // GUARDAR TOKEN EN COOKIE
-          // obtenerEmpresa()
-          if (cookie.rolUsuario==="usuario" || response.rol === 'usuario') {
+          setNombreUsuarioL('');
+          setPasswordL('');
+          setCookie("usuarioID", response.id);
+          setCookie("nombreUsuario", response.nombre);
+          setCookie("rolUsuario", response.rol);
+          setCookie("areaUsuario", response.area);
+          setCookie("empresaId", response.id_empresa);
+          setCookie("token", response.token_acceso);
+
+          if (cookie.rolUsuario === "usuario" || response.rol === 'usuario') {
             navigate("/empresas");
           }
 
-          if (cookie.rolUsuario==="propietario" || response.rol === 'propietario') {
+          if (cookie.rolUsuario === "propietario" || response.rol === 'propietario') {
             navigate("/dashboard");
           }
-          
-          if (cookie.rolUsuario==="trabajador" || response.rol === 'trabajador') {
-            localStorage.clear()
-            navigate("/verEncuestas")
+
+          if (cookie.rolUsuario === "trabajador" || response.rol === 'trabajador') {
+            localStorage.clear();
+            navigate("/verEncuestas");
           }
-          if (cookie.rolUsuario==="recursos_humanos" || response.rol === 'recursos_humanos') {
-            localStorage.clear()
-            navigate("/CrearEncuestas")
+
+          if (cookie.rolUsuario === "recursos_humanos" || response.rol === 'recursos_humanos') {
+            localStorage.clear();
+            navigate("/CrearEncuestas");
           }
-          // guardamos el id del usuario para obtenerlo en empresas
         }, 1000);
       } else {
         mostrarAlerta("error", 'No se ha encontrado un usuario con ese nombre de usuario');
@@ -101,6 +92,8 @@ function RegistroLogin() {
     } catch (error) {
       mostrarAlerta("error", "Ocurrió un error al procesar tu solicitud. Inténtalo de nuevo más tarde.");
       console.error(error);
+    } finally {
+      setIsLoading(false); // Desactivar el spinner después de la solicitud
     }
   };
 
@@ -124,24 +117,23 @@ function RegistroLogin() {
   };
 
   const registroUsuario = async () => {
-    
     const dataRegister = { 
       username: nombreUsuario.trim(), 
       cedula: cedulaIndentidad.trim(), 
       email: emailRegistro.trim(), 
       password: claveRegistro.trim() 
     };
-    setNombreUsuario(dataRegister.username)
-    setCedulaIndentidad(dataRegister.cedula)
-    setEmailRegistro(dataRegister.email)
-    setClaveRegistro(dataRegister.password)
+    
+    setNombreUsuario(dataRegister.username);
+    setCedulaIndentidad(dataRegister.cedula);
+    setEmailRegistro(dataRegister.email);
+    setClaveRegistro(dataRegister.password);
 
-    //METODO POST para subir un usuario
+    setIsLoading(true); // Activar el spinner al iniciar la solicitud
 
     try {
       const response = await loginPost(dataRegister, "crear-usuario/"); //conexion a backend
       if (response && response.success) {
-        mostrarAlerta("success", "Usuario registrado exitosamente");
         setActiveTab('login');
       } else {
         mostrarAlerta("error", "Hubo un problema al registrar al usuario");
@@ -149,133 +141,131 @@ function RegistroLogin() {
     } catch (error) {
       mostrarAlerta("error", "Hubo un error al registrar al usuario. Intenta nuevamente.");
       console.error(error);
+    } finally {
+      setIsLoading(false); // Desactivar el spinner después de la solicitud
     }
   };
 
- 
-
   return (
-      <>
-      
-    <Navbar/>
+    <>
+      <NavbarNuevo/>
+      <div className="modal-overlay1 ">
+        <div className="modal-conten1t" style={{border: "2px solid #cccc", padding: "2em", borderRadius: "15px"}}>
+          <h2 className="card-title1"> Bienvenidos</h2>
+          <p className="card-subtitle1">Inicia sesión o regístrate para disfrutar de nuestro servicio</p>
+          <ul className="nav nav-tabs1">
+            <li className="nav-item1">
+              <button
+                className={`nav-link ${activeTab === 'login' ? 'btn-login' : 'btn-login-f'}`}
+                onClick={() => setActiveTab('login')}
+              >
+                Iniciar Sesión
+              </button>
+            </li>
+            <li className="nav-item1">
+              <button
+                className={`nav-link ${activeTab === 'register' ? 'btn-login' : 'btn-login-f'}`}
+                onClick={() => setActiveTab('register')}
+                style={{backgroundColor: "#5c3ac0", color: "white"}}
 
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2 className="card-title"> Bienvenidos</h2>
-        <p className="card-subtitle">Inicia sesión o regístrate para disfrutar de nuestro servicio</p>
-        <ul className="nav nav-tabs">
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === 'login' ? 'active' : ''}`}
-              onClick={() => setActiveTab('login')}
-            >
-              Iniciar Sesión
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link ${activeTab === 'register' ? 'active' : ''}`}
-              onClick={() => setActiveTab('register')}
-            >
-              Registrarse
-            </button>
-          </li>
-        </ul>
-        {activeTab === 'login' && (
-          <form onSubmit={inicioSesion}>
-            <div className="form-group">
-              <label htmlFor="loginEmail">Nombre de Usuario</label>
-              <input
-                type="text"
-                className="form-control"
-                id="loginEmail"
-                placeholder="Nombre de Usuario"
-                value={nombreUsuarioL}
-                onChange={(e) => setNombreUsuarioL(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="loginPassword">Contraseña</label>
-              <input
-                type="password"
-                className="form-control"
-                id="loginPassword"
-                placeholder="Contraseña"
-                value={passwordL}
-                onChange={(e) => setPasswordL(e.target.value)}
-              />
-            </div>
-            <button type="submit" className="btn btn-primary" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                  Cargando...
-                </>
-              ) : (
-                'Iniciar Sesión'
-              )}
-            </button>
-          </form>
-        )}
-        {activeTab === 'register' && (
-          <form onSubmit={(e) => { e.preventDefault(); validarFormRegister(); }}>
-            <div className="form-group">
-              <label htmlFor="registerNombre">Nombre Completo</label>
-              <input
-                type="text"
-                className="form-control"
-                id="registerNombre"
-                value={nombreUsuario}
-                onChange={(e) => setNombreUsuario(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="registerCedula">Cédula de Identidad</label>
-              <input
-                type="text"
-                className="form-control"
-                id="registerCedula"
-                value={cedulaIndentidad}
-                onChange={(e) => setCedulaIndentidad(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="registerEmail">Correo Electrónico</label>
-              <input
-                type="email"
-                className="form-control"
-                id="registerEmail"
-                value={emailRegistro}
-                onChange={(e) => setEmailRegistro(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="registerPassword">Contraseña</label>
-              <input
-                type="password"
-                className="form-control"
-                id="registerPassword"
-                value={claveRegistro}
-                onChange={(e) => setClaveRegistro(e.target.value)}
-              />
-            </div>
-            <button type="submit" className="btn btn-success" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                  Cargando...
-                </>
-              ) : (
-                'Registrarse'
-              )}
-            </button>
-          </form>
-        )}
+              >
+                Registrarse
+              </button>
+            </li>
+          </ul>
+          {activeTab === 'login' && (
+            <form onSubmit={inicioSesion}>
+              <div className="form-group1">
+                <label htmlFor="loginEmail1">Nombre de Usuario</label>
+                <input
+                  type="text"
+                  className="form-control1"
+                  id="loginEmail"
+                  placeholder="Nombre de Usuario"
+                  value={nombreUsuarioL}
+                  onChange={(e) => setNombreUsuarioL(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="loginPassword">Contraseña</label>
+                <input
+                  type="password"
+                  className="form-control1"
+                  id="loginPassword"
+                  placeholder="Contraseña"
+                  value={passwordL}
+                  onChange={(e) => setPasswordL(e.target.value)}
+                />
+              </div>
+              <button type="submit" className="btn btn-primary1" disabled={isLoading} style={{backgroundColor: "#dd1a57"}}>
+                {isLoading ? (
+                  <LoadingSpinner /> // Aquí insertamos el componente de LoadingSpinner
+                ) : (
+                  'Iniciar Sesión'
+                )}
+
+              </button>
+            </form>
+          )}
+          {activeTab === 'register' && (
+            <form onSubmit={(e) => { e.preventDefault(); validarFormRegister(); }}>
+              <div className="form-group1">
+                <label htmlFor="registerNombre">Nombre Completo</label>
+                <input
+                  type="text"
+                  placeholder='Nombre Completo'
+                  className="form-control1"
+                  id="registerNombre"
+                  value={nombreUsuario}
+                  onChange={(e) => setNombreUsuario(e.target.value)}
+                />
+              </div>
+              <div className="form-group1">
+                <label htmlFor="registerCedula">Cédula de Identidad</label>
+                <input
+                  type="text"
+                  placeholder='Cédula de Identidad'
+                  className="form-control1"
+                  id="registerCedula"
+                  value={cedulaIndentidad}
+                  onChange={(e) => setCedulaIndentidad(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="registerEmail1">Correo Electrónico</label>
+                <input
+                  type="email"
+                  placeholder='Correo Electrónico'
+                  className="form-control1"
+                  id="registerEmail"
+                  value={emailRegistro}
+                  onChange={(e) => setEmailRegistro(e.target.value)}
+                />
+              </div>
+              <div className="form-group1">
+                <label htmlFor="registerPassword">Contraseña</label>
+                <input
+                  type="password"
+                  placeholder='Contraseña'
+                  className="form-control1"
+                  id="registerPassword"
+                  value={claveRegistro}
+                  onChange={(e) => setClaveRegistro(e.target.value)}
+                />
+              </div>
+              <button type="submit" className="btn btn-success1" disabled={isLoading} style={{backgroundColor: "#dd1a57"}}>
+                {isLoading ? (
+                  <LoadingSpinner /> // Aquí insertamos el componente de LoadingSpinner
+                ) : (
+                  'Registrarse'
+                )}
+              </button>
+            </form>
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
 }
 
 export default RegistroLogin;
-

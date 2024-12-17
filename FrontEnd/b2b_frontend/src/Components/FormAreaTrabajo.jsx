@@ -3,14 +3,16 @@ import { post } from '../Services/Crud';
 import '../Style/FormAreaTrabajo.css';
 import { useCookies } from 'react-cookie';
 import { mostrarAlerta } from './MostrarAlerta';
+import LoadingSpinner from './LoadingSpinner'; // Asegúrate de importar el componente Spinner
 
 const FormAreaTrabajo = () => {
-  const [cookies] = useCookies(["empresaId", "nombreEmpresa",'token']);
-  const token = cookies.token
+  const [cookies] = useCookies(["empresaId", "nombreEmpresa", 'token']);
+  const token = cookies.token;
   const [nombreArea, setNombreArea] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
   const [formVisible, setFormVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Estado para controlar la carga del spinner
 
   // Validación del formulario
   const validarFormulario = () => {
@@ -36,6 +38,8 @@ const FormAreaTrabajo = () => {
         empresa: cookies.empresaId
       };
 
+      setIsLoading(true); // Mostrar spinner antes de hacer la solicitud
+
       try {
         const response = await post(datosFormulario, 'AreaTrabajo/', token);
         if (response.id) {
@@ -46,6 +50,8 @@ const FormAreaTrabajo = () => {
       } catch (error) {
         mostrarAlerta("error", 'Error al enviar el formulario');
         console.error(error);
+      } finally {
+        setIsLoading(false); // Ocultar el spinner después de la carga
       }
     } else {
       setMensajeError('Por favor, completa todos los campos correctamente.');
@@ -108,6 +114,9 @@ const FormAreaTrabajo = () => {
           )}
         </form>
       )}
+
+      {/* Mostrar el spinner mientras isLoading es verdadero */}
+      {isLoading && <LoadingSpinner />}
     </div>
   );
 };

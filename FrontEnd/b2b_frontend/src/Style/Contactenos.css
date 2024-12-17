@@ -222,6 +222,6 @@ strong {
   }
   
   button.submit-button:hover {
-    background-color: #0056b3;
+    scale: 1.1;
   }
   

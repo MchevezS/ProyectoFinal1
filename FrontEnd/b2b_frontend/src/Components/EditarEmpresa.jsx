@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'; // Para obtener el ID
 import { get, patch } from '../Services/Crud';
 import '../Style/EditarEmpresa.css';
 import { useCookies } from "react-cookie";
+import { mostrarAlerta } from './MostrarAlerta';
 
 const EditarEmpresa = () => {
   const [cookie]=useCookies(["token"]);
@@ -80,13 +81,13 @@ const EditarEmpresa = () => {
         const response = await patch('empresas/', id, datosFormulario, token); // Llamamos a el metodo PATCH
         if (response) {
           navigate('/administradorGeneral'); // Redirige al administrador a la lista de empresas
-          alert('Empresa actualizada con éxito');
+          mostrarAlerta("success",'Empresa actualizada con éxito');
         } else {
           // Si la respuesta no es válida (por alguna razón el servidor no devuelve datos esperados)
-          alert('Error al actualizar la empresa. Intenta nuevamente');
+          mostrarAlerta("error",'Error al actualizar la empresa. Intenta nuevamente');
         }
       } catch (error) {
-        alert('Error al actualizar la empresa');
+        mostrarAlerta("error",'Error al actualizar la empresa');
         console.error('Error al actualizar la empresa:', error);
       }
     }
