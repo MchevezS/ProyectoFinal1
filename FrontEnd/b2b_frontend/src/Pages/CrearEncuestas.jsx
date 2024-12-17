@@ -55,7 +55,7 @@ async function enviarEncuesta() {
         //METODO POST 
     }
     if(categoriaEncuesta === "" || descripcionEncuesta === ""){
-      mostrarAlerta("error","Faltan campos por llenar")
+      mostrarAlerta("error","Faltan campos por llenar.")
       return
     }
     const enviarPeticion = await post(datosEncuesta,"encuestas/",token)

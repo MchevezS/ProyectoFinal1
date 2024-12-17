@@ -4,21 +4,27 @@ import { get, patch } from '../Services/Crud';
 import '../Style/EditarEmpresa.css';
 import { useCookies } from "react-cookie";
 import { mostrarAlerta } from './MostrarAlerta';
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 const EditarEmpresa = () => {
-  const [cookie]=useCookies(["token"]);
+  const [cookie] = useCookies(["token"]);
   const token = cookie.token;
+
   const [empresa, setEmpresa] = useState({
     nombre_empresa: '',
     cedula_juridica: '',
     correo: '',
   });
+
   const [errores, setErrores] = useState({
     nombreEmpresa: '',
     cedulaJuridica: '',
     correo: '',
   });
-  const [loading, setLoading] = useState(true); // estado para que carguen las empresas
+
+  const [loading, setLoading] = useState(true); // Estado para cargar los datos iniciales
+  const [isLoading, setIsLoading] = useState(false); // Estado para manejar el loading del botón
+
   const { id } = useParams(); // Obtenemos el ID de la empresa de la URL
   const navigate = useNavigate();
 
@@ -67,29 +73,32 @@ const EditarEmpresa = () => {
   // Manejo del envío del formulario
   const manejarEnvio = async (e) => {
     e.preventDefault();
+    if (!validarFormulario()) return;
+ // Preparamos los datos a enviar basados en el estado 'empresa'
 
-    if (validarFormulario()) {
-      // Preparamos los datos a enviar basados en el estado 'empresa'
-     const datosFormulario = {
+    const datosFormulario = {
       nombre_empresa: empresa.nombre_empresa,
       cedula_juridica: empresa.cedula_juridica,
       correo: empresa.correo,
-    }
+    };
 
-      try {
+    setIsLoading(true); // Activar spinner en el botón
+
+    try {
         // Realizamos la llamada PATCH para actualizar la empresa
-        const response = await patch('empresas/', id, datosFormulario, token); // Llamamos a el metodo PATCH
-        if (response) {
-          navigate('/administradorGeneral'); // Redirige al administrador a la lista de empresas
-          mostrarAlerta("success",'Empresa actualizada con éxito');
-        } else {
+      const response = await patch('empresas/', id, datosFormulario, token); // Llamamos a el metodo PATCH
+      if (response) {
+        mostrarAlerta("success", 'Empresa actualizada con éxito'); // Redirige al administrador a la lista de empresas
+        navigate('/administradorEmpresas');
+      } else {
           // Si la respuesta no es válida (por alguna razón el servidor no devuelve datos esperados)
-          mostrarAlerta("error",'Error al actualizar la empresa. Intenta nuevamente');
-        }
-      } catch (error) {
-        mostrarAlerta("error",'Error al actualizar la empresa');
-        console.error('Error al actualizar la empresa:', error);
+        mostrarAlerta("error", 'Error al actualizar la empresa. Intenta nuevamente');
       }
+    } catch (error) {
+      mostrarAlerta("error", 'Error al actualizar la empresa');
+      console.error('Error al actualizar la empresa:', error);
+    } finally {
+      setIsLoading(false); // Desactivar spinner
     }
   };
 
@@ -98,31 +107,48 @@ const EditarEmpresa = () => {
   }, [id]); // Se ejecuta cuando cambia el ID de la empresa
 
   if (loading) {
-    // Este mensaje se muestra si entramos a la pagina y las empresas no han cargado
-    return <p>Cargando datos de la empresa...</p>;
+    // Mostrar spinner mientras se cargan los datos iniciales
+    return <LoadingSpinner />;
   }
 
   return (
     <form onSubmit={manejarEnvio} className='formEditar'>
       <div>
         <label className='label1'>Nombre de la empresa:</label>
-        <input className='inputs' type="text" value={empresa.nombre_empresa} onChange={(e) => setEmpresa({ ...empresa, nombre_empresa: e.target.value })}/>
+        <input
+          className='inputs'
+          type="text"
+          value={empresa.nombre_empresa}
+          onChange={(e) => setEmpresa({ ...empresa, nombre_empresa: e.target.value })}
+        />
         {errores.nombreEmpresa && <span className="error-text">{errores.nombreEmpresa}</span>}
       </div>
 
       <div>
         <label className='label1'>Ingrese su Cédula Jurídica:</label>
-        <input className='inputs' type="text" value={empresa.cedula_juridica} onChange={(e) => setEmpresa({ ...empresa, cedula_juridica: e.target.value })}/>
+        <input
+          className='inputs'
+          type="text"
+          value={empresa.cedula_juridica}
+          onChange={(e) => setEmpresa({ ...empresa, cedula_juridica: e.target.value })}
+        />
         {errores.cedulaJuridica && <span className="error-text">{errores.cedulaJuridica}</span>}
       </div>
 
       <div>
         <label className='label1'>Ingrese su Correo:</label>
-        <input className='inputs' type="email" value={empresa.correo} onChange={(e) => setEmpresa({ ...empresa, correo: e.target.value })}/>
+        <input
+          className='inputs'
+          type="email"
+          value={empresa.correo}
+          onChange={(e) => setEmpresa({ ...empresa, correo: e.target.value })}
+        />
         {errores.correo && <span className="error-text">{errores.correo}</span>}
       </div>
 
-      <button type="submit" className='botonActualizar'>Actualizar Empresa</button>
+      <button type="submit" className='botonActualizar' disabled={isLoading}>
+        {isLoading ? <LoadingSpinner /> : 'Actualizar Empresa'}
+      </button>
     </form>
   );
 };
