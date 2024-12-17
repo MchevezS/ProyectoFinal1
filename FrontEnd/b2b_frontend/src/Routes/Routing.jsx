@@ -13,13 +13,14 @@ import RutaPrivada from './RutaPrivada';
 import Perfil from '../Pages/Perfil';
 import MisionVision from '../Components/MisionVision';
 import HomeNuevo from '../Pages/HomeNuevo';
+import DashboardNuevo from '../Pages/DashboardNuevo';
 const Routing = () => {
     return (
       <Router>
        <Routes>
          {/* Rutas privadas */}
           <Route path='/' element={<HomeNuevo/>}/>
-          <Route path='/dashboard' element={<RutaPrivada rol={["propietario"]} children={<Dashboard/>} />}/>
+          <Route path='/dashboard' element={<RutaPrivada rol={["propietario"]} children={<DashboardNuevo/>} />}/>
           <Route path='/empresas' element={<RutaPrivada rol={["usuario", "propietario"]} children={<Empresas/>}/>}/>
           <Route path='/responderEncuestas' element={<RutaPrivada rol={["trabajador", "recursos_humanos","propietario"]} children={<VerEncuesta/>}/>}/>
           <Route path='/CrearEncuestas' element={<RutaPrivada rol={["recursos_humanos", "propietario"]} children={<CrearEncuestas/>}/>}/>
@@ -31,7 +32,7 @@ const Routing = () => {
           <Route path="/home" element={<HomeNuevo/> }/>
           <Route path='/registroLogin' element={<Login/>}/>
           <Route path='/contactenos' element={<Contactenos/>}/>
-          <Route path='/dasboard' element={<Dashboard/>}/>
+          <Route path='/dasboard' element={<DashboardNuevo/>}/>
           <Route path='/formularioEmailJS' element={<FormularioEmailJS/>}/>
 
        </Routes>

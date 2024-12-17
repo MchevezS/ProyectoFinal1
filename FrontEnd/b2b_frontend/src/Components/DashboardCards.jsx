@@ -62,8 +62,8 @@ function DashboardCards() {
   ];
 
   return (
-    <>
-    <div className="d-flex gap-3" style={{width:"79vw",maxWidth:"80vw",maxHeight:"20vh",marginLeft:"12vw",marginBottom:"16vh"}} >
+    <div style={{backgroundColor:"#000",height:"100vh",width:"92vw",maxHeight:"20vh"}}>
+    <div className="d-flex gap-3" style={{marginLeft:"9vw",marginBottom:"16vh",backgroundColor:"#000"}} >
       {cards.map((card) => (
         <Cards
           titulo={card.title}
@@ -72,11 +72,9 @@ function DashboardCards() {
           estilo={card.estilo}
         />
       ))}
-      <div>
-        <TablaEmpleados/>
-      </div>
     </div>
-    </>
+        <TablaEmpleados/>
+    </div>
   );
 
 }
