@@ -1,26 +1,60 @@
-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    max-width: 300px;
-    margin: 10px auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  }
-  
-  .card-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
-  
-  .card-description {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 8px;
-  }
-  
-  .card-date {
-    font-size: 12px;
-    color: #888;
-  }
+/* Estilos para el contenedor de las tarjetas */
+.encuestas-container {
+  display: flex;            /* Contenedor con Flexbox */
+  flex-wrap: wrap;          /* Permite que las tarjetas se muevan a la siguiente fila */
+  gap: 20px;                /* Espacio entre las tarjetas */
+  justify-content: flex-start; /* Alinea las tarjetas al inicio de la fila */
+  padding: 20px;            /* Espaciado interno */
+}
+
+/* Estilo para cada tarjeta */
+.card1 {
+  width: calc(33.333% - 20px); /* 3 tarjetas por fila, considerando el espacio entre ellas */
+  box-sizing: border-box;      /* Asegura que el padding y borde no afecten el tamaño */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  padding: 16px;
+  transition: transform 0.3s ease; /* Animación para el hover */
+}
+
+/* Títulos de las tarjetas */
+.card-titles {
+  text-align: center;
+  font-size: 30px;
+  font-family: fantasy;
+  margin-bottom: 8px;
+}
+
+/* Descripciones de las tarjetas */
+.card-descriptions {
+  text-align: center;
+  font-size: 25px;
+  font-family: sans-serif;
+  color: #373737;
+  margin-bottom: 8px;
+}
+
+/* Fechas de las tarjetas */
+.card-dates {
+  text-align: center;
+  font-size: 25px;
+  color: #888;
+}
+
+/* Estilo del botón */
+.card-button {
+  padding: 8px 16px;
+  font-size: 20px;
+  background-color: #135ba9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 130px;
+  width: 350px;
+}
+
+.card-button:hover {
+  background-color: #4d91d8;
+}

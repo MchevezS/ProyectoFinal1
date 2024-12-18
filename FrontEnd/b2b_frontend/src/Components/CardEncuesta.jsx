@@ -1,12 +1,12 @@
 const CardEncuesta = ({ titulo, descripcion, fechaSubida, responder}) => {
   return (
-    <div className="card">
-      <h2 className="card-title">{titulo}</h2>
-      <p className="card-description">{descripcion}</p>
-      <p className="card-date">Subido el: {fechaSubida}</p>
-      <button onClick={responder}> Responder encuesta </button>
+    <div className="card1">
+      <h2 className="card-titles">{titulo}</h2>
+      <p className="card-descriptions">{descripcion}</p>
+      <p className="card-dates">Subido el: {fechaSubida}</p>
+      <button className="card-button" onClick={responder}> Responder Encuesta </button>
 
     </div>
   );
 };
-export default CardEncuesta
+export default CardEncuesta;

@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { post } from '../Services/Crud';
-import { useCookies } from 'react-cookie'; // Accedemos al ID del usuario registrado
+import { useCookies } from 'react-cookie';
 import '../Style/FormEmpresas.css';
 import { mostrarAlerta } from './MostrarAlerta';
-import BarraLateral from './BarraLateral';
+import { patch } from '../Services/Crud';
+import LoadingSpinner from '../Components/LoadingSpinner'; 
 
 const FormEmpresas = () => {
-  const [cookies] = useCookies(["usuarioID","nombreUsuario"]);
+  const [cookies, setCookies] = useCookies(["usuarioID", "nombreUsuario", "empresaId", "nombreEmpresa", 'rolUsuario', 'token']);
+  const token = cookies.token;
   const [nombreEmpresa, setNombreEmpresa] = useState('');
   const [cedulaJuridica, setCedulaJuridica] = useState('');
   const [correo, setCorreo] = useState('');
@@ -16,18 +18,22 @@ const FormEmpresas = () => {
     correo: '',
   });
 
+  // Estado para controlar la visibilidad del formulario
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
+  // Estado para el spinner de carga
+  const [isLoading, setIsLoading] = useState(false);
+
   // Validación del formulario
   const validarFormulario = () => {
     let esValido = true;
     let erroresTemp = { nombreEmpresa: '', cedulaJuridica: '', correo: '' };
 
-    // Validación de nombre de la empresa
     if (!nombreEmpresa) {
       erroresTemp.nombreEmpresa = 'El nombre de la empresa es obligatorio';
       esValido = false;
     }
 
-    // Validación de cédula jurídica
     if (!cedulaJuridica) {
       erroresTemp.cedulaJuridica = 'La cédula jurídica es obligatoria';
       esValido = false;
@@ -36,7 +42,6 @@ const FormEmpresas = () => {
       esValido = false;
     }
 
-    // Validación del correo
     if (!correo) {
       erroresTemp.correo = 'El correo es obligatorio';
       esValido = false;
@@ -53,75 +58,133 @@ const FormEmpresas = () => {
   const manejarEnvio = async (e) => {
     e.preventDefault();
 
-    // Verificamos si la cédula es un array (debería ser un valor único)
-    const cedula = Array.isArray(cedulaJuridica) ? cedulaJuridica[0] : cedulaJuridica;
-
-    // Verificamos si el propietario es un array (debería ser un valor único)
-    const propietario = Array.isArray(cookies.usuarioID) ? cookies.usuarioID[0] : cookies.usuarioID;
-
-    // Validamos el formulario antes de enviar los datos
     if (validarFormulario()) {
-      // Preparamos los datos a enviar
       const datosFormulario = {
         nombre_empresa: nombreEmpresa,
-        cedula_juridica: cedula,
+        cedula_juridica: cedulaJuridica,
         correo: correo,
-        propietario: propietario,
+        propietario: cookies.usuarioID,
       };
 
-      console.log("Datos enviados al servidor:", datosFormulario);  // Verifica los datos antes de enviarlos
+      console.log("Datos enviados al servidor:", datosFormulario);
+      setIsLoading(true); // Activar el spinner de carga
 
       try {
-        // Realizamos la petición POST al servidor
-        const response = await post(datosFormulario, 'empresas');
-        console.log('Respuesta del servidor:', response);  // Verifica la estructura de la respuesta
-
+          const response = await post(datosFormulario, 'empresas/', token);
+          const empresa = response;
+          setCookies("empresaId", response.id);
+          setCookies("nombreEmpresa", empresa.nombre_empresa);
+          console.log(empresa.nombre_empresa);
+          console.log(response);
+          
         if (response) {
-          mostrarAlerta("success",'Empresa registrada con éxito');
+          mostrarAlerta("success", 'Empresa registrada con éxito');
+          const peticion = await patch('cambiar-rol', '', {
+            usuario_id: cookies.usuarioID,
+            rol: 'propietario',
+          }, token);
+          setCookies("rolUsuario", "propietario");
+          console.log('Respuesta del servidor:', peticion);
         } else {
-          mostrarAlerta("error",'Hubo un error al registrar la empresa');
+          mostrarAlerta("error", 'Hubo un error al registrar la empresa');
         }
       } catch (error) {
-        // Si ocurre un error durante el envío va aparecer esta alerta
         console.error('Error al enviar datos:', error);
+        mostrarAlerta("error", 'Hubo un error al procesar tu solicitud');
+      } finally {
+        setIsLoading(false); // Desactivar el spinner después de que termine la solicitud
       }
     }
   };
-      
+
+  // Función para alternar la visibilidad del formulario
+  const toggleFormulario = () => {
+    setMostrarFormulario(!mostrarFormulario);
+  };
 
   return (
     <>
-    <BarraLateral/>
-    
-    <form onSubmit={manejarEnvio}>
-      <div className='titulo'>
-      <h1 >Registra tu empresa</h1>
-      </div>
-      <div className='form-group2'>
-        <label className='nombreEmpresalabel'>Nombre de la empresa:</label>
-        <input placeholder='Nombre de la empresa' className='nombreEmpresa' type="text" value={nombreEmpresa} onChange={(e) => setNombreEmpresa(e.target.value)}/>
-        {errores.nombreEmpresa && <span className="error-text">{errores.nombreEmpresa}</span>}
-      </div>
+      <div className="development-table-container">
+        <div className="form-title1">
+          <h2>Registrar Empresa</h2>
+          
+          {/* Flecha para alternar la visibilidad */}
+          <span className="toggle-arrow" onClick={toggleFormulario}>
+            {mostrarFormulario ? '↑' : '↓'} {/* Cambia la dirección de la flecha */}
+          </span> 
+        </div>        
 
-      <div className='form-group2'>
-        <label className='labelCedula'>Cédula Jurídica:</label>
-        <input placeholder='Cédula Jurídica' className='cedulaJuridica' type="text" value={cedulaJuridica} onChange={(e) => setCedulaJuridica(e.target.value)}/>
-        {errores.cedulaJuridica && <span className="error-text">{errores.cedulaJuridica}</span>}
-      </div>
+        {/* Mostrar el formulario solo si el estado es verdadero */}
+        {mostrarFormulario && (
+          <form onSubmit={manejarEnvio}>
+            <table className="table">
+              <tbody>
+                <tr>
+                  <td><label className="nombreEmpresalabel">Nombre de la empresa:</label></td>
+                  <td>
+                    <input
+                      placeholder="Nombre de la empresa"
+                      className="nombreEmpresa"
+                      type="text"
+                      value={nombreEmpresa}
+                      onChange={(e) => setNombreEmpresa(e.target.value)}
+                    />
+                    {errores.nombreEmpresa && <span className="error-text">{errores.nombreEmpresa}</span>}
+                  </td>
+                </tr>
 
-      <div className='form-group2'>
-        <label className='labelCorreo'>Correo:</label>
-        <input placeholder='Correo' className='correoEmpresas' type="email" value={correo} onChange={(e) => setCorreo(e.target.value)}/>
-        {errores.correo && <span className="error-text">{errores.correo}</span>}
-      </div>
+                <tr>
+                  <td><label className="labelCedula">Cédula Jurídica:</label></td>
+                  <td>
+                    <input
+                      placeholder="Cédula Jurídica"
+                      className="cedulaJuridica"
+                      type="text"
+                      value={cedulaJuridica}
+                      onChange={(e) => setCedulaJuridica(e.target.value)}
+                    />
+                    {errores.cedulaJuridica && <span className="error-text">{errores.cedulaJuridica}</span>}
+                  </td>
+                </tr>
 
-      <div className='form-group'>
-        <label className='labelPropietario'>Propietario:</label>
-        <input className='idPropietario' type="text" value={cookies.nombreUsuario} disabled />
-      </div>
+                <tr>
+                  <td><label className="labelCorreo">Correo:</label></td>
+                  <td>
+                    <input
+                      placeholder="Correo"
+                      className="correoEmpresas"
+                      type="email"
+                      value={correo}
+                      onChange={(e) => setCorreo(e.target.value)}
+                    />
+                    {errores.correo && <span className="error-text">{errores.correo}</span>}
+                  </td>
+                </tr>
 
-      <button className='btnEnviarEmpresas' type="submit">Enviar</button>
-    </form>
+                <tr>
+                  <td><label className="labelPropietario">Propietario:</label></td>
+                  <td>
+                    <input
+                      className="idPropietario"
+                      type="text"
+                      value={cookies.nombreUsuario}
+                      disabled
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <button className="btnEnviarEmpresas" type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <LoadingSpinner /> // Mostrar el spinner cuando está cargando
+              ) : (
+                'Enviar'
+              )}
+            </button>
+          </form>
+        )}
+      </div>
     </>
   );
 };

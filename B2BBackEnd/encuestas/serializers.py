@@ -17,8 +17,9 @@ class PreguntaSerializer(ModelSerializer):
         
         
 class RespuestaSerializer(ModelSerializer):
+    categoria_encuesta = serializers.CharField(source='encuesta_referencia.categoria_encuesta',read_only=True)
     class Meta:
         model = Respuesta
-        fields = '__all__'
+        fields = ['id','encuesta_referencia','pregunta_referencia','usuario_referencia','respuesta_texto','categoria_encuesta','fecha_respuesta','retroalimentacion','empresa']
 
         

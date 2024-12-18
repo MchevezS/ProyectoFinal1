@@ -14,7 +14,8 @@ class Empresa(models.Model):
     cedula_juridica = models.CharField(
         max_length = 10, 
         unique=True,
-        validators=[cedula_juridica_validator]) 
+        validators=[cedula_juridica_validator]
+    ) 
     correo = models.EmailField(unique=True) 
     #propietario de la empresa(relación con modelo Usuarios)
     propietario = models.ForeignKey("usuarios.Usuarios",on_delete=models.CASCADE) #La relacion se hace "app.Modelo"
@@ -26,7 +27,14 @@ class Empresa(models.Model):
     
 class AreaTrabajo(models.Model):
     #Responsable del área(relación con modelo Usuarios)
-    nombre_area = models.CharField(max_length=100)
+    AREA_OPCIONES = [
+    ('Marketing', 'MARKETING'),
+    ('TI', 'TI'),
+    ('Atencion al cliente', 'ATENCION_CLIENTE'),
+    ('Recursos humanos', 'RECURSOS_HUMANOS'),
+    ('Finanzas', 'FINANZAS'),
+]
+    nombre_area = models.CharField(choices=AREA_OPCIONES,max_length=30)
     empresa = models.ForeignKey(Empresa,on_delete=models.CASCADE) # que empresa tiene esa area 
     def __str__(self):
         
@@ -35,6 +43,7 @@ class AreaTrabajo(models.Model):
 class AreaTrabajoUsuarios(models.Model):
     usuario = models.ForeignKey("usuarios.Usuarios", on_delete=models.CASCADE)
     area_trabajo = models.ForeignKey(AreaTrabajo, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
 
     
     class Meta:
@@ -42,3 +51,9 @@ class AreaTrabajoUsuarios(models.Model):
     
     def __str__(self):
         return f"{self.usuario.nombre} - {self.area_trabajo.nombre_area}"
+
+
+class Empleados(models.Model):
+    trabajador = models.ForeignKey("usuarios.Usuarios", on_delete=models.CASCADE, related_name="trabajador_empresa")
+    empresa= models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name="empresa_trabajador")
+    
