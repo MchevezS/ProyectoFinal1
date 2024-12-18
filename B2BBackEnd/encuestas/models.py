@@ -14,8 +14,10 @@ class Encuestas(models.Model):
     ]
     categoria_encuesta = models.CharField(choices=ENCUESTAS_CATEGORIAS, max_length=50)
     descripcion_encuesta = models.TextField()
+    
     fecha_creacion = models.DateField(auto_now=True)
     empresa = models.ForeignKey("empresas.Empresa", on_delete=models.CASCADE,related_name="encuestas_empresa")
+    activo = models.BooleanField(default=True)  # Este campo indica si la empresa está activa o desactivada
     
     def __str__(self):
         return self.categoria_encuesta 

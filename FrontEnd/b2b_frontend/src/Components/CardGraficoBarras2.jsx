@@ -39,10 +39,9 @@ const CardGraficoBarras2 = () => {
   const chartOptions = {
     chart: {
       type: 'bar',
-      toolbar: { show: false },
       animations: { enabled: true },
     },
-    colors: ['#6A5AE0'],
+    colors: ['#91B9CC'],
     plotOptions: {
       bar: {
         borderRadius: 4,
@@ -63,7 +62,7 @@ const CardGraficoBarras2 = () => {
       ],
       labels: {
         style: {
-          colors: '#9a9a9a',
+          colors: 'white',
           fontSize: '10px',
         },
       },
@@ -71,25 +70,14 @@ const CardGraficoBarras2 = () => {
     yaxis: {
       labels: {
         style: {
-          colors: '#9a9a9a',
+          colors: 'white',
         },
       },
     },
     grid: {
       show: false,
     },
-    tooltip: {
-      theme: 'light',
-    },
-    fill: {
-      type: 'gradient',
-      gradient: {
-        shade: 'light',
-        type: 'vertical',
-        gradientToColors: ['#A066F4'],
-        stops: [0, 100],
-      },
-    },
+
   };
 
   const chartData = {
@@ -113,6 +101,16 @@ const CardGraficoBarras2 = () => {
         margin: '0 auto',
       }}
     >
+         <h5
+          className="text-uppercase mb-3"
+          style={{
+            fontSize: "14px",
+            textAlign: "center",
+            color: "white",
+          }}
+        >
+          Cantidad de empleados por área
+        </h5>
       <Chart
         options={chartOptions}
         series={chartData.series}

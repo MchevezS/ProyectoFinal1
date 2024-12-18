@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { get, patch } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
-import '../Style/AdministradorGeneral.css';
 import { useCookies } from "react-cookie";
 import Swal from 'sweetalert2';
 import { mostrarAlerta } from './MostrarAlerta';
 import'../Style/AdministradorEncuestas.css';
 
-const AdministradorGeneral = () => {
+const AdministradorEncuestas = () => {
   const [encuestas, setEncuestas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [seekerEncuesta, setSeekerEncuesta] = useState(''); // Estado del buscador encuestas(seeker)
@@ -19,6 +18,7 @@ const AdministradorGeneral = () => {
   const obtenerEncuestas = async () => {
     try {
       const response = await get('encuestas');
+      console.log(response);
       setEncuestas(response);
       setLoading(false);
     } catch (error) {
@@ -42,7 +42,7 @@ const AdministradorGeneral = () => {
     if (result.isConfirmed) {
       try {
         const data = { estado: !estadoActual };
-        const response = await patch(`encuestas/estado/`, id, data, token);
+        const response = await patch(`encuesta/estado/`, id, data, token);
         if (response) {
           await mostrarAlerta('success', `Encuesta ${estadoActual ? "desactivada" : "activada"} con éxito`);
         } else {
@@ -59,9 +59,9 @@ const AdministradorGeneral = () => {
   // Filtrar encuestas
   const encuestasFiltradas = encuestas.filter((encuesta) => {
     return (
-      (encuesta.categoriaEncuesta && encuesta.categoriaEncuesta.toLowerCase().includes(seekerEncuesta.toLowerCase())) ||
-      (encuesta.descripcionEncuesta && encuesta.descripcionEncuesta.toLowerCase().includes(seekerEncuesta.toLowerCase())) ||
-      (encuesta.preguntaEncuesta && encuesta.preguntaEncuesta.toLowerCase().includes(seekerEncuesta.toLowerCase())) ||
+      (encuesta.categoria_encuesta && encuesta.categoria_encuesta.toLowerCase().includes(seekerEncuesta.toLowerCase())) ||
+      (encuesta.descripcion_encuesta && encuesta.descripcion_encuesta.toLowerCase().includes(seekerEncuesta.toLowerCase())) ||
+      (encuesta.pregunta_encuesta && encuesta.pregunta_encuesta.toLowerCase().includes(seekerEncuesta.toLowerCase())) ||
       (encuesta.id_empresa && encuesta.id_empresa.toString().includes(seekerEncuesta.toLowerCase()))
     );
   });
@@ -100,6 +100,7 @@ const AdministradorGeneral = () => {
       <th>Categoria Encuesta</th>
       <th>Descripcion Encuesta</th>
       <th>Pregunta Encuesta</th>
+      <th>ID de la Empresa</th>
       <th>Estado</th>
       <th>Acciones</th>
     </tr>
@@ -107,9 +108,10 @@ const AdministradorGeneral = () => {
   <tbody>
     {encuestasFiltradas.map((encuesta) => (
       <tr key={encuesta.id}>
-        <td>{encuesta.categoriaEncuesta}</td>
-        <td>{encuesta.descripcionEncuesta}</td>
-        <td>{encuesta.preguntaEncuesta}</td>
+        <td>{encuesta.categoria_encuesta}</td>
+        <td>{encuesta.descripcion_encuesta}</td>
+        <td>{encuesta.pregunta_encuesta}</td>
+        <td>{encuesta.id_empresa}</td>
         <td>{encuesta.activo ? "Activa" : "Desactivada"}</td>
         <td>
           <button className="button-custom" onClick={() => editarEncuesta(encuesta.id)}>Editar</button>
@@ -123,4 +125,4 @@ const AdministradorGeneral = () => {
   );
 };
 
-export default AdministradorGeneral;
+export default AdministradorEncuestas;

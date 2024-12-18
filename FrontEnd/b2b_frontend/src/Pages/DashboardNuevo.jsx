@@ -18,7 +18,6 @@ const DashboardNuevo = () => {
   const [respondidas, setRespondidas] = useState(0);
   const [sinResponder, setSinResponder] = useState(0);
 
-  
   useEffect(() => {
     const traerEmpleadosActivos = async () => {
       const cantidad = await getFilter('traer-empleados/',cookies.empresaId,'empresa_id')
@@ -82,7 +81,7 @@ const DashboardNuevo = () => {
             valor={areasTrabajo}
           />
         </div>
-        <div className="section-dashboard-grafico">
+        <div className="section-dashboard-grafico text-white">
             <CardGraficoCircular titulo1={"Respondidas"} valor1={respondidas} titulo2={"Sin Responder"} valor2={sinResponder}/>
         </div>
         <div className="section-dashboard-grafico-barras">

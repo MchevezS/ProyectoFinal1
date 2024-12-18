@@ -4,15 +4,14 @@ import { useCookies } from 'react-cookie';
 import { get } from '../Services/Crud';
 const CardGraficoBarras = ()=>{
 
-  const [saludMental,setSaludMental] = useState(0);
-  const [ambienteLaboral,setAmbienteLaboral] = useState(0);
-  const [equilibrioVidaTrabajo,setEquilibrioVidaTrabajo] = useState(0);
-  const [beneficiosCompensaciones,setBeneficiosCompensaciones] = useState(0);
-  const [comunicacionInterna,setComunicacionInterna] = useState(0);
-  const [oportunidadesCrecimiento,setOportunidadesCrecimiento] = useState(0);
+  const [saludMental,setSaludMental] = useState(10);
+  const [ambienteLaboral,setAmbienteLaboral] = useState(10);
+  const [equilibrioVidaTrabajo,setEquilibrioVidaTrabajo] = useState(10);
+  const [beneficiosCompensaciones,setBeneficiosCompensaciones] = useState(10);
+  const [comunicacionInterna,setComunicacionInterna] = useState(10);
+  const [oportunidadesCrecimiento,setOportunidadesCrecimiento] = useState(10);
   
   const [cookies]=useCookies(["empresaId"])
-
 
   useEffect(()=>{
     const traerRetroalimentaciones = async () => {
@@ -41,27 +40,33 @@ const CardGraficoBarras = ()=>{
       traerRetroalimentaciones()
   },[])
   const plans = [
-    { name: 'Salud Mental', percentage: saludMental, color: '#7F7EFD' },
-    { name: 'Ambiente Laboral', percentage: ambienteLaboral, color: '#FF8A65' },
+    { name: 'Salud Mental', 
+      percentage: saludMental, 
+      color: '#c91459' 
+    },
+    { name: 'Ambiente Laboral', 
+      percentage: ambienteLaboral, 
+      color: '#FFDB45' 
+    },
     {
       name: 'Equilibrio Vida-Trabajo',
       percentage: equilibrioVidaTrabajo,
-      color: '#E57373',
+      color: '#c91459',
     },
     {
       name: 'Beneficios y Compensaciones',
       percentage: beneficiosCompensaciones,
-      color: '#E57373',
+      color: '#FFDB45',
     },
     {
       name: 'Comunicación Interna',
       percentage: comunicacionInterna,
-      color: '#E57373',
+      color: '#c91459',
     },
     {
       name: 'Oportunidades de Crecimiento',
       percentage: oportunidadesCrecimiento,
-      color: '#E57373',
+      color: '#FFDB45',
     },
   ];
     return(
@@ -76,7 +81,16 @@ const CardGraficoBarras = ()=>{
           margin: "auto",
         }}
       >
-  
+           <h5
+          className="text-uppercase"
+          style={{
+            fontSize: "14px",
+            textAlign: "center",
+            color: "white",
+          }}
+        >
+          Retroalimentación por categoría
+        </h5>
         {plans.map((plan,index) => (
           <div key={index} className="mb-3">
             <div className="d-flex justify-content-between">
@@ -85,7 +99,7 @@ const CardGraficoBarras = ()=>{
             </div>
             <div
               style={{
-                height: "8px",
+                height: "5px",
                 backgroundColor: "#2E2E48",
                 borderRadius: "4px",
               }}

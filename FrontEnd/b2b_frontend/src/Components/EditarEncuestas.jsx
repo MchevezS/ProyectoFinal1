@@ -3,15 +3,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { get, patch } from '../Services/Crud';
 import '../Style/EditarEncuesta.css';
 import { useCookies } from "react-cookie";
-import { mostrarAlerta } from './MostrarAlerta'; // Asegúrate de importar la función de la alerta
+import { mostrarAlerta } from '../Components/MostrarAlerta';
 
-const EditarEncuesta = () => {
+const EditarEncuestas = () => {
   const [cookie] = useCookies(["token"]);
   const token = cookie.token;
-  const [encuesta, setEncuesta] = useState({
-    categoriaEncuesta: '',
-    descripcionEncuesta: '',
-    preguntaEncuesta: '',
+  const [encuestas, setEncuestas] = useState({
+    categoria_encuesta: '',
+    descripcion_encuesta: '',
+    pregunta_encuesta: '',
   });
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
@@ -21,7 +21,10 @@ const EditarEncuesta = () => {
   const obtenerEncuesta = async () => {
     try {
       const response = await get('encuestas', id);
-      setEncuesta(response);
+      // const respon = await get('preguntas', id);
+      console.log(response)
+      setEncuestas(response);
+      // setEncuestas(respon)
       setLoading(false);
     } catch (error) {
       console.error("Error al obtener la encuesta:", error);
@@ -33,18 +36,13 @@ const EditarEncuesta = () => {
   const validarFormulario = () => {
     let esValido = true;
 
-    if (!encuesta.categoriaEncuesta.trim()) {
+    if (!encuestas.categoria_encuesta.trim()) {
       mostrarAlerta('error', 'El nombre de la encuesta es obligatorio');
       esValido = false;
     }
 
-    if (!encuesta.descripcionEncuesta.trim()) {
+    if (!encuestas.descripcion_encuesta.trim()) {
       mostrarAlerta('error', 'La descripción de la encuesta es obligatoria');
-      esValido = false;
-    }
-
-    if (!encuesta.preguntaEncuesta.trim()) {
-      mostrarAlerta('error', 'La pregunta de la encuesta es obligatoria');
       esValido = false;
     }
 
@@ -57,16 +55,15 @@ const EditarEncuesta = () => {
 
     if (validarFormulario()) {
       const datosFormulario = {
-        categoriaEncuesta: encuesta.categoriaEncuesta,
-        descripcionEncuesta: encuesta.descripcionEncuesta,
-        preguntaEncuesta: encuesta.preguntaEncuesta,
+        categoria_encuesta: encuestas.categoria_encuesta,
+        descripcion_encuesta: encuestas.descripcion_encuesta,
       };
 
       try {
         const response = await patch('encuestas/', id, datosFormulario, token);
         if (response) {
           mostrarAlerta('success', 'Encuesta actualizada con éxito');
-          navigate('/administradorGeneral');
+          navigate('/administradorEncuestas');
         } else {
           mostrarAlerta('error', 'Error al actualizar la encuesta. Intenta nuevamente');
         }
@@ -79,27 +76,22 @@ const EditarEncuesta = () => {
 
   useEffect(() => {
     obtenerEncuesta();
-  }, [id]);
+  }, []);
 
   if (loading) {
-    return <p>Cargando datos de la encuesta...</p>;
+    return <p>Cargando datos de la encuesta...</p>
   }
 
   return (
     <form onSubmit={manejarEnvio} className='formEditar'>
       <div>
         <label className='label1'>Ingrese la categoria:</label>
-        <input className='inputs' type="text" value={encuesta.categoriaEncuesta} onChange={(e) => setEncuesta({ ...encuesta, categoriaEncuesta: e.target.value })}/>
+        <input className='inputs' type="text" value={encuestas.categoria_encuesta} onChange={(e) => setEncuestas({ ...encuestas, categoria_encuesta: e.target.value })}/>
       </div>
 
       <div>
         <label className='label1'>Ingrese su descripcion de la encuesta:</label>
-        <input className='inputs' type="text" value={encuesta.descripcionEncuesta} onChange={(e) => setEncuesta({ ...encuesta, descripcionEncuesta: e.target.value })}/>
-      </div>
-
-      <div>
-        <label className='label1'>Ingrese su pregunta de Encuesta:</label>
-        <input className='inputs' type="email" value={encuesta.preguntaEncuesta} onChange={(e) => setEncuesta({ ...encuesta, preguntaEncuesta: e.target.value })}/>
+        <input className='inputs' type="text" value={encuestas.descripcion_encuesta} onChange={(e) => setEncuestas({ ...encuestas, descripcion_encuesta: e.target.value })}/>
       </div>
 
       <button type="submit" className='botonActualizar'>Actualizar Encuesta</button>
@@ -107,4 +99,4 @@ const EditarEncuesta = () => {
   );
 };
 
-export default EditarEncuesta;
+export default EditarEncuestas;
