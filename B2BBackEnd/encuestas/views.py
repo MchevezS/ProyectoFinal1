@@ -3,8 +3,9 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from encuestas.models import Encuestas, Pregunta,Respuesta
+from encuestas.models import Encuestas, Pregunta, Respuesta
 from encuestas.serializers import EncuestaSerializer, PreguntaSerializer, RespuestaSerializer
+from rest_framework import generics
 
 # Create your views here.
 # List create api view = GET/POST.
@@ -67,3 +68,20 @@ class EncuestasRespondidasSinResponderView(APIView):
 
         return Response(data,status=status.HTTP_200_OK)
 
+
+class CambiarEstadoEncuestaView(APIView):
+    def patch(self, request, encuesta_id):
+        try:
+            # Obtener la encuesta por su ID
+            encuesta = Encuestas.objects.get(id=encuesta_id)
+            # Cambiar el estado de la encuesta (activa/desactiva)
+            encuesta.activo = not encuesta.activo  # Cambia el valor de 'activo'
+            encuesta.save()
+            # Responder con un mensaje de éxito
+            return Response({
+                'message': f"encuesta {'activada' if encuesta.activo else 'desactivada'} correctamente",
+                'encuesta': encuesta.categoria_encuesta,
+                'estado_actual': 'activa' if encuesta.activo else 'desactivada'
+            }, status=status.HTTP_200_OK)
+        except encuesta.DoesNotExist:
+            return Response({'error': 'encuesta no encontrada'}, status=status.HTTP_404_NOT_FOUND)

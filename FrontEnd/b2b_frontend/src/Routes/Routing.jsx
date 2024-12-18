@@ -13,9 +13,12 @@ import Perfil from '../Pages/Perfil';
 import AdministradorEmpresas from '../Components/AdministradorEmpresas'
 import EditarEmpresa from '../Components/EditarEmpresa';
 import AdministradorEncuestas from '../Components/AdministradorEncuestas';
-import EditarEncuesta from '../Components/EditarEncuestas';
+import EditarEncuestas from '../Components/EditarEncuestas';
 import HomeNuevo from '../Pages/HomeNuevo';
 import DashboardNuevo from '../Pages/DashboardNuevo';
+import AdministradorUsuarios from '../Components/AdministradorUsuarios';
+import EditarUsuarios from '../Components/EditarUsuarios'
+
 const Routing = () => {
     return (
       <Router>
@@ -40,7 +43,9 @@ const Routing = () => {
           <Route path='/administradorEmpresas' element={<AdministradorEmpresas/>}/>
           <Route path='/editar-empresa/:id' element={<EditarEmpresa/>}/>
           <Route path='/administradorEncuestas' element={<AdministradorEncuestas/>}/>
-          <Route path='/editar-encuesta/:id' element={<EditarEncuesta/>}/>
+          <Route path='/editar-encuesta/:id' element={<EditarEncuestas/>}/>
+          <Route path='/administradorUsuarios' element={<AdministradorUsuarios/>}/>
+          <Route path='/editar-usuarios/:id' element={<EditarUsuarios/>}/>
        </Routes>
       </Router>
      );

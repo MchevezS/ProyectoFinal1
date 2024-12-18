@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { get, patch } from '../Services/Crud';  
+import { get, patch } from '../Services/Crud';  // Asegúrate de que 'patch' esté configurado
 import { useNavigate } from 'react-router-dom';
-import '../Style/AdministradorGeneral.css';
+import '../Style/AdministradorEmpresas.css';
 import { useCookies } from "react-cookie";
 import Swal from 'sweetalert2';
 import { mostrarAlerta } from './MostrarAlerta';
-import LoadingSpinner from '../Components/LoadingSpinner';
 
-const AdministradorGeneral = () => {
+const AdministradorEmpresas = () => {
   const [empresas, setEmpresas] = useState([]);
   const [loading, setLoading] = useState(true); // Estado para cargar los datos iniciales
   const [isUpdating, setIsUpdating] = useState(false); // Estado para manejar el spinner en el botón
