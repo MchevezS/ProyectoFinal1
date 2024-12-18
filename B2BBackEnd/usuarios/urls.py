@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import LoginView, RegistroView, UsuariosView,RegistroEmpleadoView,ActivarDescactivarUsuarioView,CambiarClaveView,CambiarEstadoUsuarioView
+from .views import LoginView, RegistroView, UsuariosView,RegistroEmpleadoView,ActivarDescactivarUsuarioView,CambiarClaveView,CambiarEstadoUsuarioView,CambiarFotoPerfilView
 urlpatterns = [
     path("crear-usuario/", RegistroView.as_view()),
     path("login-usuario/", LoginView.as_view()),
@@ -9,7 +9,8 @@ urlpatterns = [
     path("estado-usuario/",ActivarDescactivarUsuarioView .as_view()),
     path("cambio-clave/", CambiarClaveView.as_view()),
     path("crear-admin/", CambiarClaveView.as_view()),
-     path('usuario/estado/<int:usuario_id>/', CambiarEstadoUsuarioView.as_view(), name='cambiar-estado-usuario') # URL para el estado del usuario (activa/desactiva)
+    path('usuario/estado/<int:usuario_id>/', CambiarEstadoUsuarioView.as_view(), name='cambiar-estado-usuario'), # URL para el estado del usuario (activa/desactiva
+    path("cambio-imagen/", CambiarFotoPerfilView.as_view(), name="")
 
 
     

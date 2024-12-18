@@ -28,11 +28,11 @@ const BarraLateralNuevo = () => {
                 </div>
                 <div className="barra-lateral-menu">
                     <ul className="barra-lateral-menu-lista">
-                        <li  onClick={()=>{navigate("/dashboard")}}    className="barra-lateral-menu-icono"><MdDashboard className="me-3" size={25} /></li>
-                        <li  onClick={()=>{navigate("/CrearEncuestas")}}   className="barra-lateral-menu-icono"><RiSurveyFill className="me-3" size={25} /></li>
-                        <li  onClick={()=>{navigate("/empresas")}}  className="barra-lateral-menu-icono"><IoMdBusiness className="me-3" size={25} /></li>
-                        <li  onClick={()=>{navigate("/perfil")}} className="barra-lateral-menu-icono"><ImProfile className="me-3" size={25}/></li>
-                        <li  onClick={cerrarSesion} className="barra-lateral-menu-icono"><TbLogout2  className="me-3" size={25}/></li>
+                        <li onClick={()=>{navigate("/dashboard")}}    className="barra-lateral-menu-icono"><MdDashboard className="me-3" size={25} /></li>
+                        <li onClick={()=>{navigate("/CrearEncuestas")}}   className="barra-lateral-menu-icono"><RiSurveyFill className="me-3" size={25} /></li>
+                        <li onClick={()=>{navigate("/empresas")}}  className="barra-lateral-menu-icono"><IoMdBusiness className="me-3" size={25} /></li>
+                        <li onClick={()=>{navigate("/perfil")}} className="barra-lateral-menu-icono"><ImProfile className="me-3" size={25}/></li>
+                        <li onClick={cerrarSesion} className="barra-lateral-menu-icono"><TbLogout2  className="me-3" size={25}/></li>
                     </ul>
                 </div>
             </div>

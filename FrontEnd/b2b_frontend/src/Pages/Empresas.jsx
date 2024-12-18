@@ -3,9 +3,8 @@ import FormEmpresas from '../Components/FormEmpresas';
 import FormAreaTrabajoUsuarios from '../Components/FormAreaTrabajoUsuarios';
 import RegistroEmpleados from '../Components/RegistroEmpleados';
 import '../Style/Empresas.css';
-import BarraLateral from '../Components/BarraLateral';
 import { useState } from 'react';
-import Header from '../Components/Header';
+import BarraLateralNuevo from '../Components/BarraLateralNuevo';
 function Empresas() {
   // Estados para controlar si los formularios están completados
   const [formEmpresasComplete, setFormEmpresasComplete] = useState(false);
@@ -22,12 +21,8 @@ function Empresas() {
   return (
     <>
       <div>
-        <BarraLateral />
+        <BarraLateralNuevo/>
 
-        <div>
-        <Header />
-
-          </div>
 
   <div className="form-item">
     <FormEmpresas

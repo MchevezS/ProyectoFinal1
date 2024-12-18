@@ -50,7 +50,7 @@ const DashboardNuevo = () => {
   
   return (
     <div className="dashboard-container">
-      <BarraLateralNuevo />
+      <BarraLateralNuevo/>
 
       <main className="main-dashboard">
         <section className="section-dashboard">

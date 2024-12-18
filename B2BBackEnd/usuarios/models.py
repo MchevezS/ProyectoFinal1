@@ -12,6 +12,7 @@ class Usuarios(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     cedula_usuario = models.CharField(max_length=18)
     rol = models.CharField(choices=ROL_OPCIONES,default="usuario",max_length=30) # Se asigna el rol por defecto usuario.
+    imagen_perfil = models.TextField(default="https://static-00.iconduck.com/assets.00/profile-circle-icon-512x512-zxne30hp.png")
      
     
     def __str__(self):

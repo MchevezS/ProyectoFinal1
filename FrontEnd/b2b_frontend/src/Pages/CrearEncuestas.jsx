@@ -2,15 +2,10 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 import { post } from '../Services/Crud';
 import {useCookies} from 'react-cookie';
-import Navbar from '../Components/Navbar';
 import { mostrarAlerta } from '../Components/MostrarAlerta';
-import CardPregunta from '../Components/CardPregunta';
-import { useLocation } from 'react-router-dom';
 import '../Style/CrearEncuestas.css'
 import { getFilter } from '../Services/Crud';
-import BarraLateral from '../Components/BarraLateral';
-import Header from '../Components/Header';
-import Preguntas from '../Components/Preguntas';
+import BarraLateralNuevo from '../Components/BarraLateralNuevo';
 
 function CrearEncuestas() {
     //Estados para manejar el cambio de informacion en los inputs
@@ -110,11 +105,9 @@ async function enviarEncuesta() {
   return (
     <div>
      <div className="sidebar" style={{ width: '50px' }}>
-            <BarraLateral/>
+            <BarraLateralNuevo/>
         </div>
-        <div className="content flex-grow-1 ">
-          <Header />
-        </div>
+        
     <div className="container">
       <div
         style={{ height: '100vh',position:"relative",top:"10px",left:"11vw"}}

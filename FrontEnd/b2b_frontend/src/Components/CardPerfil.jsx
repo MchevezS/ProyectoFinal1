@@ -1,7 +1,7 @@
 import { useCookies } from "react-cookie";
 
 const CardPerfil = () => {
-  const [cookie] = useCookies(["nombreUsuario",'areaUsuario','empresaId','token'])
+  const [cookie] = useCookies(["nombreUsuario",'areaUsuario','empresaId','token', 'foto'])
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div
@@ -38,12 +38,11 @@ const CardPerfil = () => {
     
             <div className="card-body text-center">
               <img
-                src="https://via.placeholder.com/100"
+                src={cookie.foto}
                 alt="profile"
                 className="rounded-circle mb-3"
                 style={{ width: "100px", height: "130px" }}
               />
-              <h5 className="fw-bold mb-1">Wendy Tatiana Barrantes Romero</h5>
               <p className="mb-2 text-muted" style={{ fontSize: "0.9rem" }}>
                 {cookie.nombreUsuario}
               </p>

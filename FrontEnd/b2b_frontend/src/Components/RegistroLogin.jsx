@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { mostrarAlerta } from './MostrarAlerta';
-import { loginPost } from '../Services/Crud';
+import { loginPost, subirImagenPerfil } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
 import '../Style/RegistroLogin.css'; 
 import NavbarNuevo from './NavbarNuevo';
 import { useCookies } from 'react-cookie';
 import LoadingSpinner from "../Components/LoadingSpinner.jsx"
 import Footer from './Footer.jsx';
+
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false); // Estado para manejar el loading
-  const [cookie, setCookie] = useCookies(["usuarioID", "nombreUsuario", "rolUsuario", 'areaUsuario', 'token', 'empresaId']);
+  const [cookie, setCookie] = useCookies(["usuarioID", "nombreUsuario", "rolUsuario", 'areaUsuario', 'token', 'empresaId','foto']);
   const token = cookie.token;
   const navigate = useNavigate();
+
 
   // Estados de los formularios
   const [nombreUsuarioL, setNombreUsuarioL] = useState('');
@@ -21,7 +23,8 @@ function RegistroLogin() {
   const [cedulaIndentidad, setCedulaIndentidad] = useState('');
   const [emailRegistro, setEmailRegistro] = useState('');
   const [claveRegistro, setClaveRegistro] = useState('');
-
+  const [imagen, setImagen] = useState(null);
+  const [foto, setFoto]= useState("")
   const espaciosVacios = () => {
     if (nombreUsuarioL.trim() === "" || passwordL.trim() === "") {
       mostrarAlerta("error", "Llenar espacios vacíos");
@@ -36,6 +39,18 @@ function RegistroLogin() {
       return false;
     }
     return true;
+  };
+
+  const subirImagen = async (e) => {
+    try {
+      if (imagen) {
+        const peticion = await subirImagenPerfil(imagen, 'upload-image');
+        setFoto(peticion.url)
+        return peticion.url
+      }
+    } catch (e){
+      console.error(e);
+    }
   };
 
   const inicioSesion = async (e) => {
@@ -67,6 +82,7 @@ function RegistroLogin() {
           setCookie("areaUsuario", response.area);
           setCookie("empresaId", response.id_empresa);
           setCookie("token", response.token_acceso);
+          setCookie("foto",response.imagen)
 
           if (cookie.rolUsuario === "usuario" || response.rol === 'usuario') {
             navigate("/empresas");
@@ -117,13 +133,15 @@ function RegistroLogin() {
   };
 
   const registroUsuario = async () => {
+    const url= await subirImagen()
     const dataRegister = { 
       username: nombreUsuario.trim(), 
       cedula: cedulaIndentidad.trim(), 
       email: emailRegistro.trim(), 
-      password: claveRegistro.trim() 
+      password: claveRegistro.trim(),
+      imagen_perfil: url
     };
-    
+
     setNombreUsuario(dataRegister.username);
     setCedulaIndentidad(dataRegister.cedula);
     setEmailRegistro(dataRegister.email);
@@ -148,10 +166,10 @@ function RegistroLogin() {
 
   return (
     <>
-      <NavbarNuevo/>
+      <NavbarNuevo />
       <div className="modal-overlay1 ">
         <div className="modal-conten1t" style={{border: "2px solid #cccc", padding: "2em", borderRadius: "15px"}}>
-          <h2 className="card-title1"> Bienvenidos</h2>
+          <h2 className="card-title1">Bienvenidos</h2>
           <p className="card-subtitle1">Inicia sesión o regístrate para disfrutar de nuestro servicio</p>
           <ul className="nav nav-tabs1">
             <li className="nav-item1">
@@ -167,7 +185,6 @@ function RegistroLogin() {
                 className={`nav-link ${activeTab === 'register' ? 'btn-login' : 'btn-login-f'}`}
                 onClick={() => setActiveTab('register')}
                 style={{backgroundColor: "#5c3ac0", color: "white"}}
-
               >
                 Registrarse
               </button>
@@ -203,7 +220,6 @@ function RegistroLogin() {
                 ) : (
                   'Iniciar Sesión'
                 )}
-
               </button>
             </form>
           )}
@@ -242,6 +258,16 @@ function RegistroLogin() {
                   onChange={(e) => setEmailRegistro(e.target.value)}
                 />
               </div>
+              <div className="form-group">
+                <label htmlFor="registerEmail1">Imagen de perfil</label>
+                <input
+                  type="file"
+                  placeholder='imagen'
+                  className="form-control1"
+                  id="registerEmail"
+                  onChange={(e) => setImagen(e.target.files[0])}
+                />
+              </div>
               <div className="form-group1">
                 <label htmlFor="registerPassword">Contraseña</label>
                 <input
@@ -264,6 +290,7 @@ function RegistroLogin() {
           )}
         </div>
       </div>
+      <Footer /> 
     </>
   );
 }
