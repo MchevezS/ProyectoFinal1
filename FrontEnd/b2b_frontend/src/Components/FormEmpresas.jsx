@@ -175,7 +175,7 @@ const FormEmpresas = () => {
               </tbody>
             </table>
 
-            <button className="btnEnviarEmpresas" type="submit" disabled={isLoading}>
+            <button className="btnEnviarEmpresas" type="submit" disabled={isLoading} >
               {isLoading ? (
                 <LoadingSpinner /> // Mostrar el spinner cuando está cargando
               ) : (

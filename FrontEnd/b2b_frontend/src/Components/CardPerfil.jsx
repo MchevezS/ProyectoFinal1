@@ -7,7 +7,8 @@ const CardPerfil = () => {
           <div
             className="card text-white shadow-lg"
             style={{
-              maxWidth: "350px",
+              maxwidth: "350px",
+              width: "350px",
               borderRadius: "15px",
             }}
           >
@@ -41,7 +42,7 @@ const CardPerfil = () => {
                 src={cookie.foto}
                 alt="profile"
                 className="rounded-circle mb-3"
-                style={{ width: "100px", height: "130px" }}
+                style={{ width: "150px", height: "150px" }}
               />
               <p className="mb-2 text-muted" style={{ fontSize: "0.9rem" }}>
                 {cookie.nombreUsuario}

@@ -98,7 +98,7 @@ const FormAreaTrabajo = () => {
             </tbody>
           </table>
 
-          <button className="btnRegistrarArea" type="submit">Registrar Área de Trabajo</button>
+          <button className="btnRegistrarArea" type="submit" disabled={cookies.empresaId != 0 ? false : true }>Registrar Área de Trabajo</button>
 
           {/* Mostrar errores */}
           {mensajeError && <div className="alerta-error">{mensajeError}</div>}

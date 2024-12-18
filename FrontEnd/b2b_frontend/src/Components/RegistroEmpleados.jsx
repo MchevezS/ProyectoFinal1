@@ -151,7 +151,7 @@ function RegistroEmpleados() {
               </tr>
             </tbody>
           </table>
-          <button type="button" className="btnRegistarEmpleado" onClick={espaciosVacios}>Registrar Empleado</button>
+          <button type="button" className="btnRegistarEmpleado" disabled={cookies.empresaId != 0 ? false : true} onClick={espaciosVacios}>Registrar Empleado</button>
         </>
       )}
 

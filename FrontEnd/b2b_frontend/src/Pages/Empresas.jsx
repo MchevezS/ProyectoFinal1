@@ -19,10 +19,13 @@ function Empresas() {
   const handleRegistroEmpleadosComplete = () => setRegistroEmpleadosComplete(true);
 
   return (
-    <>
+    <main style={{backgroundColor: "#E2E2E2", height: "221vh"}}>
+        <div style={{height: "100vh", width: "10vw", position: "fixed"}}>
+          <BarraLateralNuevo/>
+        </div>
       <div>
-        <BarraLateralNuevo/>
 
+    <section style={{position:"absolute", top:"0vh", left:"10vw", width:"80vw", height:"100vh", backgroundColor: "#E2E2E2"}}>
 
   <div className="form-item">
     <FormEmpresas
@@ -49,8 +52,10 @@ function Empresas() {
     />
   </div>
 
+  </section>
+
       </div>
-    </>
+    </main>
   );
 }
 

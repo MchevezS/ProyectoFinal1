@@ -41,7 +41,6 @@ const CardPerfilUsuario = () => {
       }
     } catch (error) {
       mostrarAlerta('error', 'Error al cambiar la contraseña');
-      console.error(error);
     } finally {
       setIsLoading(false); // Desactivar el spinner al finalizar la solicitud
     }
@@ -49,7 +48,6 @@ const CardPerfilUsuario = () => {
 
   const cambioPerfilImagen = async (username) => {
     const peticion = await subirImagenPerfil(imagen, 'upload-image');
-    console.log(peticion);
     
     const actualizarImagen = await fetch(`http://127.0.0.1:8000/api/cambio-imagen/`,{
       method: 'PATCH',
@@ -63,12 +61,11 @@ const CardPerfilUsuario = () => {
       })
     })
     setCookie('foto', peticion.url);
-    console.log(actualizarImagen);
     setMostrarCambioFoto(!mostrarCambioFoto);
   }
 
   return (
-    <div className="card mx-auto mt-4" style={{ width: "25rem", height: "auto", borderRadius: "15px", overflow: "hidden",border:"2px solid #6c30b8" }}>
+    <div className="card mx-auto mt-4" style={{ width: "25rem", height: "auto", borderRadius: "15px", overflow: "hidden"}}>
       {/* Spinner mientras se cargan los datos */}
       {isLoading ? (
         <LoadingSpinner />
@@ -85,7 +82,7 @@ const CardPerfilUsuario = () => {
                 src={cookie.foto}
                 alt="Profile"
                 className="rounded-circle  border-3"
-                style={{ maxHeight: "150px", maxWidth: "150px", objectFit: "contain", border:"4px solid #c91459" }}
+                style={{ maxHeight: "150px", maxWidth: "150px", objectFit: "contain", border:"4px solid #021321" }}
               />
             </div>
             {/* Nombre y descripción */}
@@ -94,11 +91,17 @@ const CardPerfilUsuario = () => {
           </div>
 
           <div className="d-flex justify-content-center">
-            <button className="btn" style={{border:"2px solid #c91459",color:"#c91459"}} onClick={() => setMostrarCambio(!mostrarCambio)}>Cambiar contraseña</button>
+            <button className="btn" style={{border:"2px solid #c91459",color:"#c91459"}} onClick={() => {
+              setMostrarCambio(!mostrarCambio)
+              setMostrarCambioFoto(false)
+            }}>Cambiar contraseña</button>
           </div>
 
           <div className="d-flex justify-content-center mt-3">
-            <button className="btn" style={{border:"2px solid #c91459",color:"#c91459"}} onClick={() => setMostrarCambioFoto(!mostrarCambioFoto)}>Cambiar foto</button>
+            <button className="btn" style={{border:"2px solid #c91459",color:"#c91459"}} onClick={() => {
+              setMostrarCambioFoto(!mostrarCambioFoto)
+              setMostrarCambio(false)
+            }}>Cambiar foto</button>
           </div>
           {mostrarCambio && (
             <div className="d-flex flex-column gap-3">

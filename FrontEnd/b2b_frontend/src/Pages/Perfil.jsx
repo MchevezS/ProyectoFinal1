@@ -4,7 +4,7 @@ import BarraLateralNuevo from "../Components/BarraLateralNuevo";
 
 const Perfil = () => {
     return(
-        <main style={{backgroundColor:"#f9f9f9", height:"auto"}}>
+        <main style={{backgroundColor:"#E2E2E2", height:"auto"}}>
             
             <div>
                 <BarraLateralNuevo/>

@@ -52,18 +52,24 @@ input:focus {
   border-radius: 5px;
   font-size: 1.1rem;
   font-weight: bold;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
+  color: #d72d57 !important;
+  border: 1px solid #d72d57 !important;
+  background-color: transparent !important;
   cursor: pointer;
 }
 
 .btnRegistarEmpleado:hover {
-  background-color: #0056b3;
+  transform: scale(1.05);
+
 }
 
 .btnRegistarEmpleado:focus {
   outline: none;
+}
+.btnRegistarEmpleado:disabled {
+ background-color: #ccc !important;
+  color: #666 !important;
+  border: 1px solid #666 !important;
 }
 
 
