@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { get, patch } from '../Services/Crud';  // Asegúrate de que 'patch' esté configurado
+import { get, patch } from '../Services/Crud';
 import { useNavigate } from 'react-router-dom';
-import '../Style/AdministradorGeneral.css';
+import '../Style/AdministradorEmpresas.css';
 import { useCookies } from "react-cookie";
 import Swal from 'sweetalert2';
-import { mostrarAlerta } from './MostrarAlerta';
+import { mostrarAlerta } from '../Components/MostrarAlerta';
 
-const AdministradorGeneral = () => {
+const AdministradorEmpresas = () => {
   const [empresas, setEmpresas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [seeker, setSeeker] = useState(''); // Estado del buscador empresas(seeker)
@@ -116,4 +116,4 @@ const AdministradorGeneral = () => {
   );
 };
 
-export default AdministradorGeneral;
+export default AdministradorEmpresas;

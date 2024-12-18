@@ -13,6 +13,7 @@ import string
 from rest_framework.permissions import AllowAny
 from empresas.models import AreaTrabajoUsuarios,Empleados,Empresa
 from mailersend import emails #importacion de la api mailersend
+from rest_framework import generics
 
 # api token de mailersend 
 correo = emails.NewEmail("mlsn.fe3c04fac13c0e6f5f7e85e0e65dd186c8f61706d8c5bcf0c1042855144b387b")
@@ -257,3 +258,38 @@ class CambiarClaveView(APIView):
             return Response({'status':'200'}, status=status.HTTP_200_OK)
         else:
             return Response({'status': '400'}, status=status.HTTP_400_BAD_REQUEST)
+        
+class RegistroAdminView(APIView):
+    permission_classes = [AllowAny]
+    def post(self,request):
+        nombre_usuario = request.data.get("username")
+        clave_usuario = request.data.get("password")
+        
+        #Usamos expresiones regulares para validar la informacion que se envia a la base de datos. 
+        nombre_usuario_regex = r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$'
+        
+        if not re.match(nombre_usuario_regex,nombre_usuario):
+            return Response({"error":'No cumple los requisitos en nombre',},status=status.HTTP_400_BAD_REQUEST)
+        
+        if User.objects.filter(username=nombre_usuario).exists():
+            return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            usuario = User.objects.create_superuser(username=nombre_usuario,password=clave_usuario)
+            return Response({"success":'Administrador creado',},status=status.HTTP_201_CREATED)
+        
+class CambiarEstadoUsuarioView(APIView):
+    def patch(self, request, encuesta_id):
+        try:
+            # Obtener el usuario por su ID
+            usuario = Usuarios.objects.get(id=usuario_id)
+            # Cambiar el estado de la usuario (activa/desactiva)
+            usuario.activo = not usuario.activo  # Cambia el valor de 'activo'
+            usuario.save()
+            # Responder con un mensaje de éxito
+            return Response({
+                'message': f"usuario {'activada' if usuario.activo else 'desactivada'} correctamente",
+                'usuario': usuario.nombre_usuario,
+                'estado_actual': 'activa' if usuario.activo else 'desactivada'
+            }, status=status.HTTP_200_OK)
+        except usuario.DoesNotExist:
+            return Response({'error': 'usuario no encontrada'}, status=status.HTTP_404_NOT_FOUND)
