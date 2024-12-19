@@ -46,6 +46,10 @@ const VerEncuesta = () => {
   };
 
   const enviarRespuesta = async () => {
+    if(localStorage.getItem("infoRespuesta") === null || JSON.parse(localStorage.getItem("infoRespuesta")).length < preguntas.length){
+      mostrarAlerta('error', 'No se han respondido preguntas');
+      return;
+    }
     const listaRespuestas = localStorage.getItem("infoRespuesta")
       ? JSON.parse(localStorage.getItem("infoRespuesta"))
       : [];
@@ -55,6 +59,7 @@ const VerEncuesta = () => {
       await post(respuesta, "respuestas/", token);
     }
     mostrarAlerta('success', 'Respuestas enviadas correctamente');
+    localStorage.removeItem("infoRespuesta");
     navigate("/VerEncuestas");
   };
 

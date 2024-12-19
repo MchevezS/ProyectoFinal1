@@ -3,7 +3,7 @@ import { post } from '../Services/Crud';
 import { useCookies } from 'react-cookie';
 import '../Style/FormEmpresas.css';
 import { mostrarAlerta } from './MostrarAlerta';
-import { patch } from '../Services/Crud';
+import { patch,get } from '../Services/Crud';
 import LoadingSpinner from '../Components/LoadingSpinner'; 
 
 const FormEmpresas = () => {
@@ -70,13 +70,28 @@ const FormEmpresas = () => {
       setIsLoading(true); // Activar el spinner de carga
 
       try {
-          const response = await post(datosFormulario, 'empresas/', token);
-          const empresa = response;
-          setCookies("empresaId", response.id);
-          setCookies("nombreEmpresa", empresa.nombre_empresa);
-          console.log(empresa.nombre_empresa);
-          console.log(response);
-          
+        const empresasCedula = await get('empresas')
+        console.log('Empresas:', empresasCedula);
+        const soloCedula = empresasCedula.map((empresa) => empresa.cedula_juridica);
+        console.log('Solo cedula:', soloCedula);
+          if(soloCedula.includes(cedulaJuridica)){
+            mostrarAlerta("error", 'Ya tienes una empresa registrada');
+            setIsLoading(false);
+            return;
+        }
+        const soloCorreo = empresasCedula.map((empresa) => empresa.correo);
+        console.log('Solo correo:', soloCorreo);
+          if(soloCorreo.includes(correo)){
+            mostrarAlerta("error", 'El correo ya está registrado');
+            setIsLoading(false);
+            return;
+          }
+        const response = await post(datosFormulario, 'empresas/', token);
+        const empresa = response;
+        setCookies("empresaId", response.id);
+        setCookies("nombreEmpresa", empresa.nombre_empresa);
+       
+
         if (response) {
           mostrarAlerta("success", 'Empresa registrada con éxito');
           const peticion = await patch('cambiar-rol', '', {
@@ -90,7 +105,11 @@ const FormEmpresas = () => {
         }
       } catch (error) {
         console.error('Error al enviar datos:', error);
-        mostrarAlerta("error", 'Hubo un error al procesar tu solicitud');
+        if (error.response && error.response.data && error.response.data.cedula_juridica) {
+          mostrarAlerta("error", 'La cédula jurídica ya existe. Por favor, verifica los datos.');
+        } else {
+          mostrarAlerta("error", 'Hubo un error al procesar tu solicitud');
+        }
       } finally {
         setIsLoading(false); // Desactivar el spinner después de que termine la solicitud
       }
@@ -107,14 +126,11 @@ const FormEmpresas = () => {
       <div className="development-table-container">
         <div className="form-title1">
           <h2>Registrar Empresa</h2>
-          
-          {/* Flecha para alternar la visibilidad */}
           <span className="toggle-arrow" onClick={toggleFormulario}>
-            {mostrarFormulario ? '↑' : '↓'} {/* Cambia la dirección de la flecha */}
+            {mostrarFormulario ? '↑' : '↓'}
           </span> 
         </div>        
 
-        {/* Mostrar el formulario solo si el estado es verdadero */}
         {mostrarFormulario && (
           <form onSubmit={manejarEnvio}>
             <table className="table">
@@ -177,7 +193,7 @@ const FormEmpresas = () => {
 
             <button className="btnEnviarEmpresas" type="submit" disabled={isLoading} >
               {isLoading ? (
-                <LoadingSpinner /> // Mostrar el spinner cuando está cargando
+                <LoadingSpinner />
               ) : (
                 'Enviar'
               )}

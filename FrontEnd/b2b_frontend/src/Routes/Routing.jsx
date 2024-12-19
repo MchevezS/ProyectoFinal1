@@ -31,23 +31,17 @@ const Routing = () => {
           <Route path='/CrearEncuestas' element={<RutaPrivada rol={["recursos_humanos", "propietario"]} children={<CrearEncuestas/>}/>}/>
           <Route path='/verEncuestas' element={<RutaPrivada rol={["trabajador", "recursos_humanos","propietario"]} children={<ResponderEncuestas/>}/>}/>
           <Route path='/perfil' element={<RutaPrivada rol={["recursos_humanos","propietario", "trabajador","usuario"]} children={<Perfil/>}/>}/>
-          {/* <Route path='/administrador' element={<RutaPrivada rol={["admin"]} children={<AdministradorGeneral/>}/>}/> */}
+          <Route path='/administrador' element={<RutaPrivada rol={["admin"]} children={<AdministradorGeneral/>}/>}/> 
           <Route path="/respondidas" element={<RutaPrivada rol={["recursos_humanos","propietario"]} children={<EncuestasRespondidas/>}/>}/>
 
-          
 
-          <Route path="/administrador" element={<AdministradorGeneral/> }/>
+
+
 
           <Route path="/home" element={<HomeNuevo/> }/>
           <Route path='/registroLogin' element={<Login/>}/>
           <Route path='/contactenos' element={<Contactenos/>}/>
           <Route path='/formularioEmailJS' element={<FormularioEmailJS/>}/>
-          <Route path='/administradorEmpresas' element={<AdministradorEmpresas/>}/>
-          <Route path='/editar-empresa/:id' element={<EditarEmpresa/>}/>
-          <Route path='/administradorEncuestas' element={<AdministradorEncuestas/>}/>
-          <Route path='/editar-encuesta/:id' element={<EditarEncuestas/>}/>
-          <Route path='/administradorUsuarios' element={<AdministradorUsuarios/>}/>
-          <Route path='/editar-usuarios/:id' element={<EditarUsuarios/>}/>
        </Routes>
       </Router>
      );

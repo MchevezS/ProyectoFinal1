@@ -6,7 +6,6 @@ import '../Style/RegistroLogin.css';
 import NavbarNuevo from './NavbarNuevo';
 import { useCookies } from 'react-cookie';
 import LoadingSpinner from "../Components/LoadingSpinner.jsx"
-import Footer from './Footer.jsx';
 
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
@@ -69,44 +68,55 @@ function RegistroLogin() {
     setIsLoading(true); // Activar el spinner al iniciar la solicitud
 
     try {
+      const admin = await loginPost(datosLogin,"loginAdmin/");
+      if(admin.success && admin.super){
+        setCookie("rolUsuario", admin.rol);
+        navigate ("/administrador")
+        return
+
+      }
+
       const response = await loginPost(datosLogin, "login-usuario/");
+
 
       if (response.success) {
         // mostrarAlerta("success", "Te has logueado de manera exitosa");
+        setCookie("usuarioID", response.id);
+        setCookie("nombreUsuario", response.nombre);
+        setCookie("rolUsuario", response.rol);
+        setCookie("areaUsuario", response.area);
+        setCookie("empresaId", response.id_empresa);
+        setCookie("token", response.token_acceso);
+        setCookie("foto",response.imagen)
+        localStorage.setItem("rol",response.rol)
         setTimeout(() => {
           setNombreUsuarioL('');
           setPasswordL('');
-          setCookie("usuarioID", response.id);
-          setCookie("nombreUsuario", response.nombre);
-          setCookie("rolUsuario", response.rol);
-          setCookie("areaUsuario", response.area);
-          setCookie("empresaId", response.id_empresa);
-          setCookie("token", response.token_acceso);
-          setCookie("foto",response.imagen)
+         
 
-          if (cookie.rolUsuario === "usuario" || response.rol === 'usuario') {
+          if (cookie.rolUsuario === "usuario" || response.rol == 'usuario' || localStorage.getItem("rol") == "usuario") {
             navigate("/empresas");
           }
 
-          if (cookie.rolUsuario === "propietario" || response.rol === 'propietario') {
+          if (cookie.rolUsuario == "propietario" || response.rol == 'propietario' || localStorage.getItem("rol") == "propietario") {
             navigate("/dashboard");
           }
 
-          if (cookie.rolUsuario === "trabajador" || response.rol === 'trabajador') {
+          if (cookie.rolUsuario == "trabajador" || response.rol == 'trabajador' ||localStorage.getItem("rol") == "trabajador") {
             localStorage.clear();
             navigate("/verEncuestas");
           }
 
-          if (cookie.rolUsuario === "recursos_humanos" || response.rol === 'recursos_humanos') {
+          if (cookie.rolUsuario === "recursos_humanos" || response.rol === 'recursos_humanos' ||localStorage.getItem("rol") === "recursos_humanos") {
             localStorage.clear();
             navigate("/CrearEncuestas");
           }
         }, 1000);
       } else {
-        mostrarAlerta("error", 'No se ha encontrado un usuario con ese nombre de usuario');
+        mostrarAlerta("error", 'Creedenciales incorrectas');
       }
     } catch (error) {
-      mostrarAlerta("error", "Ocurrió un error al procesar tu solicitud. Inténtalo de nuevo más tarde.");
+      mostrarAlerta("error", "Creedenciales incorrectas.");
       console.error(error);
     } finally {
       setIsLoading(false); // Desactivar el spinner después de la solicitud
@@ -133,28 +143,41 @@ function RegistroLogin() {
   };
 
   const registroUsuario = async () => {
-    const url= await subirImagen()
     const dataRegister = { 
       username: nombreUsuario.trim(), 
       cedula: cedulaIndentidad.trim(), 
       email: emailRegistro.trim(), 
       password: claveRegistro.trim(),
-      imagen_perfil: url
+      imagen_perfil: null // Inicialmente se envía sin imagen
     };
-
+  
     setNombreUsuario(dataRegister.username);
     setCedulaIndentidad(dataRegister.cedula);
     setEmailRegistro(dataRegister.email);
     setClaveRegistro(dataRegister.password);
-
+  
     setIsLoading(true); // Activar el spinner al iniciar la solicitud
-
+  
     try {
-      const response = await loginPost(dataRegister, "crear-usuario/"); //conexion a backend
+      const response = await loginPost(dataRegister, "crear-usuario/"); // Conexión a backend
+  
       if (response && response.success) {
-        setActiveTab('login');
+        // Subir la imagen si fue seleccionada
+        if (imagen) {
+          try {
+            const peticion = await subirImagenPerfil(imagen, 'upload-image');
+            const imagenUrl = peticion.url;
+  
+            // Actualizar el perfil del usuario con la URL de la imagen
+            await loginPost({ imagen_perfil: imagenUrl }, `actualizar-imagen-usuario/${response.id}`);
+          } catch (error) {
+            console.error("Error al subir la imagen:", error);
+          }
+        }
+  
+        setActiveTab('login'); // Cambiar a la pestaña de login
       } else {
-        mostrarAlerta("error", "Hubo un problema al registrar al usuario");
+        mostrarAlerta("error", response.error);
       }
     } catch (error) {
       mostrarAlerta("error", "Hubo un error al registrar al usuario. Intenta nuevamente.");
@@ -163,6 +186,7 @@ function RegistroLogin() {
       setIsLoading(false); // Desactivar el spinner después de la solicitud
     }
   };
+  
 
   return (
     <>

@@ -35,7 +35,6 @@ const ResponderEncuestas =()=>{
     descripcion={encuesta.descripcion_encuesta}
     fechaSubida={encuesta.fecha_creacion}
     responder={()=> { 
-
      localStorage.setItem("id_encuesta", encuesta.id)
      localStorage.setItem('categoria_encuesta', encuesta.categoria_encuesta)
         navigate("/responderEncuestas")

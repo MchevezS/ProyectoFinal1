@@ -51,7 +51,7 @@ async function enviarEncuesta() {
         empresa: cookies.empresaId,
         //METODO POST 
     }
-    if(categoriaEncuesta === "" || descripcionEncuesta === ""){
+    if(categoriaEncuesta === "" || descripcionEncuesta === "" || preguntaEncuesta === "") {
       mostrarAlerta("error","Faltan campos por llenar.")
       return
     }
@@ -66,11 +66,15 @@ async function enviarEncuesta() {
       encuesta_referencia : enviarPeticion.id,
       pregunta_texto : preguntaEncuesta,
     }
+    if(preguntaEncuesta === ""){
+      mostrarAlerta("error","Faltan campos por llenar")
+    }
      const enviarPregunta = await post(datosPreguntas,"preguntas/",token)
       console.log(enviarPregunta)
 
     if (enviarPeticion){
       mostrarAlerta("success","Se agregó la encuesta")
+      setCategoriaEncuesta("")
       setdescripcionEncuesta("")
       setpreguntaEncuesta("")
     }
@@ -145,7 +149,7 @@ async function enviarEncuesta() {
               {cookies.encuestaId &&
               <div className='input-group-append'>
                
-                <span onClick={agregarPregunta}  className='btn btn-primary' style={{color:"#041223",marginTop:"10px",height:"5.8vh",borderRadius:"0px",backgroundColor:"#d0d5ff",border:"none"}}>+</span>
+                <span onClick={agregarPregunta}  className='btn btn-primary' style={{color:"#041223",marginTop:"-0px",height:"5.8vh",borderRadius:"0px",backgroundColor:"#d0d5ff",border:"none"}}>+</span>
               </div>
                 }
             </div>

@@ -44,6 +44,10 @@ class RegistroView(APIView):
         
         if User.objects.filter(username=nombre_usuario).exists():
             return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email=correo_usuario).exists():
+            return Response({"error":"Ya existe un usuario con ese correo",},status=status.HTTP_400_BAD_REQUEST)
+        if Usuarios.objects.filter(cedula_usuario=cedula_usuario).exists():
+            return Response({"error":"Ya existe un usuario con esa cedula",},status=status.HTTP_400_BAD_REQUEST)
         else:
             usuario = User.objects.create_user(username=nombre_usuario,password=clave_usuario,email=correo_usuario)
             Usuarios.objects.create(user=usuario,cedula_usuario=cedula_usuario,imagen_perfil=imagen_perfil) #El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 20
@@ -116,10 +120,14 @@ class RegistroEmpleadoView(APIView):
         if not re.match(cedula_usuario_regex,cedula_usuario):
             return Response({"error":'No cumple los requisitos en cedula',},status=status.HTTP_400_BAD_REQUEST)
         
-        
-        
         if User.objects.filter(username=nombre_usuario).exists():
             return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email=correo_usuario).exists():
+            return Response({"error":"Ya existe un usuario con ese correo",},status=status.HTTP_400_BAD_REQUEST)
+        if Usuarios.objects.filter(cedula_usuario=cedula_usuario).exists():
+            return Response({"error":"Ya existe un usuario con esa cedula",},status=status.HTTP_400_BAD_REQUEST)
+        
+
         else:
             usuario_creado = User.objects.create_user(username=nombre_usuario,password=clave_usuario,email=correo_usuario)
             Usuarios.objects.create(user=usuario_creado,cedula_usuario=cedula_usuario,rol=rol_usuario) #El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 20
@@ -305,3 +313,34 @@ class CambiarFotoPerfilView(APIView):
         usuario.imagen_perfil = imagen_perfil
         usuario.save()
         return Response({'status':'200'}, status=status.HTTP_200_OK)
+    
+    
+class RegistroAdminView(APIView):
+    permission_classes = [AllowAny]
+    def post(self,request):
+        nombre_usuario = request.data.get("username")
+        clave_usuario = request.data.get("password")
+       
+        if User.objects.filter(username=nombre_usuario).exists():
+            return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            usuario = User.objects.create_superuser(username=nombre_usuario,password=clave_usuario)
+            return Response({"success":'Admin creado', "rol": "admin",},status=status.HTTP_201_CREATED)
+        
+        
+class LoginAdminView(APIView):
+    permission_classes = [AllowAny]
+    def post(self,request):
+        nombre_usuario = request.data.get("username")
+        clave_usuario = request.data.get("password")
+        
+        #quita el cifrado de la contraseña para saber si es correcta
+        datos_autenticacion = authenticate(request,username=nombre_usuario,password=clave_usuario)
+
+        if datos_autenticacion is not None:
+                refresh = RefreshToken.for_user(datos_autenticacion)
+                return Response({'success':'Admin iniciado', "rol":"admin","super":datos_autenticacion.is_superuser, "token":str(refresh.access_token),},status=status.HTTP_400_BAD_REQUEST)
+           
+        else:
+                return Response({'error':'Credenciales incorrectas'},status=status.HTTP_400_BAD_REQUEST)
+        

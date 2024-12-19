@@ -28,6 +28,10 @@ const CardPerfilUsuario = () => {
       mostrarAlerta('warning', 'Las contraseñas no coinciden');
       return;
     }
+    if(nuevaClave.length < 4){
+      mostrarAlerta('warning', 'La contraseña debe tener al menos 4 caracteres');
+      return
+    }
  
     const credenciales = {
       username: cookie.nombreUsuario,

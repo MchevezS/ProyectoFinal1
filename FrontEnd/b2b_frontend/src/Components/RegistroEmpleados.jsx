@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { mostrarAlerta } from './MostrarAlerta';
-import { post } from '../Services/Crud';
+import { post,get } from '../Services/Crud';
 import '../Style/RegistroEmpleados.css';
 import { useCookies } from 'react-cookie';
 import LoadingSpinner from './LoadingSpinner'; // Asegúrate de importar el componente Spinner
@@ -39,7 +39,7 @@ function RegistroEmpleados() {
   };
 
   const espaciosVacios = () => {
-    if (nombreEmpleado.trim() === "" || cedulaEmpleado.trim() === "" || correoEmpleado.trim() === "") {
+    if (nombreEmpleado.trim() === "" || cedulaEmpleado.trim() === "" || correoEmpleado.trim() === "" || rolEmpleado.trim() === "") {
       mostrarAlerta("error", "Llenar espacios vacíos");
       return;
     }
@@ -60,11 +60,15 @@ function RegistroEmpleados() {
     setIsLoading(true); // Mostrar spinner antes de hacer la solicitud
 
     try {
+      if(nombreEmpleado.length === "" || cedulaEmpleado.length === "" || correoEmpleado.length === "" || rolEmpleado.length === ""){
+        mostrarAlerta("error", "Completa todos los campos");
+        setIsLoading(false);
+        return;
+      }
       const response = await post(dataEmpleados, 'crear-empleado/', token);
       console.log(response);
       if (response && response.success) {
         mostrarAlerta("success", "Registrado exitosamente");
-
         const asignar = {
           empresa: cookies.empresaId,
           trabajador: response.id
@@ -72,6 +76,8 @@ function RegistroEmpleados() {
 
         const responseEmpleados = await post(asignar, "asignar-empleados/", token);
         console.log(responseEmpleados);
+      }else{
+        mostrarAlerta("error", response.error);
       }
     } catch (error) {
       console.error('Error al procesar la solicitud:', error);
