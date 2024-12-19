@@ -1,13 +1,19 @@
 import { useCookies } from "react-cookie";
 
+
+/*
+  Este componente muestra información del usuario logueado, como su nombre y foto de perfil.
+  Se trae la información del usuario logueado desde las cookies. (estas cookies se crean al loguearse)
+*/
 const CardPerfil = () => {
-  const [cookie] = useCookies(["nombreUsuario",'areaUsuario','empresaId','token'])
+  const [cookie] = useCookies(["nombreUsuario",'areaUsuario','empresaId','token', 'foto'])
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div
             className="card text-white shadow-lg"
             style={{
-              maxWidth: "350px",
+              maxwidth: "350px",
+              width: "350px",
               borderRadius: "15px",
             }}
           >
@@ -15,8 +21,8 @@ const CardPerfil = () => {
               className="card-header py-2 px-3"
               style={{
                 borderTopLeftRadius: "15px",
-                borderTopRightRadius: "15px",
-                background: "linear-gradient(135deg, #6b7cff, #3b4cca)",
+                borderTopRightRadius: "10px",
+                background: "#021323",
               }}
             >
               <div className="d-flex justify-content-between align-items-center">
@@ -38,12 +44,11 @@ const CardPerfil = () => {
     
             <div className="card-body text-center">
               <img
-                src="https://via.placeholder.com/100"
+                src={cookie.foto}
                 alt="profile"
                 className="rounded-circle mb-3"
-                style={{ width: "100px", height: "130px" }}
+                style={{ width: "150px", height: "150px" }}
               />
-              <h5 className="fw-bold mb-1">Wendy Tatiana Barrantes Romero</h5>
               <p className="mb-2 text-muted" style={{ fontSize: "0.9rem" }}>
                 {cookie.nombreUsuario}
               </p>

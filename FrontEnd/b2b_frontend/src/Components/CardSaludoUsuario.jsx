@@ -1,4 +1,9 @@
 import '../Style/CardSaludoUsuario.css'
+
+/*
+ Componente que muestra un saludo al usuario con su nombre y la fecha actual.
+*/
+
 const CardSaludoUsuario = ({ nombre }) => {
     const fecha = new Date().toLocaleDateString()
     return (

@@ -14,13 +14,13 @@
 .section-dashboard-perfil{
     position: absolute;
     right: 2vw;
-    bottom: 16vh;
+    bottom: 18vh;
 }
 
 .section-dashboard-grafico{
     position: absolute;
     left:7.9vw;
-    top: 28vh;
+    top: 30vh;
 }
 .section-dashboard-grafico-barras{
     position: relative;
@@ -29,12 +29,14 @@
 }
 .section-dashboard-grafico-tabla{
     position: relative;
-    bottom: 23%;
+    bottom: 22.6%;
     left: 86%;
+    width: 10%;
+
 }
 .section-dashboard-grafico-barras-2{
     position: relative;
-    top: -20vh;
+    top: -5vh;
     left: -4vw;
     border-radius: 8px;
 }

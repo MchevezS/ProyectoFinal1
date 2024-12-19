@@ -42,6 +42,33 @@ class EncuestaCompleta(APIView):
             'preguntas': pregunta_serializer.data, #devuelve todas las preguntas de la encuesta en especifico (segun el id de la encuesta).
             'respuestas': respuestas_serializer.data #devuelve todas las respuestas de la encuesta en especifico (segun el id de la encuesta).
         })
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Encuestas, Pregunta, Respuesta
+from .serializers import EncuestaSerializer, PreguntaSerializer, RespuestaSerializer
+
+class EncuestaCompletaEmpresa(APIView):
+    def get(self, request, empresa, format=None):
+        encuestas = Encuestas.objects.filter(empresa=empresa)
+        
+        encuestas_serializadas = EncuestaSerializer(encuestas, many=True).data
+        
+        data_encuestas = []
+
+        for encuesta in encuestas:
+            preguntas = Pregunta.objects.filter(encuesta_referencia=encuesta)
+            respuestas = Respuesta.objects.filter(encuesta_referencia=encuesta)
+            
+            pregunta_serializer = PreguntaSerializer(preguntas, many=True).data
+            respuestas_serializer = RespuestaSerializer(respuestas, many=True).data
+
+            data_encuestas.append({
+                'encuesta': EncuestaSerializer(encuesta).data,
+                'preguntas': pregunta_serializer,
+                'respuestas': respuestas_serializer
+            })
+
+        return Response(data_encuestas)
 
 class TraerEncuestasID(ListCreateAPIView):
     queryset = Encuestas.objects.all()

@@ -1,23 +1,19 @@
 import CardPerfilUsuario from "../Components/CardPerfilUsuario";
-import BarraLateral from "../Components/BarraLateral";
-import Header from "../Components/Header";
+import BarraLateralNuevo from "../Components/BarraLateralNuevo";
 
-const Perfil =({})=>{
+const Perfil = () => {
     return(
-        <>
-        <div className="sidebar" style={{ width: '50px' }}>
-            <BarraLateral/>
-        </div>
-        <div className="content flex-grow-1 ">
-          <Header />
-        </div>
-        <section>
-            <div className="d-flex">
-            <CardPerfilUsuario/>
+        <main style={{backgroundColor:"#E2E2E2", height:"auto"}}>
+            
+            <div>
+                <BarraLateralNuevo/>
             </div>
-        </section>
-        </>
+            <section style={{position:"absolute", top:"0vh", width:"65vw",left:"15vw"}}>
+                <CardPerfilUsuario/>
+            </section>
 
+            
+        </main>
     )
 }
 export default Perfil;

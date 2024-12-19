@@ -2,15 +2,10 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 import { post } from '../Services/Crud';
 import {useCookies} from 'react-cookie';
-import Navbar from '../Components/Navbar';
 import { mostrarAlerta } from '../Components/MostrarAlerta';
-import CardPregunta from '../Components/CardPregunta';
-import { useLocation } from 'react-router-dom';
 import '../Style/CrearEncuestas.css'
 import { getFilter } from '../Services/Crud';
-import BarraLateral from '../Components/BarraLateral';
-import Header from '../Components/Header';
-import Preguntas from '../Components/Preguntas';
+import BarraLateralNuevo from '../Components/BarraLateralNuevo';
 
 function CrearEncuestas() {
     //Estados para manejar el cambio de informacion en los inputs
@@ -18,17 +13,19 @@ function CrearEncuestas() {
     const [descripcionEncuesta,setdescripcionEncuesta]=useState("")
     const [preguntaEncuesta,setpreguntaEncuesta]=useState("")
     const [idEmpresa,setIdEmpresa]=useState([])
+
     const localPreguntas = JSON.parse(localStorage.getItem("preguntas"))
     //HOOK (creacion de cookies) recibe el nombre de la cookie que va a tener 
     const [cookies,setCookies]=useCookies(["Encuesta","empresaId",'usuarioID','rolUsuario','token','encuestaId'])
     const token = cookies.token
     useEffect(()=>{
+      setCookies("encuestaId",null)
       const obtenerEmpresa = async()=>{
         const empresa = await getFilter("empresa-id/",cookies.usuarioID,'propietario_id')
         console.log(empresa.id_empresa)
         setIdEmpresa(empresa.id_empresa)
+        
         setCookies("empresaId",empresa.id_empresa)
-        console.log(idEmpresa);
       }
       const obtenerEmpresaUsuario = async()=>{
         const empresa = await getFilter("empresa-id/",cookies.usuarioID,'empresa_id')
@@ -54,7 +51,7 @@ async function enviarEncuesta() {
         empresa: cookies.empresaId,
         //METODO POST 
     }
-    if(categoriaEncuesta === "" || descripcionEncuesta === ""){
+    if(categoriaEncuesta === "" || descripcionEncuesta === "" || preguntaEncuesta === "") {
       mostrarAlerta("error","Faltan campos por llenar.")
       return
     }
@@ -69,11 +66,15 @@ async function enviarEncuesta() {
       encuesta_referencia : enviarPeticion.id,
       pregunta_texto : preguntaEncuesta,
     }
+    if(preguntaEncuesta === ""){
+      mostrarAlerta("error","Faltan campos por llenar")
+    }
      const enviarPregunta = await post(datosPreguntas,"preguntas/",token)
       console.log(enviarPregunta)
 
     if (enviarPeticion){
       mostrarAlerta("success","Se agregó la encuesta")
+      setCategoriaEncuesta("")
       setdescripcionEncuesta("")
       setpreguntaEncuesta("")
     }
@@ -84,7 +85,6 @@ async function enviarEncuesta() {
     setCookies("Encuesta", datosEncuesta,{path:"/",maxAge:600}) //esta en segundos
 }
     const agregarPregunta = async() => {
-
       const datosPreguntas = {
         encuesta_referencia : cookies.encuestaId,
         pregunta_texto : preguntaEncuesta,
@@ -108,20 +108,13 @@ async function enviarEncuesta() {
     } 
 
   return (
-    <div>
-     <div className="sidebar" style={{ width: '50px' }}>
-            <BarraLateral/>
-        </div>
-        <div className="content flex-grow-1 ">
-          <Header />
-        </div>
-    <div className="container">
-      <div
-        style={{ height: '100vh',position:"relative",top:"10px",left:"11vw"}}
-      >
-        <div className="d-flex gap-5" style={{ width: '150vh',height:"87vh"}}>
-          <div className="d-flex flex-column gap-3 mx-auto form-container" style={{border:"3px solid #cccc"}}>
-            <h1 className="encuesta">Crear encuesta</h1>
+    <div style={{backgroundColor:"#e2e2e2",height:"100vh"}}>
+            <BarraLateralNuevo/>
+        
+      <div style={{ height:'110vh',position:"relative",bottom:"112vh",left:"13vw",width:"10vw"}}>
+        <div className="d-flex" style={{ width: '150vh',height:"65vh",position:"relative",top:"15vh",borderRadius:"10px"}}>
+          <div className="d-flex flex-column mx-auto form-container" style={{border:"3px solid #cccc"}}>
+            <h1 className="encuesta" style={{fontFamily:"Lora"}}>Crear encuesta</h1>
             {/* Evento para guardar el valor del titulo encuesta */}
             {cookies.encuestaId === null &&
             <select onChange={(e)=>setCategoriaEncuesta(e.target.value)}>
@@ -156,16 +149,16 @@ async function enviarEncuesta() {
               {cookies.encuestaId &&
               <div className='input-group-append'>
                
-                <span onClick={agregarPregunta}  className='btn btn-primary' style={{color:"#041223",marginTop:"10px",height:"5.8vh",borderRadius:"0px",backgroundColor:"#d0d5ff",border:"none"}}>+</span>
+                <span onClick={agregarPregunta}  className='btn btn-primary' style={{color:"#041223",marginTop:"-0px",height:"5.8vh",borderRadius:"0px",backgroundColor:"#d0d5ff",border:"none"}}>+</span>
               </div>
                 }
             </div>
             {cookies.encuestaId ?
-             <button onClick={reiniciarEncuesta} style={{backgroundColor:"#d0d5ff",border:"none",color:"#041223"}} className="submit-button">
+             <button onClick={reiniciarEncuesta} style={{backgroundColor:"transparent",border:"1px solid #c91459",color:"#c91459"}} className="submit-button">
              Reiniciar Encuesta
            </button>  
           :
-          <button onClick={enviarEncuesta} style={{backgroundColor:"#d0d5ff",border:"none",color:"#041223"}} className="submit-button">
+          <button onClick={enviarEncuesta} style={{backgroundColor:"transparent",border:"1px solid #c91459",color:"#c91459"}} className="submit-button">
           Enviar
           </button>
      }
@@ -173,7 +166,6 @@ async function enviarEncuesta() {
           
         </div>
       </div>
-    </div>
     </div>
 );
 }

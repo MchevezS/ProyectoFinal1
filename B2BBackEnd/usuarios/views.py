@@ -27,7 +27,7 @@ class RegistroView(APIView):
         clave_usuario = request.data.get("password")
         correo_usuario = request.data.get("email")
         cedula_usuario = request.data.get("cedula")
-        
+        imagen_perfil = request.data.get("imagen_perfil")
         #Usamos expresiones regulares para validar la informacion que se envia a la base de datos. 
         nombre_usuario_regex = r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$'
         correo_usuario_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -44,9 +44,13 @@ class RegistroView(APIView):
         
         if User.objects.filter(username=nombre_usuario).exists():
             return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email=correo_usuario).exists():
+            return Response({"error":"Ya existe un usuario con ese correo",},status=status.HTTP_400_BAD_REQUEST)
+        if Usuarios.objects.filter(cedula_usuario=cedula_usuario).exists():
+            return Response({"error":"Ya existe un usuario con esa cedula",},status=status.HTTP_400_BAD_REQUEST)
         else:
             usuario = User.objects.create_user(username=nombre_usuario,password=clave_usuario,email=correo_usuario)
-            Usuarios.objects.create(user=usuario,cedula_usuario=cedula_usuario) #El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 20
+            Usuarios.objects.create(user=usuario,cedula_usuario=cedula_usuario,imagen_perfil=imagen_perfil) #El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 20
             return Response({"success":'Usuario creado',},status=status.HTTP_201_CREATED)
         
         
@@ -75,15 +79,15 @@ class LoginView(APIView):
             rol= Usuarios.objects.get(user_id=datos_autenticacion.id)
             if area_trabajo is None and id_empresa_p is not None:
                 return Response({"success":'bienvenido','area':'No tiene area asignada',"id":datos_autenticacion.id,"rol":rol.rol,
-                             "nombre": datos_autenticacion.username,'id_empresa':id_empresa_p.id, 
+                             "nombre": datos_autenticacion.username, "imagen": rol.imagen_perfil,'id_empresa':id_empresa_p.id, 
                              "token_acceso": str(refresh.access_token),},status=status.HTTP_200_OK)
             elif area_trabajo is not None:
-                return Response({"success":'bienvenido','area':area_trabajo.area_trabajo.nombre_area,"id":datos_autenticacion.id,"rol":rol.rol,
+                return Response({"success":'bienvenido','area':area_trabajo.area_trabajo.nombre_area,"imagen": rol.imagen_perfil,"id":datos_autenticacion.id,"rol":rol.rol,
                              "nombre": datos_autenticacion.username,'id_empresa':id_empresa.empresa.id,
                              "token_acceso": str(refresh.access_token),},status=status.HTTP_200_OK)
             elif id_empresa_p is None:
                 return Response({"success":'bienvenido','area':'No tiene area asignada',"id":datos_autenticacion.id,"rol":rol.rol,
-                             "nombre": datos_autenticacion.username,'id_empresa':0, 
+                             "nombre": datos_autenticacion.username,"imagen": rol.imagen_perfil,'id_empresa':0, 
                              "token_acceso": str(refresh.access_token),},status=status.HTTP_200_OK)
             else:
                 return Response({'error':'Credenciales incorrectas'},status=status.HTTP_400_BAD_REQUEST)
@@ -116,10 +120,14 @@ class RegistroEmpleadoView(APIView):
         if not re.match(cedula_usuario_regex,cedula_usuario):
             return Response({"error":'No cumple los requisitos en cedula',},status=status.HTTP_400_BAD_REQUEST)
         
-        
-        
         if User.objects.filter(username=nombre_usuario).exists():
             return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email=correo_usuario).exists():
+            return Response({"error":"Ya existe un usuario con ese correo",},status=status.HTTP_400_BAD_REQUEST)
+        if Usuarios.objects.filter(cedula_usuario=cedula_usuario).exists():
+            return Response({"error":"Ya existe un usuario con esa cedula",},status=status.HTTP_400_BAD_REQUEST)
+        
+
         else:
             usuario_creado = User.objects.create_user(username=nombre_usuario,password=clave_usuario,email=correo_usuario)
             Usuarios.objects.create(user=usuario_creado,cedula_usuario=cedula_usuario,rol=rol_usuario) #El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 20
@@ -293,3 +301,46 @@ class CambiarEstadoUsuarioView(APIView):
             }, status=status.HTTP_200_OK)
         except usuario.DoesNotExist:
             return Response({'error': 'usuario no encontrada'}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+class CambiarFotoPerfilView(APIView):
+    def patch(self,request):
+        nombre_usuario = request.data.get('username')
+        imagen_perfil = request.data.get('imagen_perfil')
+
+        usuario = Usuarios.objects.get(user__username=nombre_usuario)
+        usuario.imagen_perfil = imagen_perfil
+        usuario.save()
+        return Response({'status':'200'}, status=status.HTTP_200_OK)
+    
+    
+class RegistroAdminView(APIView):
+    permission_classes = [AllowAny]
+    def post(self,request):
+        nombre_usuario = request.data.get("username")
+        clave_usuario = request.data.get("password")
+       
+        if User.objects.filter(username=nombre_usuario).exists():
+            return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            usuario = User.objects.create_superuser(username=nombre_usuario,password=clave_usuario)
+            return Response({"success":'Admin creado', "rol": "admin",},status=status.HTTP_201_CREATED)
+        
+        
+class LoginAdminView(APIView):
+    permission_classes = [AllowAny]
+    def post(self,request):
+        nombre_usuario = request.data.get("username")
+        clave_usuario = request.data.get("password")
+        
+        #quita el cifrado de la contraseña para saber si es correcta
+        datos_autenticacion = authenticate(request,username=nombre_usuario,password=clave_usuario)
+
+        if datos_autenticacion is not None:
+                refresh = RefreshToken.for_user(datos_autenticacion)
+                return Response({'success':'Admin iniciado', "rol":"admin","super":datos_autenticacion.is_superuser, "token":str(refresh.access_token),},status=status.HTTP_400_BAD_REQUEST)
+           
+        else:
+                return Response({'error':'Credenciales incorrectas'},status=status.HTTP_400_BAD_REQUEST)
+        

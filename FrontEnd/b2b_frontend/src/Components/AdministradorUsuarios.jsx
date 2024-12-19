@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from "react-cookie";
 import Swal from 'sweetalert2';
 import { mostrarAlerta } from './MostrarAlerta';
+import'../Style/AdministradorUsuarios.css';
+
 
 const AdministradorUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);

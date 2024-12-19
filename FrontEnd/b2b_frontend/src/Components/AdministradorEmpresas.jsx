@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { get, patch } from '../Services/Crud';  // Asegúrate de que 'patch' esté configurado
+import { get, patch } from '../Services/Crud';  
 import { useNavigate } from 'react-router-dom';
 import '../Style/AdministradorEmpresas.css';
 import { useCookies } from "react-cookie";
 import Swal from 'sweetalert2';
 import { mostrarAlerta } from './MostrarAlerta';
+import LoadingSpinner from '../Components/LoadingSpinner';
 
 const AdministradorEmpresas = () => {
   const [empresas, setEmpresas] = useState([]);
@@ -137,4 +138,4 @@ const AdministradorEmpresas = () => {
   );
 };
 
-export default AdministradorGeneral;
+export default AdministradorEmpresas;

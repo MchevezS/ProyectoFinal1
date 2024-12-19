@@ -41,6 +41,11 @@ const FormAreaTrabajo = () => {
       setIsLoading(true); // Mostrar spinner antes de hacer la solicitud
 
       try {
+        if(nombreArea === '') {
+          mostrarAlerta("error", 'Por favor, completa todos los campos correctamente.');
+          setIsLoading(false); // Ocultar el spinner después de la carga
+          return;
+        }
         const response = await post(datosFormulario, 'AreaTrabajo/', token);
         if (response.id) {
           mostrarAlerta("success", 'Área de trabajo registrada con éxito');
@@ -89,16 +94,11 @@ const FormAreaTrabajo = () => {
                   </select>
                 </td>
               </tr>
-              <tr>
-                <td><label className="labelEmpresa">Empresa:</label></td>
-                <td>
-                  <input type="text" value={cookies.nombreEmpresa || ''} disabled />
-                </td>
-              </tr>
+
             </tbody>
           </table>
 
-          <button className="btnRegistrarArea" type="submit">Registrar Área de Trabajo</button>
+          <button className="btnRegistrarArea" type="submit" disabled={cookies.empresaId != 0 ? false : true }>Registrar Área de Trabajo</button>
 
           {/* Mostrar errores */}
           {mensajeError && <div className="alerta-error">{mensajeError}</div>}
