@@ -57,15 +57,16 @@ select:focus {
   border-radius: 5px;
   font-size: 1.1rem;
   font-weight: bold;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
+  color: #d72d57 !important;
+  border: 1px solid #d72d57 !important;
+  background-color: transparent !important;
   cursor: pointer;
   margin-top: 20px;
 }
 
 .btnAsignar:hover {
-  background-color: #0056b3;
+  transform: scale(1.05);
+
 }
 
 .btnAsignar:focus {
@@ -162,7 +163,11 @@ select:focus {
   cursor: pointer;
   margin-top: 20px;
 }
-
+.btnAsignar:disabled {
+ background-color: #ccc !important;
+  color: #666 !important;
+  border: 1px solid #666 !important;
+}
 .btnAsignar:hover {
   background-color: #0056b3;
 }

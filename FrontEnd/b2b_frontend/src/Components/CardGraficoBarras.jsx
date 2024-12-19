@@ -4,64 +4,72 @@ import { useCookies } from 'react-cookie';
 import { get } from '../Services/Crud';
 const CardGraficoBarras = ()=>{
 
-  const [saludMental,setSaludMental] = useState(0);
-  const [ambienteLaboral,setAmbienteLaboral] = useState(0);
-  const [equilibrioVidaTrabajo,setEquilibrioVidaTrabajo] = useState(0);
-  const [beneficiosCompensaciones,setBeneficiosCompensaciones] = useState(0);
-  const [comunicacionInterna,setComunicacionInterna] = useState(0);
-  const [oportunidadesCrecimiento,setOportunidadesCrecimiento] = useState(0);
+  const [saludMental,setSaludMental] = useState(10);
+  const [ambienteLaboral,setAmbienteLaboral] = useState(10);
+  const [equilibrioVidaTrabajo,setEquilibrioVidaTrabajo] = useState(10);
+  const [beneficiosCompensaciones,setBeneficiosCompensaciones] = useState(10);
+  const [comunicacionInterna,setComunicacionInterna] = useState(10);
+  const [oportunidadesCrecimiento,setOportunidadesCrecimiento] = useState(10);
   
   const [cookies]=useCookies(["empresaId"])
 
-
   useEffect(()=>{
     const traerRetroalimentaciones = async () => {
+      /*
+        Este use effect hace el get a respuestas par aluego hacer un filtro para obtener donde la retroalimentacion no sea vacia (hayan enviado retroalimentacion)
+        Luego se hace un filtro por categoria de encuesta y se cuentan cuantas retroalimentaciones hay por categoria
+      */
       const peticion = await get('respuestas')
-      console.log(peticion);
       const retroalimentacion = peticion.filter((respuesta)=>respuesta.retroalimentacion != "" && respuesta.empresa === cookies.empresaId)
+
       const contadorSaludMental = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Salud Mental")
       setSaludMental(contadorSaludMental.length)
-      console.log(contadorSaludMental.length)
+
       const contadorAmbienteLaboral = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Ambiente Laboral")
       setAmbienteLaboral(contadorAmbienteLaboral.length)
-      console.log(contadorAmbienteLaboral.length)
+
       const contadorEquilibrioVidaTrabajo = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Equilibrio Vida-Trabajo")
       setEquilibrioVidaTrabajo(contadorEquilibrioVidaTrabajo.length)
-      console.log(contadorEquilibrioVidaTrabajo.length)
+
       const contadorBeneficiosCompensaciones = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Beneficios y Compensaciones")
       setBeneficiosCompensaciones(contadorBeneficiosCompensaciones.length)
-      console.log(contadorBeneficiosCompensaciones.length)
+
       const contadorComunicacionInterna = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Comunicación Interna")
       setComunicacionInterna(contadorComunicacionInterna.length)
-      console.log(contadorComunicacionInterna.length)
+
       const contadorOportunidadesCrecimiento = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Oportunidades de Crecimiento")
       setOportunidadesCrecimiento(contadorOportunidadesCrecimiento.length)
-      console.log(contadorOportunidadesCrecimiento.length)
     } 
       traerRetroalimentaciones()
   },[])
   const plans = [
-    { name: 'Salud Mental', percentage: saludMental, color: '#7F7EFD' },
-    { name: 'Ambiente Laboral', percentage: ambienteLaboral, color: '#FF8A65' },
+    { name: 'Salud Mental', 
+      percentage: saludMental, 
+      color: '#c91459' 
+    },
+    { name: 'Ambiente Laboral', 
+      percentage: ambienteLaboral, 
+      color: '#FFDB45' 
+    },
     {
       name: 'Equilibrio Vida-Trabajo',
       percentage: equilibrioVidaTrabajo,
-      color: '#E57373',
+      color: '#c91459',
     },
     {
       name: 'Beneficios y Compensaciones',
       percentage: beneficiosCompensaciones,
-      color: '#E57373',
+      color: '#FFDB45',
     },
     {
       name: 'Comunicación Interna',
       percentage: comunicacionInterna,
-      color: '#E57373',
+      color: '#c91459',
     },
     {
       name: 'Oportunidades de Crecimiento',
       percentage: oportunidadesCrecimiento,
-      color: '#E57373',
+      color: '#FFDB45',
     },
   ];
     return(
@@ -76,7 +84,16 @@ const CardGraficoBarras = ()=>{
           margin: "auto",
         }}
       >
-  
+           <h5
+          className="text-uppercase"
+          style={{
+            fontSize: "14px",
+            textAlign: "center",
+            color: "white",
+          }}
+        >
+          Retroalimentación por categoría
+        </h5>
         {plans.map((plan,index) => (
           <div key={index} className="mb-3">
             <div className="d-flex justify-content-between">
@@ -85,7 +102,7 @@ const CardGraficoBarras = ()=>{
             </div>
             <div
               style={{
-                height: "8px",
+                height: "5px",
                 backgroundColor: "#2E2E48",
                 borderRadius: "4px",
               }}

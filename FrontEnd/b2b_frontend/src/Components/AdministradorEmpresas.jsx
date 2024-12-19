@@ -1,58 +1,63 @@
 import { useState, useEffect } from 'react';
-import { get, patch } from '../Services/Crud';
+import { get, patch } from '../Services/Crud';  
 import { useNavigate } from 'react-router-dom';
 import '../Style/AdministradorEmpresas.css';
 import { useCookies } from "react-cookie";
 import Swal from 'sweetalert2';
-import { mostrarAlerta } from '../Components/MostrarAlerta';
+import { mostrarAlerta } from './MostrarAlerta';
+import LoadingSpinner from '../Components/LoadingSpinner';
 
 const AdministradorEmpresas = () => {
   const [empresas, setEmpresas] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // Estado para cargar los datos iniciales
+  const [isUpdating, setIsUpdating] = useState(false); // Estado para manejar el spinner en el botón
   const [seeker, setSeeker] = useState(''); // Estado del buscador empresas(seeker)
   const navigate = useNavigate();
-  const [cookies] = useCookies(['token'])
-  const token = cookies.token
+  const [cookies] = useCookies(['token']);
+  const token = cookies.token;
 
   // Obtener todas las empresas
   const obtenerEmpresas = async () => {
     try {
+      setLoading(true); // Iniciar la carga
       const response = await get('empresas');
       setEmpresas(response);
-      setLoading(false);
     } catch (error) {
       console.error("Error al obtener las empresas:", error);
-      setLoading(false);
+    } finally {
+      setLoading(false); // Finaliza la carga
     }
   };
 
   // Cambiar el estado (activar/desactivar) de una empresa
   const cambiarEstadoEmpresa = async (id, estadoActual) => {
-  // Mostrar la alerta personalizada
-  const result = await Swal.fire({
-    title: `¿Estás seguro de que deseas ${estadoActual ? "desactivar" : "activar"} esta empresa?`,
-    showCancelButton: true,
-    confirmButtonText: 'Sí',
-    cancelButtonText: 'No',
-    icon: 'warning',
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-  });
+  // Muestra alerta personalizada
+    const result = await Swal.fire({
+      title: `¿Estás seguro de que deseas ${estadoActual ? "desactivar" : "activar"} esta empresa?`,
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No',
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+    });
+
     if (result.isConfirmed) {
       try {
+        setIsUpdating(true); // Activar el spinner
         const data = { estado: !estadoActual }; // nuevo estado
-        const response = await patch(`empresa/estado/`, id, data, token); // llamamos al metodo PATCH para que haga los cambios en la url (empresa/estado)
-        if (response) { 
-        // Muestra una alerta de éxito
-        await mostrarAlerta('success', `Empresa ${estadoActual ? "desactivada" : "activada"} con éxito`);
-      } else {
-        // Muestra una alerta de error
-        await mostrarAlerta('error', 'No se pudo cambiar el estado de la empresa');
-      }
+        const response = await patch(`empresa/estado/`, id, data, token); // PATCH para cambiar el estado
+        if (response) {
+          await mostrarAlerta('success', `Empresa ${estadoActual ? "desactivada" : "activada"} con éxito`);
+        } else {
+          await mostrarAlerta('error', 'No se pudo cambiar el estado de la empresa');
+        }
         obtenerEmpresas(); // Vuelve a cargar la lista después de cambiar el estado
       } catch (error) {
         console.log(error);
-        alert("Error al cambiar el estado de la empresa");
+        mostrarAlerta('error', 'Error al cambiar el estado de la empresa');
+      } finally {
+        setIsUpdating(false); // Desactivar el spinner
       }
     }
   };
@@ -74,7 +79,8 @@ const AdministradorEmpresas = () => {
   }, []); // Se ejecuta solo una vez
 
   if (loading) {
-    return <p>Cargando empresas...</p>;
+    // Mostrar spinner mientras se cargan los datos iniciales
+    return <LoadingSpinner />;
   }
 
   return (
@@ -83,7 +89,12 @@ const AdministradorEmpresas = () => {
 
       {/* Barra de búsqueda */}
       <div className='seeker-container'>
-        <input type='text' placeholder='Buscar empresa...' value={seeker} onChange={(e) => setSeeker(e.target.value)} />
+        <input
+          type='text'
+          placeholder='Buscar empresa...'
+          value={seeker}
+          onChange={(e) => setSeeker(e.target.value)}
+        />
         <button onClick={() => console.log('Buscar')}>Buscar</button>
       </div>
 
@@ -105,8 +116,19 @@ const AdministradorEmpresas = () => {
               <td>{empresa.correo}</td>
               <td>{empresa.activo ? "Activa" : "Desactivada"}</td>
               <td>
-                <button className="button-custom" onClick={() => editarEmpresa(empresa.id)}>Editar</button>
-                <button className="button-custom2" onClick={() => cambiarEstadoEmpresa(empresa.id, empresa.activo)}>Activar/Desactivar</button>
+                <button
+                  className="button-custom"
+                  onClick={() => editarEmpresa(empresa.id)}
+                >
+                  Editar
+                </button>
+                <button
+                  className="button-custom2"
+                  onClick={() => cambiarEstadoEmpresa(empresa.id, empresa.activo)}
+                  disabled={isUpdating} // Desactivar mientras está actualizando
+                >
+                  {isUpdating ? <LoadingSpinner small /> : "Activar/Desactivar"}
+                </button>
               </td>
             </tr>
           ))}

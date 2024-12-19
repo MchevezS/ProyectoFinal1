@@ -59,20 +59,21 @@
     border-radius: 5px;
     font-size: 0.95rem;
     font-weight: bold;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
+    color: #d72d57 !important;
+    border: 1px solid #d72d57 !important;
+    background-color: transparent !important;
     cursor: pointer;
     margin-top: 15px;
   }
 
   .btnEnviarEmpresas:hover {
-    background-color: #0056b3;
+    transform: scale(1.05);
   }
 
   .btnEnviarEmpresas:focus {
     outline: none;
   }
+  
   .development-table-container {
     margin: 10px; /* Espaciado externo */
     margin-left: 270px; /* Espacio para que las tablas queden fuera de la barra */
