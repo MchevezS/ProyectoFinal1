@@ -15,27 +15,30 @@ const CardGraficoBarras = ()=>{
 
   useEffect(()=>{
     const traerRetroalimentaciones = async () => {
+      /*
+        Este use effect hace el get a respuestas par aluego hacer un filtro para obtener donde la retroalimentacion no sea vacia (hayan enviado retroalimentacion)
+        Luego se hace un filtro por categoria de encuesta y se cuentan cuantas retroalimentaciones hay por categoria
+      */
       const peticion = await get('respuestas')
-      console.log(peticion);
       const retroalimentacion = peticion.filter((respuesta)=>respuesta.retroalimentacion != "" && respuesta.empresa === cookies.empresaId)
+
       const contadorSaludMental = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Salud Mental")
       setSaludMental(contadorSaludMental.length)
-      console.log(contadorSaludMental.length)
+
       const contadorAmbienteLaboral = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Ambiente Laboral")
       setAmbienteLaboral(contadorAmbienteLaboral.length)
-      console.log(contadorAmbienteLaboral.length)
+
       const contadorEquilibrioVidaTrabajo = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Equilibrio Vida-Trabajo")
       setEquilibrioVidaTrabajo(contadorEquilibrioVidaTrabajo.length)
-      console.log(contadorEquilibrioVidaTrabajo.length)
+
       const contadorBeneficiosCompensaciones = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Beneficios y Compensaciones")
       setBeneficiosCompensaciones(contadorBeneficiosCompensaciones.length)
-      console.log(contadorBeneficiosCompensaciones.length)
+
       const contadorComunicacionInterna = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Comunicación Interna")
       setComunicacionInterna(contadorComunicacionInterna.length)
-      console.log(contadorComunicacionInterna.length)
+
       const contadorOportunidadesCrecimiento = retroalimentacion.filter((respuesta)=>respuesta.categoria_encuesta === "Oportunidades de Crecimiento")
       setOportunidadesCrecimiento(contadorOportunidadesCrecimiento.length)
-      console.log(contadorOportunidadesCrecimiento.length)
     } 
       traerRetroalimentaciones()
   },[])

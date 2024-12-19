@@ -1,5 +1,4 @@
 import CardPerfilUsuario from "../Components/CardPerfilUsuario";
-import Header from "../Components/Header";
 import BarraLateralNuevo from "../Components/BarraLateralNuevo";
 
 const Perfil = () => {

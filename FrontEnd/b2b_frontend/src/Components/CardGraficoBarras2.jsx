@@ -13,6 +13,13 @@ const CardGraficoBarras2 = () => {
   const [cookies] = useCookies(['empresaId']);
 
   useEffect(() => {
+    /*
+      Función que obtiene la cantidad de empleados por área de trabajo
+      hace un getfilter al endpoint de areas-trabajo-usuario, en la que le pasa el id de la empresa
+      para obtener solo los empleados de la empresa logueada, luego filtra por el nombre de las áreas
+
+      el parametro empresa_id es el que se le pasa al endpoint para filtrar por empresa (esta en el backend)
+    */
     const traerEmpleadosPorArea = async () => {
       const peticion = await getFilter('areas-trabajo-usuario', cookies.empresaId, 'empresa_id');
 

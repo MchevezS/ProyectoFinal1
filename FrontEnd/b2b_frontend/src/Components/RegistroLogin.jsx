@@ -290,7 +290,6 @@ function RegistroLogin() {
           )}
         </div>
       </div>
-      <Footer /> 
     </>
   );
 }

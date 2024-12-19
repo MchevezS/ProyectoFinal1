@@ -1,10 +1,15 @@
 import '../Style/CardPerfilUsuario.css';
 import { useState, useEffect } from 'react';
-import CambioCredencialesUsuario from "../Components/CambioCredencialesUsuario";
 import { useCookies } from "react-cookie";
 import { mostrarAlerta } from "./MostrarAlerta";
 import { getFilter, patch,subirImagenPerfil } from "../Services/Crud";
 import LoadingSpinner from "../Components/LoadingSpinner"; // Importar el spinner
+
+
+/*
+  Este componente es una tarjeta que card que tiene la información del perfil del usuario.
+  y permite cambiar la contraseña y la foto de perfil.
+*/
 
 const CardPerfilUsuario = () => {
   const [mostrarCambio, setMostrarCambio] = useState(false);

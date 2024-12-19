@@ -4,6 +4,7 @@ import { useState,useEffect } from 'react';
 import { getFilter,get,patch } from "../Services/Crud"
 import { useCookies } from "react-cookie"
 
+
 const CardTablaEmpleados = () => {
   const [empleados,setEmpleados] = useState([])
   const [cookies]=useCookies(["empresaId",'token'])
@@ -11,6 +12,12 @@ const CardTablaEmpleados = () => {
   const [carga,setCarga] = useState(false) // Estado de recarga, para que se actualice la tabla de empleados
   
   useEffect(()=>{
+
+    /*
+    En este use effect se hace una peticion get al endpoint traer-empleados, que trae todos los empleados de la empresa
+    el endpoint espera el id, que se relaciona con la empresa de la tabla empleados
+    */
+
       const traerEmpleados = async()=>{
        const peticion = await  getFilter('traer-empleados',cookies.empresaId,'empresa_id')
        setEmpleados(peticion)
@@ -19,6 +26,10 @@ const CardTablaEmpleados = () => {
   },[carga]) // Se ejecuta el useEffect cada vez que cambia el estado
 
     const cambiarEstado = async(nombre_usuario)=>{
+      /*
+      En esta funcion se hace una peticion patch al endpoint estado-usuario, que cambia el estado de un usuario
+      el endpoint espera el nombre de usuario (para cambiar solo a ese usuario) y el token de autenticacion
+      */
       const peticion = await patch('estado-usuario','',nombre_usuario,token)
       console.log(peticion)
       setCarga(!carga) // Cambiamos el estado cada vez que tocamos el botoncito

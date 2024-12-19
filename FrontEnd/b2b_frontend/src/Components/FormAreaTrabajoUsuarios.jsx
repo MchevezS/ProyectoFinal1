@@ -48,11 +48,9 @@ const FormAreaTrabajoUsuarios = () => {
         setMensajeError('Error al cargar las áreas de trabajo');
       }
     };
-
-    fetchData();
     traerEmpleados();
     traerAreas();
-  }, [cookies.empresaId]);
+  }, [areasTrabajo,listaEmpleados]);
 
   // Validación del formulario
   const validarFormulario = () => {

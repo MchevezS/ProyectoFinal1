@@ -17,7 +17,8 @@ import HomeNuevo from '../Pages/HomeNuevo';
 import DashboardNuevo from '../Pages/DashboardNuevo';
 import AdministradorUsuarios from '../Components/AdministradorUsuarios';
 import EditarUsuarios from '../Components/EditarUsuarios'
-
+import AdministradorGeneral from '../Pages/AdministradorGeneral';
+import EncuestasRespondidas from '../Pages/EncuestasRespondidas';
 const Routing = () => {
     return (
       <Router>
@@ -30,8 +31,12 @@ const Routing = () => {
           <Route path='/CrearEncuestas' element={<RutaPrivada rol={["recursos_humanos", "propietario"]} children={<CrearEncuestas/>}/>}/>
           <Route path='/verEncuestas' element={<RutaPrivada rol={["trabajador", "recursos_humanos","propietario"]} children={<ResponderEncuestas/>}/>}/>
           <Route path='/perfil' element={<RutaPrivada rol={["recursos_humanos","propietario", "trabajador","usuario"]} children={<Perfil/>}/>}/>
+          {/* <Route path='/administrador' element={<RutaPrivada rol={["admin"]} children={<AdministradorGeneral/>}/>}/> */}
+          <Route path="/respondidas" element={<RutaPrivada rol={["recursos_humanos","propietario"]} children={<EncuestasRespondidas/>}/>}/>
+
           
 
+          <Route path="/administrador" element={<AdministradorGeneral/> }/>
 
           <Route path="/home" element={<HomeNuevo/> }/>
           <Route path='/registroLogin' element={<Login/>}/>

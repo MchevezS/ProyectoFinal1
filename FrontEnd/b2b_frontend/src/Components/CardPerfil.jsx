@@ -1,5 +1,10 @@
 import { useCookies } from "react-cookie";
 
+
+/*
+  Este componente muestra información del usuario logueado, como su nombre y foto de perfil.
+  Se trae la información del usuario logueado desde las cookies. (estas cookies se crean al loguearse)
+*/
 const CardPerfil = () => {
   const [cookie] = useCookies(["nombreUsuario",'areaUsuario','empresaId','token', 'foto'])
     return (
