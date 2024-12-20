@@ -1,0 +1,29 @@
+/* Title */
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+/* Subheading for description */
+p {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.5;
+}
+.pregunta {
+  background-color: #fff;
+  text-align: center;
+  margin-left: 924px;
+  width: 200px;
+}
+/* Question list */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+ul li {
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}

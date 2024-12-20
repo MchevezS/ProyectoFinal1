@@ -21,7 +21,7 @@ CORS_ALLOW_ORIGINS = True
 
 
 # Application definition
-
+# todas las aplicaciones que voy a usar en el proyecto.
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,20 +37,22 @@ INSTALLED_APPS = [
     'empresas',
 ]
 
+# Añadimos configuraciones externas al proyecto.
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # implementación del token.
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly', #implemetación de la autenticación de las views.
+    ),
 }
-
+# Configuración del token y de los tiempos de expiración.
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=3), #cambiar tiempo
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=3), 
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), 
 }
 
+#conexion de dependencias de FE a BE.
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,8 +64,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+# Damos permiso de usar recursos externos . (api)
+CORS_ALLOW_ALL_ORIGINS = True 
 CORS_ALLOW_CREDENTIALS = True
 
 
@@ -95,8 +97,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'B2B',  # El nombre de tu base de datos en MySQL
-        'USER': 'moha',  # Tu usuario de MySQL
-        'PASSWORD': '119690203',  # La contraseña de tu usuario MySQL
+        'USER': 'root',  # Tu usuario de MySQL
+        'PASSWORD': 'vialka16',  # La contraseña de tu usuario MySQL
         'HOST': '127.0.0.1',  # Si estás ejecutando MySQL localmente
         'PORT': '3306',  # El puerto por defecto de MySQL
     }

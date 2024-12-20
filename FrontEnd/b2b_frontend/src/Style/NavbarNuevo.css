@@ -1,0 +1,53 @@
+.encabezado-nav{
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-image: url(https://www.betterup.com/hubfs/Global%20Hero/0_Hero.png);
+    color: #ffff;
+    background-size: cover;
+}
+.cont-nav-ul{
+    position: relative;
+    right: 10%;    
+}
+.encabezado-nav-ul{
+    color: #ffff;
+    gap: 5rem;
+    a{
+        color: #ffff;
+        text-decoration: none;
+    }
+    li{
+        color: #fff;
+    }
+}
+
+.encabezado-nav:hover{
+    background-color: #ffff;
+    color: #000;
+    background-image: none;
+
+    a{
+        color: #000;
+        text-decoration: none;
+    }
+
+    li{
+        color: #000;
+    }
+}
+a{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #d12054 !important;
+}

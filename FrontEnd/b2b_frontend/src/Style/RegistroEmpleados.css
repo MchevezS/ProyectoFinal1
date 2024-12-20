@@ -1,140 +1,154 @@
-/* Estilo general para el contenedor del formulario */
-.form-group1 {
-  margin-bottom: 20px;
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 500px; /* Limita el ancho en pantallas grandes */
-  margin: 0 auto;
-  padding: 20px; /* Agrega padding en el contenedor para mejor espaciado */
+.development-table-container {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para el título del formulario */
 .form-title1 {
-  font-size: 24px;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
   color: #333;
-  margin-bottom: 15px;
   text-align: center;
 }
 
-/* Estilo de las etiquetas (label) */
-.form-group1 label {
-  font-size: 15px;
-  color: #34495e;
-  margin-bottom: 8px;
-  text-align: left;
-  margin-left: 60px; /* Ajuste del margen izquierdo a 0 */
+.table {
   width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
-/* Estilo para los campos de entrada (input) */
-.nombreEmpleado,
-.cedulaEmpleado,
-.correoEmpleado,
-.claveEmpleado {
-  width: 100%;
-  padding: 10px; /* Ajuste de padding */
-  font-size: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  max-width: 400px; /* Limita el ancho máximo de los inputs */
-  box-sizing: border-box;
-  margin-bottom: 10px; /* Espaciado entre inputs */
+.table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  vertical-align: middle;
 }
 
-/* Efecto de enfoque en los inputs */
-.nombreEmpleado:focus,
-.cedulaEmpleado:focus,
-.correoEmpleado:focus,
-.claveEmpleado:focus {
-  border-color: #5b9bd5;
+.table label {
+  font-weight: 600;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 1rem;
+}
+
+input:focus {
   outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
 }
 
-/* Estilo para los placeholders */
-.nombreEmpleado::placeholder,
-.cedulaEmpleado::placeholder,
-.correoEmpleado::placeholder,
-.claveEmpleado::placeholder {
-  color: #999;
-}
-
-/* Estilo para el botón de registro */
 .btnRegistarEmpleado {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  font-size: 18px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: block;
   width: 100%;
-  max-width: 400px; /* Limita el ancho máximo del botón */
-  margin: 20px auto 0; /* Centrado y con espacio superior */
+  padding: 14px;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #d72d57 !important;
+  border: 1px solid #d72d57 !important;
+  background-color: transparent !important;
+  cursor: pointer;
 }
 
 .btnRegistarEmpleado:hover {
-  background-color: #45a049;
+  transform: scale(1.05);
+
 }
 
-/* Contenedor principal para centrar el formulario */
-.form-container {
+.btnRegistarEmpleado:focus {
+  outline: none;
+}
+.btnRegistarEmpleado:disabled {
+ background-color: #ccc !important;
+  color: #666 !important;
+  border: 1px solid #666 !important;
+}
+
+
+.development-table-container {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-title1 {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  height: 100vh; /* 100% de la altura de la pantalla */
-  padding: 10px;
-  background-color: #f4f4f4;
+  margin-bottom: 20px;
 }
 
-/* Media query para pantallas pequeñas */
-@media (max-width: 768px) {
-  /* Aseguramos que los inputs no se vean demasiado pequeños en pantallas pequeñas */
-  .form-group1 {
-    padding: 15px; /* Asegura que haya suficiente espacio alrededor en pantallas pequeñas */
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .form-title1 {
-    font-size: 20px; /* Reduce el tamaño del título para pantallas más pequeñas */
-  }
-
-  .nombreEmpleado,
-  .cedulaEmpleado,
-  .correoEmpleado,
-  .claveEmpleado {
-    font-size: 14px; /* Ajuste de tamaño de fuente */
-    padding: 12px; /* Ajuste del padding */
-    max-width: 100%; /* Hace que los inputs ocupen todo el ancho disponible */
-  }
-
-  .btnRegistarEmpleado {
-    font-size: 16px; /* Ajuste de tamaño de fuente del botón */
-    padding: 12px 18px; /* Ajuste del padding */
-  }
+.form-title1 h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
 }
 
-/* Media query para dispositivos más pequeños (móviles) */
-@media (max-width: 480px) {
-  .form-title1 {
-    font-size: 18px; /* Título más pequeño para dispositivos móviles */
-  }
+.toggle-arrow {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #007bff;
+}
 
-  .nombreEmpleado,
-  .cedulaEmpleado,
-  .correoEmpleado,
-  .claveEmpleado {
-    font-size: 13px; /* Fuente más pequeña */
-    padding: 10px; /* Ajuste del padding */
-  }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
 
-  .btnRegistarEmpleado {
-    font-size: 14px; /* Ajuste para el botón en móviles */
-    padding: 10px 15px;
-  }
+.table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+.table label {
+  font-weight: 600;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.btnRegistarEmpleado {
+  width: 100%;
+  padding: 14px;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  cursor: pointer;
+}
+
+.btnRegistarEmpleado:hover {
+  background-color: #0056b3;
+}
+
+.btnRegistarEmpleado:focus {
+  outline: none;
 }

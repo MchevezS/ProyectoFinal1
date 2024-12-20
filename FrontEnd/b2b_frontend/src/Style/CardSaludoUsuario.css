@@ -1,0 +1,14 @@
+.card-saludo-usuario{
+    background-color: #f2f2f2;
+    height: 25vh;
+    width: 65vw;
+    border-radius: 10px;
+}
+.fecha-card{
+    background-color: #f2f2f2;
+    width: 25%;
+    height: 30%;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: start;
+}

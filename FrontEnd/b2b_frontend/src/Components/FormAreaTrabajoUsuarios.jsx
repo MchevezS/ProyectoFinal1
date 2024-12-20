@@ -1,55 +1,63 @@
-import '../Style/FormAreaTrabajoUsuarios.css'
+import '../Style/FormAreaTrabajoUsuarios.css';
 import { useState, useEffect } from 'react';
-import { post, get } from '../Services/Crud';
-import '../Style/FormAreaTrabajoUsuarios.css'
+import { post, get, getFilter } from '../Services/Crud';
+import { useCookies } from 'react-cookie';
+import { mostrarAlerta } from './MostrarAlerta';
+import LoadingSpinner from './LoadingSpinner'; // Asegúrate de importar el componente Spinner
+
 const FormAreaTrabajoUsuarios = () => {
-  // Estados para los datos del formulario
-//   const [usuarios, setUsuarios] = useState([]);
+  const [cookies] = useCookies(['empresaId', 'nombreEmpresa', 'token']);
   const [areasTrabajo, setAreasTrabajo] = useState([]);
-  const [empresas, setEmpresas] = useState([]);
-//   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState('');
+  const token = cookies.token;
+  const [listaEmpleados, setListaEmpleados] = useState([]);
   const [areaSeleccionada, setAreaSeleccionada] = useState('');
-  const [empresaSeleccionada, setEmpresaSeleccionada] = useState('');
+  const [empleado, setEmpleado] = useState('');
   const [errores, setErrores] = useState([]);
   const [mensajeError, setMensajeError] = useState('');
-  
-  // Cargar usuarios, áreas de trabajo y empresas
+  const [formVisible, setFormVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Estado para controlar la carga del spinner
+  const [cargarEmpleados, setCargarEmpleados] = useState(false);
+  const [cargarAreas, setCargarAreas] = useState(false);
+  // Cargar áreas de trabajo, empresas y empleados
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const usuariosData = await get('usuarios');
-        const areasData = await get('AreaTrabajo');
-        const empresasData = await get('empresas');
-        
-        // setUsuarios(usuariosData);
-        setAreasTrabajo(areasData);
-        setEmpresas(empresasData);
-      } catch (error) {
-        console.error(error);
-        setMensajeError('Error al cargar los datos');
-      }
-    };
-    fetchData();
-  }, []);
-  
+    if (cookies.empresaId !== undefined) {
+      traerEmpleados();
+      traerAreas();
+    }
+  }, [cookies.empresaId,cargarEmpleados,cargarAreas]);
+
+  // Función para traer empleados
+  const traerEmpleados = async () => {
+    try {
+      const empleadosEmpresa = await getFilter('traer-empleados', cookies.empresaId || 0, 'empresa_id');
+      setListaEmpleados(empleadosEmpresa);
+    } catch (error) {
+      console.error(error);
+      setMensajeError('Error al cargar los empleados');
+    }
+  };
+
+  // Función para traer áreas de trabajo
+  const traerAreas = async () => {
+    try {
+      const areasEmpresa = await getFilter('areas-trabajo', cookies.empresaId || 0, 'empresa_id');
+      setAreasTrabajo(areasEmpresa);
+    } catch (error) {
+      console.error(error);
+      setMensajeError('Error al cargar las áreas de trabajo');
+    }
+  };
+
   // Validación del formulario
   const validarFormulario = () => {
     let esValido = true;
     let erroresTemp = [];
 
-
-    if (!areaSeleccionada) {
-      erroresTemp.push('El área de trabajo es obligatoria');
-      esValido = false;
-    }
-
-    if (!empresaSeleccionada) {
-      erroresTemp.push('La empresa es obligatoria');
-      esValido = false;
-    }
+    if (!areaSeleccionada) erroresTemp.push('El área de trabajo es obligatoria');
+    if (!empleado) erroresTemp.push('Debe seleccionar un empleado');
 
     setErrores(erroresTemp);
-    return esValido;
+    return erroresTemp.length === 0;
   };
 
   // Manejo del envío del formulario
@@ -58,70 +66,118 @@ const FormAreaTrabajoUsuarios = () => {
 
     if (validarFormulario()) {
       const datosFormulario = {
-        // usuario_id: usuarioSeleccionado,
-        area_trabajo_id: areaSeleccionada,
-        empresa_id: empresaSeleccionada
+        usuario: empleado,
+        area_trabajo: areaSeleccionada,
+        empresa: cookies.empresaId,
       };
 
+      setIsLoading(true); // Mostrar spinner antes de hacer la solicitud
+
       try {
-        const response = await post(datosFormulario, 'asignar_usuario_area');
-        if (response && response.success) {
-        alert('Usuario asignado correctamente');
+        if(areaSeleccionada === '' || empleado === '') {
+            mostrarAlerta('error', 'Por favor, complete todos los campos');
+            setIsLoading(false);
+            return;
+        }
+        const response = await post(datosFormulario, 'asignar_usuario/', token);
+        if (response.id) {
+          mostrarAlerta('success', 'Usuario asignado correctamente');
+          // Refrescar la lista de áreas y empleados
+          traerAreas();
+          traerEmpleados();
         } else {
-            alert('Hubo un problema al asignar un usuario')
+          mostrarAlerta('error', 'Hubo un problema al asignar el usuario');
         }
       } catch (error) {
         console.error(error);
-        alert('Error al asignar el usuario');
+        mostrarAlerta('error', 'Error al asignar el usuario');
+      } finally {
+        setIsLoading(false); // Ocultar el spinner después de la carga
       }
     } else {
       setMensajeError('Por favor, completa todos los campos.');
     }
   };
 
+  // Alternar visibilidad del formulario
+  const toggleFormVisibility = () => {
+    setFormVisible(!formVisible);
+  };
+
   return (
-    <form onSubmit={manejarEnvio}>  
-   
-      <div className='form-group4'>
-        <label className='labelAreaU'>Área de Trabajo:</label>
-        <select className='areaSelect' value={areaSeleccionada} onChange={(e) => setAreaSeleccionada(e.target.value)}>
-          <option className='optionArea' value="">Seleccione un área de trabajo</option>
-          {areasTrabajo.map((area) => (
-            <option key={area.id} value={area.id}>
-              {area.nombre_area} {/* Suponiendo que el modelo de AreaTrabajo tiene 'nombre_area' */}
-            </option>
-          ))}
-        </select>
+    <div className="development-table-container">
+      <div className="form-title1">
+        <h2>Asignar Usuario a Área de Trabajo</h2>
+        <span className="toggle-arrow" onClick={toggleFormVisibility}>
+          {formVisible ? '↑' : '↓'}
+        </span>
       </div>
 
-      <div className='form-group4'>
-        <label className='labelEmpresaU'>Empresa:</label>
-        <select className='selectE' value={empresaSeleccionada} onChange={(e) => setEmpresaSeleccionada(e.target.value)}>
-          <option className='selectEmpresa' value="">Seleccione una empresas</option>
-          {empresas.map((empresa) => (
-            <option key={empresa.id} value={empresa.id}>
-              {empresa.nombre_empresa} {/* Suponiendo que el modelo de Empresa tiene 'nombre_empresa' */}
-            </option>
-          ))}
-        </select>
-      </div>
+      {formVisible && (
+        <form onSubmit={manejarEnvio}>
+          <table className="table">
+            <tbody>
+              <tr>
+                <td><label className="labelAreaU">Área de Trabajo:</label></td>
+                <td>
+                  <select
+                    className="areaSelect"
+                    value={areaSeleccionada}
+                    onChange={(e) => setAreaSeleccionada(e.target.value)}
+                    onClick={() => setCargarAreas(!cargarAreas)}
+                  >
+                    <option value="" disabled>Seleccione un área de trabajo</option>
+                    {areasTrabajo.map((area) => (
+                      <option key={area.id} value={area.id}>
+                        {area.nombre_area}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><label className="labelEmpleado">Seleccione el empleado:</label></td>
+                <td>
+                  <select
+                    className="empleadoSelect"
+                    value={empleado}
+                    onChange={(e) => setEmpleado(e.target.value)}
+                    onClick={() => setCargarEmpleados(!cargarEmpleados)}
+                  >
+                    <option value="" disabled>Lista de empleados</option>
+                    {listaEmpleados.map((emp) => (
+                      <option key={emp.id} value={emp.id}>
+                        {emp.username}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              </tr>
+             
+            </tbody>
+          </table>
 
-      <button className='btnAsignar' type="submit">Asignar</button>
+          <button className="btnAsignar" disabled={cookies.empresaId != 0 ? false : true} type="submit">Asignar</button>
 
-      {/* Mostrar mensaje de error si existe */}
-      {mensajeError && <div style={{ color: 'red' }}>{mensajeError}</div>}
-      
-      {/* Mostrar lista de errores */}
-      {errores.length > 0 && (
-        <div style={{ color: 'red' }}>
-          <ul>
-            {errores.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
-        </div>
+          {/* Mostrar mensaje de error si existe */}
+          {mensajeError && <div className="error-text">{mensajeError}</div>}
+
+          {/* Mostrar lista de errores */}
+          {errores.length > 0 && (
+            <div className="error-text">
+              <ul>
+                {errores.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </form>
       )}
-    </form>
+
+      {/* Mostrar el spinner mientras isLoading es verdadero */}
+      {isLoading && <LoadingSpinner />}
+    </div>
   );
 };
 

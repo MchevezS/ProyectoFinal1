@@ -1,0 +1,51 @@
+.cont-pasos {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+    background-color: #000;
+    padding: 5vw; 
+    
+}
+
+.cont-pasos h2 {
+    margin: 0;
+    font-family: "Lora", serif;
+    font-size: 2vw;
+    color: #fff;
+    text-align: center;
+}
+
+.pasos {
+    display: flex;
+    justify-content: space-evenly; 
+    width: 100%;
+    flex-wrap: wrap; 
+    gap: 2vw; 
+    margin-top: 3vw;
+}
+
+.paso {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;
+    width: 20%; 
+    min-width: 180px; 
+
+    
+    p{
+        color: #ffff;
+    }
+}
+
+.paso-text {
+    font-family: "Lora", serif;
+    font-size: 1.2vw;
+    color: #fff;
+    margin-top: 1vw;
+}
+
+.paso-text p {
+    margin: 0; 
+}

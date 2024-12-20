@@ -1,0 +1,100 @@
+/* Titulo (h2)*/
+.Titulo{
+    text-align: center;
+}
+
+/* Contenedor del administrador */
+.admin-container {
+    margin: 20px;
+}
+
+/* Estilos para la tabla de Usuarios */
+.usuarios-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.usuarios-table th,
+.usuarios-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Estilos para los botones */
+.button-custom {
+    padding: 6px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    background-color: #2ecc71; /* Verde brillante */
+    color: white; /* Texto blanco para contraste */
+    border: none;
+    border-radius: 4px;
+}
+/* opcion 2
+padding: 6px 10px;
+margin: 0 5px;
+cursor: pointer;
+background-color: #3498db;
+color: white;
+border: none;
+border-radius: 4px; */
+
+
+/* Estilos cuando el cursor pasa sobre el botón */
+.button-custom:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilos para el enfoque del botón (cuando se hace clic) */
+.button-custom:focus {
+    outline: none;
+}
+
+.button-custom2{
+    padding: 6px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    background-color: #e74c3c; /* Rojo brillante */
+    color: white; /* Texto blanco para el boton */
+    border: none;
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+/* Contenedor de la barra de búsqueda y el botón */
+.seeker-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea los elementos a la derecha */
+    margin-bottom: 10px;
+    margin-right: 50px;
+}
+
+/* Estilo de la barra de búsqueda */
+.seeker-container input {
+    padding: 8px;
+    margin-right: 10px; /* Espacio entre la barra de búsqueda y el botón */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 250px; /* Ajusta el ancho de la barra de búsqueda */
+}
+
+/* Estilo del botón en la barra de búsqueda */
+.seeker-container button {
+    padding: 8px 15px;
+    cursor: pointer;
+    background-color: #3498db; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none;
+    border-radius: 4px;
+}
+
+/* Estilo del botón cuando se pasa el cursor por encima */
+.seeker-container button:hover {
+    background-color: #2980b9; /* Cambia el color de fondo al pasar por encima */
+}
+
+/* Estilo para el botón cuando tiene el foco */
+.seeker-container button:focus {
+    outline: none; /* Elimina el borde del foco */
+}

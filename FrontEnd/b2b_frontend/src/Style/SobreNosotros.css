@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+  }
+  
+  .mision-vision-page {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  header {
+    text-align: center;
+    background-color: #debc4c;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  h1 {
+    margin: 0;
+  }
+
+  .conoce{
+    margin-top: 20px;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+  }
+  
+  p {
+    font-size: 1.1em;
+  }
+  
+  /* Sección Misión y Visión */
+  .section {
+    margin-top: 40px;
+  }
+  
+  .section h2 {
+    color: #333;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+  }
+  
+  .section p {
+    font-size: 1.1em;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .nombre1{
+    color: black;
+    font-family: cursive;
+  }
+  
+  .nombre2{
+    color: black;
+    font-family: cursive;
+    margin-left: 300px;
+    margin-top: -40px;
+  }
+
+  .nombre3{
+    color: black;
+    font-family: cursive;
+    margin-left: 600px;
+    margin-top: -40px;
+  }
+
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .mision-vision-page {
+      padding: 15px;
+    }
+  
+    .section h2 {
+      font-size: 1.5em;
+    }
+  }
+  

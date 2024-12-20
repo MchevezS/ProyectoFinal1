@@ -1,36 +1,26 @@
-.barra-lateral {
-  background-color: #f8f9fa;
-  width: 250px;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
-  font-family: 'Roboto', sans-serif; 
-}
+.barra-lateral{
+  background-color: #ffff;
+  width: 100px;
+  height: auto;
+  border: 1px solid #f2f2f2;
+  h2{
+    text-align: center;
+    font-family: 'Lora';
+    font-weight: 500;
+  }
 
-.barra-lateral h3 {
-  font-size: 18px;
-  font-weight: bold;
-  color: #6a5ae0; 
-}
+  li{
+    color: #000;
+    text-align: center;
+  }
 
-.barra-lateral .nav-link {
-  font-size: 14px;
-  font-weight: 500;
-  color: #6c757d; 
-  border-radius: 8px;
-  padding: 10px 15px;
-  transition: all 0.3s;
 }
-
-.barra-lateral .nav-link:hover {
-  background-color: #ececec; 
-  color: #333; 
+.barra-lateral-menu-lista{
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+  margin-top: 10vh;
 }
-
-.barra-lateral .nav-link i {
-  font-size: 18px; 
-  color: #6a5ae0;
-}
-
-.barra-lateral .nav-item:not(:last-child) {
-  margin-bottom: 10px;
+.barra-lateral-menu-icono:hover{
+  color: #5c3ac0;
 }
