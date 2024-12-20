@@ -48,7 +48,7 @@ function Contactenos() {
       emailjs.send(serviceId, templateId, templateParams, userId)
         .then((response) => {
           console.log('Correo enviado exitosamente', response.status, response.text);
-          mostrarAlerta('error', 'Hubo un error al enviar el correo, por favor intenta de nuevo');
+          mostrarAlerta('success', 'Correo enviado');
         })
         .catch((error) => {
           console.error('Error al enviar el correo', error);
