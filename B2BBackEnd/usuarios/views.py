@@ -8,20 +8,21 @@ from django.contrib.auth import authenticate #autenticacion para el login
 from rest_framework_simplejwt.tokens import RefreshToken #token
 from rest_framework.generics import ListCreateAPIView #get y post
 import re #expresiones regulares
-import random
-import string
-from rest_framework.permissions import AllowAny
+import random #contraseña aleatoria
+import string 
+from rest_framework.permissions import AllowAny #permisos de las vistas
 from empresas.models import AreaTrabajoUsuarios,Empleados,Empresa
 from mailersend import emails #importacion de la api mailersend
-from rest_framework import generics
 
 # api token de mailersend 
 correo = emails.NewEmail("mlsn.fe3c04fac13c0e6f5f7e85e0e65dd186c8f61706d8c5bcf0c1042855144b387b")
 
 
+
+
 # Create your views here.
 class RegistroView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny] #permite usar la vista este autenticada o no.
     def post(self,request):
         nombre_usuario = request.data.get("username")
         clave_usuario = request.data.get("password")
@@ -33,6 +34,7 @@ class RegistroView(APIView):
         correo_usuario_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         cedula_usuario_regex = r'^[0-9]+$'
 
+        #validaciones 
         if not re.match(nombre_usuario_regex,nombre_usuario):
             return Response({"error":'No cumple los requisitos en nombre',},status=status.HTTP_400_BAD_REQUEST)
         if not re.match(correo_usuario_regex,correo_usuario):
@@ -41,7 +43,7 @@ class RegistroView(APIView):
             return Response({"error":'No cumple los requisitos en cedula',},status=status.HTTP_400_BAD_REQUEST)
         
         
-        
+        #validaciones
         if User.objects.filter(username=nombre_usuario).exists():
             return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
         if User.objects.filter(email=correo_usuario).exists():
@@ -53,7 +55,8 @@ class RegistroView(APIView):
             Usuarios.objects.create(user=usuario,cedula_usuario=cedula_usuario,imagen_perfil=imagen_perfil) #El cedula_usuario de la izq es de la definicion de la tabla y el de la derecha la variable de la linea 20
             return Response({"success":'Usuario creado',},status=status.HTTP_201_CREATED)
         
-        
+    
+    
 class LoginView(APIView):
     permission_classes = [AllowAny]
     def post(self,request):
@@ -63,28 +66,35 @@ class LoginView(APIView):
         #quita el cifrado de la contraseña para saber si es correcta
         datos_autenticacion = authenticate(request,username=nombre_usuario,password=clave_usuario)
 
+        #trae el area de trabajo y el id de la empresa si es un empleado 
         try:
          area_trabajo = AreaTrabajoUsuarios.objects.get(usuario_id=datos_autenticacion.id)
          id_empresa = Empleados.objects.get(trabajador_id=datos_autenticacion.id)
         except:
          area_trabajo = None
 
+        #trae el id de la empresa si es un propietario 
         try:
             id_empresa_p = Empresa.objects.get(propietario=datos_autenticacion.id)
         except:
             id_empresa_p = None
 
+
+        # si las credenciales del que acaba de iniciar son correctas.
         if datos_autenticacion is not None:
             refresh = RefreshToken.for_user(datos_autenticacion)
             rol= Usuarios.objects.get(user_id=datos_autenticacion.id)
+            # si es propietario.
             if area_trabajo is None and id_empresa_p is not None:
                 return Response({"success":'bienvenido','area':'No tiene area asignada',"id":datos_autenticacion.id,"rol":rol.rol,
                              "nombre": datos_autenticacion.username, "imagen": rol.imagen_perfil,'id_empresa':id_empresa_p.id, 
                              "token_acceso": str(refresh.access_token),},status=status.HTTP_200_OK)
+            # si es empleado.
             elif area_trabajo is not None:
                 return Response({"success":'bienvenido','area':area_trabajo.area_trabajo.nombre_area,"imagen": rol.imagen_perfil,"id":datos_autenticacion.id,"rol":rol.rol,
                              "nombre": datos_autenticacion.username,'id_empresa':id_empresa.empresa.id,
                              "token_acceso": str(refresh.access_token),},status=status.HTTP_200_OK)
+            # si es usuario.
             elif id_empresa_p is None:
                 return Response({"success":'bienvenido','area':'No tiene area asignada',"id":datos_autenticacion.id,"rol":rol.rol,
                              "nombre": datos_autenticacion.username,"imagen": rol.imagen_perfil,'id_empresa':0, 
@@ -105,7 +115,7 @@ class RegistroEmpleadoView(APIView):
         correo_usuario = request.data.get("email")
         cedula_usuario = request.data.get("cedula")
         rol_usuario= request.data.get("rol")
-        clave_usuario = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+        clave_usuario = ''.join(random.choices(string.ascii_letters + string.digits, k=8))# le generamos la contraseña de manera aleatoria a traves del correo 
         
            
         #Usamos expresiones regulares para validar la informacion que se envia a la base de datos. 
@@ -113,13 +123,14 @@ class RegistroEmpleadoView(APIView):
         correo_usuario_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         cedula_usuario_regex = r'^[0-9]+$'
 
+        #validaciones
         if not re.match(nombre_usuario_regex,nombre_usuario):
             return Response({"error":'No cumple los requisitos en nombre',},status=status.HTTP_400_BAD_REQUEST)
         if not re.match(correo_usuario_regex,correo_usuario):
             return Response({"error":'No cumple los requisitos en correo',},status=status.HTTP_400_BAD_REQUEST)
         if not re.match(cedula_usuario_regex,cedula_usuario):
             return Response({"error":'No cumple los requisitos en cedula',},status=status.HTTP_400_BAD_REQUEST)
-        
+        #validaciones.  
         if User.objects.filter(username=nombre_usuario).exists():
             return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
         if User.objects.filter(email=correo_usuario).exists():
@@ -266,24 +277,7 @@ class CambiarClaveView(APIView):
             return Response({'status':'200'}, status=status.HTTP_200_OK)
         else:
             return Response({'status': '400'}, status=status.HTTP_400_BAD_REQUEST)
-        
-class RegistroAdminView(APIView):
-    permission_classes = [AllowAny]
-    def post(self,request):
-        nombre_usuario = request.data.get("username")
-        clave_usuario = request.data.get("password")
-        
-        #Usamos expresiones regulares para validar la informacion que se envia a la base de datos. 
-        nombre_usuario_regex = r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$'
-        
-        if not re.match(nombre_usuario_regex,nombre_usuario):
-            return Response({"error":'No cumple los requisitos en nombre',},status=status.HTTP_400_BAD_REQUEST)
-        
-        if User.objects.filter(username=nombre_usuario).exists():
-            return Response({"error":'El usuario ya existe',},status=status.HTTP_400_BAD_REQUEST)
-        else:
-            usuario = User.objects.create_superuser(username=nombre_usuario,password=clave_usuario)
-            return Response({"success":'Administrador creado',},status=status.HTTP_201_CREATED)
+      
         
 class CambiarEstadoUsuarioView(APIView):
     def patch(self, request, encuesta_id):
@@ -302,8 +296,6 @@ class CambiarEstadoUsuarioView(APIView):
         except usuario.DoesNotExist:
             return Response({'error': 'usuario no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
-
-
 class CambiarFotoPerfilView(APIView):
     def patch(self,request):
         nombre_usuario = request.data.get('username')
@@ -315,8 +307,9 @@ class CambiarFotoPerfilView(APIView):
         return Response({'status':'200'}, status=status.HTTP_200_OK)
     
     
+   
+    #Creamos el super usuario
 class RegistroAdminView(APIView):
-    permission_classes = [AllowAny]
     def post(self,request):
         nombre_usuario = request.data.get("username")
         clave_usuario = request.data.get("password")

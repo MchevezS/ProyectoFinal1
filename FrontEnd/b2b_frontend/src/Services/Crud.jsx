@@ -72,6 +72,7 @@ async function getFilter(endpoint,id="",filtro) {
 
 export { getFilter};
 
+
 // Metodo Put: Actualiza datos
 async function update( endpoint, id) {
     try {
@@ -149,7 +150,6 @@ async function eliminar(endpoint, id,token) {
         throw error;
     }
 }
-
 
 
 export { eliminar };

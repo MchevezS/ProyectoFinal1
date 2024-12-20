@@ -1,8 +1,8 @@
 from django.db import models
-
 # Create your models here.
 
-# Modelo padre
+# modelo donde creamos las categorias de cada encuesta. 
+#Se realaciona con empresa para tener encuestas exclusivas de cada empresa.
 class Encuestas(models.Model):
     ENCUESTAS_CATEGORIAS = [
         ("Salud Mental","Salud Mental"),
@@ -23,7 +23,7 @@ class Encuestas(models.Model):
         return self.categoria_encuesta 
     
     
-  # Modelo pregunta contiene la referencia del la encuesta
+  # Modelo pregunta contiene la referencia de la encuesta
 class Pregunta(models.Model):
     encuesta_referencia = models.ForeignKey(Encuestas, on_delete=models.CASCADE)
     pregunta_texto = models.TextField()
@@ -33,15 +33,14 @@ class Pregunta(models.Model):
         return self.pregunta_texto
     
     
-    
+#modelo en el que creamos la tupla de respuestas pre definidas.
 class Respuesta(models.Model):
     RESPUESTA_ELECCIONES = [
         ("MUY BUENA","Muy buena"),("BUENA","Buena"),("REGULAR","Regular"),("MALA","Mala"),("MUY MALA","Muy mala")
     ]
-    encuesta_referencia = models.ForeignKey(Encuestas,on_delete=models.CASCADE) #En que enncuesta esta la pregunta
-    pregunta_referencia = models.ForeignKey(Pregunta, on_delete=models.CASCADE) #A que pregunta esta respondiendo
+    encuesta_referencia = models.ForeignKey(Encuestas,on_delete=models.CASCADE) #Encuesta en que se esta rerspondiendo
+    pregunta_referencia = models.ForeignKey(Pregunta, on_delete=models.CASCADE) #Pregunta a la que se esta respondiendo
     usuario_referencia = models.ForeignKey("usuarios.Usuarios", on_delete=models.CASCADE,related_name= "usuario_responde")
     respuesta_texto = models.CharField(choices=RESPUESTA_ELECCIONES, max_length = 11) #La respuesta que se dio
     fecha_respuesta = models.DateField(auto_now=True) #la fecha en la que se repondio
-    retroalimentacion = models.TextField(blank=True,null=True) #Retroalimentacion de la respuesta
-    empresa = models.ForeignKey("empresas.Empresa", on_delete=models.CASCADE,related_name="respuestas_empresa")
+    empresa = models.ForeignKey("empresas.Empresa", on_delete=models.CASCADE,related_name="respuestas_empresa")#la empresa a que pertenece esa respuesta

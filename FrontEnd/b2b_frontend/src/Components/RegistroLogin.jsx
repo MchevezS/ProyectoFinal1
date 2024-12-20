@@ -7,6 +7,9 @@ import NavbarNuevo from './NavbarNuevo';
 import { useCookies } from 'react-cookie';
 import LoadingSpinner from "../Components/LoadingSpinner.jsx"
 
+
+//Usamos las cookies para guardar la infomcion del usuario que inicia sesion.
+//estado para cambio login-registrarse.
 function RegistroLogin() {
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false); // Estado para manejar el loading

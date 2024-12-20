@@ -21,7 +21,7 @@ CORS_ALLOW_ORIGINS = True
 
 
 # Application definition
-
+# todas las aplicaciones que voy a usar en el proyecto.
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,20 +37,22 @@ INSTALLED_APPS = [
     'empresas',
 ]
 
+# Añadimos configuraciones externas al proyecto.
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication', # implementación del token.
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly', #implemetación de la autenticación de las views.
     ),
 }
-# Configuración de los tiempos de expiración de los tokens JWT
+# Configuración del token y de los tiempos de expiración.
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=3), #cambiar tiempo
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=3), 
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1), 
 }
 
+#conexion de dependencias de FE a BE.
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -62,7 +64,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
+# Damos permiso de usar recursos externos . (api)
 CORS_ALLOW_ALL_ORIGINS = True 
 CORS_ALLOW_CREDENTIALS = True
 
