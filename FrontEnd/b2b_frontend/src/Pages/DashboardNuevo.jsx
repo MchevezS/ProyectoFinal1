@@ -73,7 +73,7 @@ const DashboardNuevo = () => {
             valor={encuestasRealizadas}
           />
           <CardDashboard
-            titulo="Empleados Activos"
+            titulo="Empleados"
             valor={empleadosActivos}
           />
           <CardDashboard

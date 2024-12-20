@@ -36,7 +36,9 @@ const Routing = () => {
 
 
 
-
+          <Route path='/editar-empresa/:id' element={<EditarEmpresa/>}/>
+          <Route path='/editar-encuesta/:id' element={<EditarEncuestas/>}/>
+          <Route path='/editar-usuarios/:id' element={<EditarUsuarios/>}/>
 
           <Route path="/home" element={<HomeNuevo/> }/>
           <Route path='/registroLogin' element={<Login/>}/>

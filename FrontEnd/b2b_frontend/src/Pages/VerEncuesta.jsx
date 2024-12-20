@@ -113,26 +113,7 @@ const VerEncuesta = () => {
           ))}
         </ul>
 
-        <p className="text-start" style={{ margin: "20px 0 10px" }}>
-          <strong>¿Qué podemos mejorar?</strong>
-        </p>
-        <div className="form-outline mb-4">
-          <input
-            style={{
-              padding: "10px",
-            }}
-            onChange={(e) => setRetroalimentacion(e.target.value)}
-            placeholder="Retroalimentación"
-            className="field"
-            id="form4Example3"
-          />
-        </div>
-        <div
-          className="card-footer text-end"
-          style={{
-            marginTop: "10px",
-          }}
-        >
+       
           <button
             className="btn btn-primary"
             onClick={enviarRespuesta}
@@ -147,7 +128,7 @@ const VerEncuesta = () => {
           </button>
         </div>
       </div>
-    </div>
+  
   );
 };
 

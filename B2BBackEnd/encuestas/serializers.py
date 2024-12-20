@@ -18,6 +18,6 @@ class RespuestaSerializer(ModelSerializer):
     categoria_encuesta = serializers.CharField(source='encuesta_referencia.categoria_encuesta',read_only=True)#campo para obtener el nombre de la categoria 
     class Meta:
         model = Respuesta
-        fields = ['id','encuesta_referencia','pregunta_referencia','usuario_referencia','respuesta_texto','categoria_encuesta','fecha_respuesta','retroalimentacion','empresa']
+        fields = ['id','encuesta_referencia','pregunta_referencia','usuario_referencia','respuesta_texto','categoria_encuesta','fecha_respuesta','empresa']
 
         

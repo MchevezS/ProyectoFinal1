@@ -280,19 +280,19 @@ class CambiarClaveView(APIView):
       
         
 class CambiarEstadoUsuarioView(APIView):
-    def patch(self, request, encuesta_id):
+    def patch(self, request, usuario_id):
         try:
             # Obtener el usuario por su ID
-            usuario = Usuarios.objects.get(id=usuario_id)
+            usuario = User.objects.get(id=usuario_id)
             # Cambiar el estado de la usuario (activa/desactiva)
-            usuario.activo = not usuario.activo  # Cambia el valor de 'activo'
+            usuario.is_active = not usuario.is_active  # Cambia el valor de 'activo'
             usuario.save()
             # Responder con un mensaje de éxito
             return Response({
-                'message': f"usuario {'activada' if usuario.activo else 'desactivada'} correctamente",
-                'usuario': usuario.nombre_usuario,
-                'estado_actual': 'activa' if usuario.activo else 'desactivada'
-            }, status=status.HTTP_200_OK)
+                'message': f"usuario {'activada' if usuario.is_active else 'desactivada'} correctamente",
+                'usuario': usuario.username,
+                'estado_actual': 'activa' if usuario.is_active else 'desactivada'
+            }, status=status.HTTP_200_OK)   
         except usuario.DoesNotExist:
             return Response({'error': 'usuario no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -310,6 +310,7 @@ class CambiarFotoPerfilView(APIView):
    
     #Creamos el super usuario
 class RegistroAdminView(APIView):
+    # permission_classes = [AllowAny]
     def post(self,request):
         nombre_usuario = request.data.get("username")
         clave_usuario = request.data.get("password")

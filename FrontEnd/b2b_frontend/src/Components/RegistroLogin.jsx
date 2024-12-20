@@ -74,6 +74,8 @@ function RegistroLogin() {
       const admin = await loginPost(datosLogin,"loginAdmin/");
       if(admin.success && admin.super){
         setCookie("rolUsuario", admin.rol);
+        setCookie("token", admin.token);
+        
         navigate ("/administrador")
         return
 
